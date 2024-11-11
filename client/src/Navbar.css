@@ -1,0 +1,51 @@
+/* Navbar.css */
+.navbar {
+    background-color: #333;  /* Dark background for the navbar */
+    color: white;            /* White text color */
+    padding: 15px;           /* Padding around the navbar */
+    position: sticky;        /* Keeps the navbar fixed at the top */
+    top: 0;                  /* Stick to the top of the page */
+    z-index: 1000;           /* Ensures the navbar stays on top of other content */
+    width: 100%;             /* Full width */
+  }
+  
+  .navbar-container {
+    display: flex;           /* Use flexbox for layout */
+    justify-content: space-between; /* Space between logo and nav items */
+    align-items: center;     /* Vertically center items */
+  }
+  
+  .navbar-logo {
+    margin-right: auto;  /* Pushes the logo to the left */
+}
+
+.navbar-logo img {
+    width: 90px;          /* Set the desired width for the logo image */
+    height: auto;         /* Maintain aspect ratio */
+}
+  
+  .navbar-items {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    list-style-type: none;   /* Remove default list styling */
+    display: flex;           /* Layout navbar items horizontally */
+    gap: 70px;               /* Space between each nav item */
+    margin: 10px;               /* Remove default margin */
+  }
+  
+  .navbar-item {
+    text-decoration: none;   /* Remove underline from links */
+    color: white;            /* White text color */
+    font-size: 18px;         /* Set font size for nav items */
+    transition: color 0.3s;  /* Smooth color transition on hover */
+  }
+  
+  .navbar.scrolled {
+    background-color:blueviolet; /* Change to the color you want when scrolled */
+  }
+
+  .navbar-item:hover {
+    color: greenyellow;          /* Change text color on hover (optional) */
+  }
+ 
