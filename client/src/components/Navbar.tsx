@@ -19,6 +19,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
           <li><Link to='/campaigns' className='navbar-item'>Campaigns</Link></li>
           <li><Link to='/media' className='navbar-item'>Media</Link></li>
           <li><Link to='/mini-shop' className='navbar-item'>Mini Shop</Link></li>
+          <button>SIGN UP</button>
         </ul> 
       </div>
     </nav>
