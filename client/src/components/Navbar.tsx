@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css';
+
+import '../assets/stylesheets/Navbar.css';
 
 interface NavbarProps {
-  isScrolled: boolean;  // Define the type for the isScrolled prop
+  isScrolled: boolean;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
@@ -19,7 +20,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
           <li><Link to='/media' className='navbar-item'>Media</Link></li>
           <li><Link to='/mini-shop' className='navbar-item'>Mini Shop</Link></li>
         </ul> 
-      </div>       
+      </div>
     </nav>
   );
 };

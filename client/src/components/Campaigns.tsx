@@ -1,5 +1,5 @@
 import React from 'react';
-import './Campaigns.css';
+import '../assets/stylesheets/Campaigns.css';
 
 const Campaigns = () => {
   return <div>Campaigns Component</div>;
