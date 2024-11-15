@@ -1,21 +1,13 @@
 body {
     background-color: #0d181c;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;        
 }
 
 .campaign-container {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    margin: 20px;
-}
-
-.vertical-line {
-    position: absolute;
-    top: 20%;
-    right: 350px;
-    width: 2px;
-    height: 100%;
-    background-color: black;
+    margin: auto;
 }
 
 .campaign-wrapper {
@@ -29,7 +21,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #055142;
+    background:linear-gradient(135deg,#2a9f5b,#1B4137);
     padding: 20px 15px;
     font-weight: bold;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -51,18 +43,17 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     background-color: #fbfdfd;
-    color: #14212c;
+    color: black;
     padding: 20px;
     border-radius: 25px;
     max-width: 950px;
     gap: 20px;
-    transition: box-shadow 0.3s ease;
     font-family:Verdana, Geneva, Tahoma, sans-serif;        
 
 }
 
 .Campaign-card:hover {
-    box-shadow: 4px 6px 4px #055142;
+    box-shadow: 4px 6px 4px #1B4137;
 }
 
 .Content {
@@ -83,6 +74,65 @@ body {
 .CampaignPhoto img {
     width: 100%;
     height: auto;
-    border-radius: 20px;
+    border-radius: 18px;
     object-fit: cover;
+}
+
+.vertical-line {
+    position: fixed; 
+    top: 100px; 
+    right: 340px;
+    width: 3px;
+    height: 80%;
+    background: linear-gradient(135deg, #2a9f5b, #1b4137); 
+}
+
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position:fixed;
+    right: 0px;
+    padding: 5px;
+    margin: 20px;
+    color: white;
+}
+
+.profile-name {
+    display: flex;
+    padding: 5px 10px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    border-radius: 20px;
+    font-size: 14px; 
+    color: white;
+    background: linear-gradient(135deg, #2a9f5b, #1B4137);
+    max-width: 150px; 
+    font-family:'Segoe UI';
+    line-height: 0.1;
+}
+
+.profile-data table {
+    width:fit-content;
+    border-spacing: 10px;
+    background-color: #ccc;
+    border-radius: 20px;
+    margin-top: 10px;
+    color: #0d181c;
+  }
+  
+  .profile-data td:first-child {
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .profile-data td:last-child {
+    text-align: right;
+    color: #2a9f5b;
+  }
+  
+  .profile-data tr:last-child td:last-child {
+    color: red; 
 }

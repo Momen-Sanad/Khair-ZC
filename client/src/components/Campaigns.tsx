@@ -1,11 +1,11 @@
 import React from 'react';
 import '../assets/stylesheets/Campaigns.css';
 import campaignPhoto from '../assets/images/campaignPhoto1.jpg';
+import { IoPersonOutline } from "react-icons/io5";
 
 const Campaigns = () => {
   return (
     <div className='campaign-container'>
-      <div className="vertical-line"></div>
       <div className='campaign-wrapper'>
         <div className='Date-box'>
           <h1>26</h1>
@@ -16,7 +16,7 @@ const Campaigns = () => {
             <h1>Campaign Name</h1>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Quibusdam iusto, facilis velit, cum consequuntur molestias temporibus 
+              Quibusdam iusto, facilis velit, cum consequuntur molestias temporibus
               corrupti ad harum saepe minus ea reprehenderit aut eius dolores asperiores
               doloribus alias dolor!
             </p>
@@ -40,10 +40,10 @@ const Campaigns = () => {
           <div className='Content'>
             <h1>Another Campaign</h1>
             <p>
-              Lorem ipsum dolor sit amet consectetur 
+              Lorem ipsum dolor sit amet consectetur
               adipisicing elit. Vero eaque vel dicta error
-               a facilis porro ipsa itaque suscipit quam. 
-               Quasi deleniti molestias voluptatem, 
+              a facilis porro ipsa itaque suscipit quam.
+              Quasi deleniti molestias voluptatem,
               obcaecati aut ipsam non iusto atque.
             </p>
             <ul className='info'>
@@ -57,6 +57,33 @@ const Campaigns = () => {
         </div>
       </div>
 
+      <div className='profile-container'>
+        <div className='profile-name'>
+          <IoPersonOutline size={30} />
+          <h1>Name</h1>
+        </div>
+        <div className="profile-data">
+          <table>
+            <tr>
+              <td>Current points:</td>
+              <td>160</td>
+            </tr>
+            <tr>
+              <td>Followed charities:</td>
+              <td>26</td>
+            </tr>
+            <tr>
+              <td>Attended Campaigns:</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>Status:</td>
+              <td>Admin</td>
+            </tr>
+          </table>
+        </div>        
+      </div>
+      <div className="vertical-line"></div>
     </div>
   );
 };

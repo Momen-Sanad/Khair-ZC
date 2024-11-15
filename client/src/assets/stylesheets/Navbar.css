@@ -45,7 +45,7 @@
 
 
 .navbar.scrolled {
-  background-color:#303030; 
+  background:linear-gradient(135deg,#2a9f5b,#1B4137);
   color: white;        
   padding: 15px;        
   position: sticky;    
