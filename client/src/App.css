@@ -2,4 +2,11 @@ body {
   margin: 0;
   color: white;
   overflow-x: hidden;
+  font-family: 'DejaVu Sans', Arial, sans-serif;
+}
+
+@font-face {
+  font-family: 'DejaVu Sans';
+  src: url('./assets/fonts/dejavu-sans-webfont.woff2') format('woff2'),
+       url('./assets/fonts//DejaVuSans.woff') format('woff');
 }
