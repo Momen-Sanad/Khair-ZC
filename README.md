@@ -36,25 +36,37 @@ A charity-based project designed to support and empower the "Khair-ZC" club. It 
 
 ```
 Khair-ZC/
+│                              # Frontend (client):
 ├── client/                    # Frontend React application
+│   ├── node_modules/          # Required packages
 │   ├── public/                # Public assets folder
 │   │   ├── favicon.ico        # Favicon icon for the website
-│   │   ├── index.html         # Main HTML file for React
+│   │   └── index.html         # Main HTML file for React
 │   ├── src/                   # Source files for React components and styles
 │   │   ├── App.css            # Styles for the main App component
-│   │   ├── App.test.tsx       # Tests for the App component
 │   │   ├── App.tsx            # Main App component
-│   │   ├── index.css          # Global styles
+│   │   ├── custom.d.ts        # Type declarations for Typescript
 │   │   ├── index.tsx          # Main entry file for React
-│   │   ├── logo.svg           # SVG logo asset
+│   │   ├── assets/            # Source files for React components and styles
+│   │   │   ├── fonts/
+│   │   │   ├── images/
+│   │   │   ├── sounds/
+│   │   │   └── stylesheets/
+│   │   └── components/
+│   │       ├── Home.tsx
+│   │       ├── Campaigns.tsx
+│   │       ├── Navbar.tsx
+│   │       ├── Media.tsx
+│   │       └── Shop.tsx
 │   ├── .gitignore             # Git ignore file for client
-│   ├── README.md              # README file specific to the client
 │   ├── package-lock.json      # Lock file for npm dependencies
 │   ├── package.json           # Package configuration file
 │   └── tsconfig.json          # TypeScript configuration file
+│                              # Backend (server):
 ├── server/                    # Backend Flask application
 │   ├── app.py                 # Main Flask application file
 │   └── requirements.txt       # Python dependencies file
+│
 ├── README.md                  # Project-wide README file
 └── setup.sh                   # Setup script for project installation
 ```
