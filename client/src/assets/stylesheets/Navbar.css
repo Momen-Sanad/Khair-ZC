@@ -1,60 +1,89 @@
+.content {
+  position: fixed;
+  z-index: 600;
+}
+
+/* Navbar.css */
 .navbar {
-  background-color: transparent; 
-  color: white;        
-  padding: 15px;        
+  background: linear-gradient(to bottom, rgb(0, 0, 0), rgba(255, 0, 0, 0));
+  color: white;
   position: sticky;    
-  top: 0;                  
-  z-index: 1000;          
-  width: 100%;    
-  font-family:Verdana, Geneva, Tahoma, sans-serif;        
+  top: 0;
+  z-index: 500;          
+  width: 100%;
+  transition: all 0.3s ease;
 }
 
 .navbar-container {
   display: flex;          
   justify-content: space-between;
-  align-items: center; 
-}
-
-.navbar-logo {
-  margin-right: auto;  
+  align-items: center;
+  padding: 18px 40px 18px 18px;
+  transition: padding 0.3s ease;
 }
 
 .navbar-logo img {
-  width: 90px;         
-  height: auto;  
+  width: 200px;
+  transition: width 0.3s ease;
 }
 
+.navbar.scrolled .navbar-logo img {
+  width: 100px;
+  /* padding-right: 100px; */
+}
+  
 .navbar-items {
   flex: 1;
   justify-content: center;
   text-align: center;
+  align-items: center;
   list-style-type: none;  
-  display: flex;      
-  gap: 70px;      
-  margin: 10px;   
+  display: flex;     
+  gap: 150px;
 }
 
 .navbar-item {
-  padding: 10px 15px;
-  border-radius: 15px;
   text-decoration: none;
   color: white;
-  font-size: 18px;
-  transition: color 0.3s;
+  font-size: 28px;
+  transition: font-size 0.3s, color 0.3s;
 }
 
-
 .navbar.scrolled {
-  background:linear-gradient(135deg,#2a9f5b,#1B4137);
-  color: white;        
-  padding: 15px;        
-  position: sticky;    
-  top: 0;                  
-  z-index: 1000;          
-  width: 100%; 
+  background: linear-gradient(to bottom, rgb(0, 0, 0), rgba(0, 0, 0, 0.050));
+}
+
+.navbar.scrolled .navbar-item {
+  font-size: 25px;
 }
 
 .navbar-item:hover {
-  background-color: #fbfdfd;
-  color: #055142;   
+  color: greenyellow;         
+}
+
+.auth-button {
+  color: white;
+  border-color: #80cc28;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 100px;
+  background-color: transparent;
+  padding: 15px 40px 15px 40px;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: font-size 0.3s, padding 0.3s;
+}
+
+.auth-button:hover {
+  color: #80cc28;
+  border-color: transparent;
+}
+
+.navbar.scrolled .auth-button {
+  font-size: 20px;
+  padding: 10px 30px;
 }
