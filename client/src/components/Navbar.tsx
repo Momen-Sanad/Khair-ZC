@@ -12,7 +12,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
     <nav className={`navbar ${isScrolled ? "scrolled" : "" }`}>
       <div className='navbar-container'>
         <Link to='/' className='navbar-logo'>
-          <img src='/KhairZcLogo.png' alt='Logo'/>
+          <img src='../assets/images/KhairZcLogo.png' alt='Logo'/>
         </Link>
         <ul className='navbar-items'>
           <li><Link to='/' className='navbar-item'>Home</Link></li>
