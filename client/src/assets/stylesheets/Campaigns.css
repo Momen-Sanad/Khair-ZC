@@ -1,0 +1,88 @@
+body {
+    background-color: #0d181c;
+}
+
+.campaign-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin: 20px;
+}
+
+.vertical-line {
+    position: absolute;
+    top: 20%;
+    right: 350px;
+    width: 2px;
+    height: 100%;
+    background-color: black;
+}
+
+.campaign-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.Date-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #055142;
+    padding: 20px 15px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #fbfdfd;
+    text-align: center;
+    font-size: 1.2em;
+    border-radius: 25px;
+    width: 80px;
+    line-height: 1px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;        
+}
+
+.Date-box:hover {
+    box-shadow: 4px 6px 4px #fbfdfd;
+}
+
+.Campaign-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #fbfdfd;
+    color: #14212c;
+    padding: 20px;
+    border-radius: 25px;
+    max-width: 950px;
+    gap: 20px;
+    transition: box-shadow 0.3s ease;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;        
+
+}
+
+.Campaign-card:hover {
+    box-shadow: 4px 6px 4px #055142;
+}
+
+.Content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.CampaignPhoto {
+    flex: 1;
+    max-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.CampaignPhoto img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+}
