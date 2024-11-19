@@ -1,14 +1,14 @@
 
 from flask_sqlalchemy import SQLAlchemy
-
 db = SQLAlchemy()
+
 
 class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True, nullable=False)
     fname = db.Column(db.String(16), nullable=False)
     lname = db.Column(db.String(16), nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)  # Consider hashing for security
+    password = db.Column(db.String(1000), nullable=False)  # Consider hashing for security
     points = db.Column(db.Integer(), default=0)
 
     # Relationships
@@ -64,7 +64,6 @@ class RedeemedMerch(db.Model):
 class RegisteredEvent(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
-
 
 
 
