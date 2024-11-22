@@ -1,5 +1,6 @@
 
 from flask_sqlalchemy import SQLAlchemy
+import datetime
 db = SQLAlchemy()
 
 
@@ -42,7 +43,7 @@ class Event(db.Model):
     id = db.Column(db.Integer(), unique=True, primary_key=True, nullable=False)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)  # Use Text for longer descriptions
-    date = db.Column(db.DateTime(), nullable=False)
+    date = db.Column(db.DateTime(), nullable=False , default=datetime.datetime.utcnow)
     reward = db.Column(db.Integer(), default=0, nullable=False)
     charity_id = db.Column(db.Integer(), db.ForeignKey('charity.id'), nullable=False)  # Specify which charity is responsible for this event
 

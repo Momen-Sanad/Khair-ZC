@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from models.dbSchema import db
 from apis.routes.auth_login import auth_bp  # Import the auth blueprint
+from apis.routes.create_charity import charity_bp
+from apis.routes.create_event import event_bp 
 
 # Initialize the db object
 def create_app():
@@ -17,7 +19,9 @@ def create_app():
 
     # Register the blueprints
     app.register_blueprint(auth_bp, url_prefix='/auth')  # Prefix routes with /auth
-
+    app.register_blueprint(auth_bp, url_prefix='/charity')  # Prefix routes with /auth
+    app.register_blueprint(auth_bp, url_prefix='/event')  # Prefix routes with /auth
+    
     return app
 
 # Create the app instance
