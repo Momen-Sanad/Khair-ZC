@@ -6,6 +6,8 @@ from models.dbSchema import db
 from apis.routes.auth_login import auth_bp  # Import the auth blueprint
 from apis.routes.create_charity import charity_bp
 from apis.routes.create_event import event_bp
+from apis.routes.points_system import points_bp
+
 from authlib.integrations.flask_client import OAuth
 import oauthlib
 import oauth
@@ -27,6 +29,8 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix='/auth')  # Prefix routes with /auth
     app.register_blueprint(charity_bp, url_prefix='/charity')  # Prefix routes with /auth
     app.register_blueprint(event_bp, url_prefix='/event')  # Prefix routes with /auth
+    app.register_blueprint(points_bp, url_prefix='/points')  # Prefix routes with /auth
+    
     
 
     return app
