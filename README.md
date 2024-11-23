@@ -147,7 +147,7 @@ This project is made possible by our dedicated team:
 - Khaled Mohamed
 - Momen Mahmoud
 - Abdullah Ayman
-- Mohammed Abbas
+- Ahmed Abbas
 
 
 ## License
