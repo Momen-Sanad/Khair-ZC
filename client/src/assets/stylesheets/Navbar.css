@@ -58,7 +58,10 @@
 }
 
 .navbar-item:hover {
-  color: greenyellow;         
+  padding: 10px 2px;
+  background-color: white;
+  border-radius: 20px;
+  color: green;         
 }
 
 .auth-button {
