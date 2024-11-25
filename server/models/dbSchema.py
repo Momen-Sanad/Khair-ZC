@@ -13,10 +13,7 @@ class User(db.Model):
     points = db.Column(db.Integer(), default=0)
 
     # Relationships
-    followed_campaigns = db.relationship('FollowedCampaign', backref='user', lazy=True)
-    followed_charities = db.relationship('FollowedCharity', backref='user', lazy=True)
-    redeemed_merch = db.relationship('RedeemedMerch', backref='user', lazy=True)
-    registered_events = db.relationship('RegisteredEvent', backref='user', lazy=True)
+
 
 class FollowedCampaign(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -46,6 +43,7 @@ class Event(db.Model):
     date = db.Column(db.DateTime(), nullable=False , default=datetime.datetime.utcnow)
     reward = db.Column(db.Integer(), default=0, nullable=False)
     charity_id = db.Column(db.Integer(), db.ForeignKey('charity.id'), nullable=False)  # Specify which charity is responsible for this event
+    capacity = db.Column(db.Integer(),default = 0)
 
     # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image
 
@@ -63,8 +61,9 @@ class RedeemedMerch(db.Model):
     date = db.Column(db.Date(), nullable=False)  # Date of redemption
 
 class RegisteredEvent(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
+    event_id = db.Column(db.Integer(), db.ForeignKey('event.id'), primary_key=True)
+
 
 
 

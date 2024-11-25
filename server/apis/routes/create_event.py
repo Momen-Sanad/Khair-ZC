@@ -23,9 +23,11 @@ def create():
     event_reward = request.json.get('eventRe')
     event_desc = request.json.get('eventDesc')
     event_date = request.json.get('eventDate')
+    event_cap = request.json.get('eventCap')
     
     connected_charity = request.json.get('charId')
-
+    if not all(key in request.json for key in ['eventName', 'eventRe', 'eventDesc', 'eventCap', 'charId']):
+        return jsonify({"error": "Missing required fields"}), 400
     if not event_id or not event_name  or not event_reward   or not event_desc  :
         return jsonify({"error": "Missing data"}), 400
     existing_event = Event.query.filter_by(title=event_name).first()
@@ -40,7 +42,7 @@ def create():
     
     # Create a new user instance
 
-    new_event = Event(id = event_id, title = event_name , reward = event_reward, description = event_desc , charity_id = connected_charity , date = event_date )
+    new_event = Event(id = event_id, title = event_name , reward = event_reward, description = event_desc , charity_id = connected_charity , date = event_date , capacity = event_cap)
 
     # Add the user to the session
     db.session.add(new_event)

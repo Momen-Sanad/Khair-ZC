@@ -7,7 +7,7 @@ from apis.routes.auth_login import auth_bp  # Import the auth blueprint
 from apis.routes.create_charity import charity_bp
 from apis.routes.create_event import event_bp
 from apis.routes.points_system import points_bp
-
+from apis.routes.Campaign_Registeration import registration_bp
 from authlib.integrations.flask_client import OAuth
 import oauthlib
 import oauth
@@ -30,7 +30,7 @@ def create_app():
     app.register_blueprint(charity_bp, url_prefix='/charity')  # Prefix routes with /auth
     app.register_blueprint(event_bp, url_prefix='/event')  # Prefix routes with /auth
     app.register_blueprint(points_bp, url_prefix='/points')  # Prefix routes with /auth
-    app.register_blueprint(registration_bp, url_prefix = '/registeration') # Prefix routes with /registration
+    app.register_blueprint(registration_bp, url_prefix = '/registration') # Prefix routes with /registration
 
 
     
