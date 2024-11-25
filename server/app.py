@@ -30,7 +30,9 @@ def create_app():
     app.register_blueprint(charity_bp, url_prefix='/charity')  # Prefix routes with /auth
     app.register_blueprint(event_bp, url_prefix='/event')  # Prefix routes with /auth
     app.register_blueprint(points_bp, url_prefix='/points')  # Prefix routes with /auth
-    
+    app.register_blueprint(registration_bp, url_prefix = '/registeration') # Prefix routes with /registration
+
+
     
 
     return app

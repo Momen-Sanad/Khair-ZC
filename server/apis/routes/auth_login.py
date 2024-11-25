@@ -1,4 +1,3 @@
-
 import datetime
 from flask import Blueprint, request, jsonify, redirect, url_for, session
 from requests_oauthlib import OAuth2Session
