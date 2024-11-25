@@ -31,6 +31,7 @@ body {
     font-size: 1.2em;
     border-radius: 25px;
     width: 80px;
+    height: 65px;
     line-height: 1px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;        
 }
@@ -45,10 +46,9 @@ body {
     align-items: flex-start;
     background-color: #fbfdfd;
     color: black;
-    padding: 20px;
+    padding: 5px;
     border-radius: 25px;
     max-width: 950px;
-    gap: 20px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;        
 
 }
@@ -58,10 +58,10 @@ body {
 }
 
 .Content {
+    font-size: large;
     flex: 2;
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
 .CampaignPhoto {
@@ -146,4 +146,18 @@ body {
 
 .icon{
     margin-right: 8px;
+}
+
+.campaign-link{
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #fbfdfd;
+    color: black;
+    padding: 20px;
+    border-radius: 25px;
+    max-width: 950px;
+    gap: 20px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;  
 }

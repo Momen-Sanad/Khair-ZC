@@ -7,46 +7,44 @@ import { FaPencil } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 
 const campaigns = [
-  { id: 1, name: "Campaign 1", day: "26", month:"MAY", author: "Author", time: "Posted Time ago" },
-  { id: 2, name: "Another Campaign", day: "27", month:"FEB", author: "Another Author", time: "Posted Time ago" },
+  { id: 1, name: "Campaign 1", day: "26", month: "MAY", author: "Author", time: "Posted Time ago",description:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, accusantium facilis. Ad temporibus illo maxime assumenda repellat esse obcaecati, exercitationem, corporis voluptatibus, sed laudantium sunt mollitia provident quibusdam illum vitae?"},
+  { id: 2, name: "Another Campaign", day: "27", month: "FEB", author: "Another Author", time: "Posted Time ago" ,description:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, accusantium facilis. Ad temporibus illo maxime assumenda repellat esse obcaecati, exercitationem, corporis voluptatibus, sed laudantium sunt mollitia provident quibusdam illum vitae?"}
 ];
-
 
 const Campaigns = () => {
   return (
     <div className='campaign-container'>
       {campaigns.map((campaign) => (
-      <div className='campaign-wrapper'>
-        <div className='Date-box'>
-          <h1>{campaign.day}</h1>
-          <h1>{campaign.month}</h1>
-        </div>
-        <div className='Campaign-card'>
-        <Link to={`/campaigns/${campaign.id}`} className="campaign-link"/>
-        <div className='Content'>
-            <h1>{campaign.name}</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Quibusdam iusto, facilis velit, cum consequuntur molestias temporibus
-              corrupti ad harum saepe minus ea reprehenderit aut eius dolores asperiores
-              doloribus alias dolor!
-            </p>
-            <ul className='info'>
-              <li>
-                <FaPencil className='icon'/>
-                 {campaign.author}
-              </li>
-              <li>
-                <IoTimeOutline className='icon'/>
-                {campaign.time}
-              </li>
-            </ul>
+        <div className='campaign-wrapper'>
+          <div className='Date-box'>
+            <h1>{campaign.day}</h1>
+            <h1>{campaign.month}</h1>
           </div>
-          <div className='CampaignPhoto'>
-            <img src={campaignPhoto} alt='Campaign' />
+          <div className='Campaign-card'>
+            <Link to={`/campaigns/${campaign.id}`} className="campaign-link">
+              <div className='Content'>
+                <h1>{campaign.name}</h1>
+                <p>
+                  {campaign.description.slice(0,100)}.....
+                </p>
+                <ul className='info'>
+                  <li>
+                    <FaPencil className='icon' />
+                    {campaign.author}
+                  </li>
+                  <li>
+                    <IoTimeOutline className='icon' />
+                    {campaign.time}
+                  </li>
+                </ul>
+              </div>
+              <div className='CampaignPhoto'>
+                <img src={campaignPhoto} alt='Campaign' />
+              </div>
+            </Link>
           </div>
+
         </div>
-      </div>
       ))}
       <div className='profile-container'>
         <div className='profile-name'>

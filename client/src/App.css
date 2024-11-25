@@ -3,6 +3,7 @@ body {
   color: white;
   overflow-x: hidden;
   font-family: 'DejaVu Sans', Arial, sans-serif;
+  text-decoration: none;
 }
 
 @font-face {
