@@ -152,4 +152,4 @@ This project is made possible by our dedicated team:
 
 ## License
 
-TBD.
+TBD
