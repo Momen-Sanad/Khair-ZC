@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaUserGraduate } from "react-icons/fa";
 
 import '../assets/stylesheets/Navbar.css';
 
@@ -20,6 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
           <li><Link to='/media' className='navbar-item'>Media</Link></li>
           <li><Link to='/mini-shop' className='navbar-item'>Mini Shop</Link></li>
         </ul> 
+        <button className='auth-button'><FaUserGraduate />SIGN UP</button>
       </div>
     </nav>
   );

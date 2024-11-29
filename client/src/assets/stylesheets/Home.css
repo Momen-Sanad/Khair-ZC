@@ -1,0 +1,19 @@
+.upper-background {
+    background: url(../images/upper-background.png) no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+.full-background {
+    background: url(../images/full-background.png) no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+    margin-top: 800px;
+    /* padding-top: 100vh; */
+    z-index: 1;
+    position: relative;
+}
