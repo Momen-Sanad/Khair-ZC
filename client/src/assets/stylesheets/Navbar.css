@@ -66,6 +66,7 @@
 
 .auth-button {
   color: white;
+  text-decoration: none;
   border-color: #80cc28;
   border-width: 3px;
   border-style: solid;
