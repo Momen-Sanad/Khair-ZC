@@ -18,7 +18,7 @@ const Media = () => {
       {images.map((src,i)=>(
         <img
           src={src}
-          alt={`Image ${i+1}`}
+          alt={`Gallery item ${i + 1}`}
           className='GalleryImage'
         />
       ))}
