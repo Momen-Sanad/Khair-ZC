@@ -1,0 +1,48 @@
+.Campaign-page {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.Campaign-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 40px;
+}
+
+.Campaign-name{
+    font-family:Tahoma, Geneva, Verdana, sans-serif;
+    justify-items: center;
+    border-radius: 15px;
+    border-color: black;
+    background-color: white;
+    color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+    background:linear-gradient(135deg,#2a9f5b,#1B4137);
+
+}
+
+.Campaign-Desc{
+    border-radius: 15px;
+    border-color: black;
+    font-size:larger;
+    background-color: white;
+    color: black;
+    padding-left: 40px;
+}
+.Campaign-Info{
+    border-radius: 15px;
+    background:linear-gradient(135deg,#2a9f5b,#1B4137);
+    display:flex;
+    justify-content: space-around;
+}
+.Campaign-Info p {
+    margin-right: 10px;
+  }
+
+.Campaign-image{
+    height: 500px;
+    border-radius: 15px;
+}

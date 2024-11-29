@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Campaigns from './components/Campaigns';
 import Media from './components/Media';
 import Shop from './components/Shop';
+import CampaignPage from "./components/CampaignPage";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/campaigns' element={<Campaigns/>} />
+        <Route path="/campaigns/:id" element={<CampaignPage/>}/>
         <Route path='/media' element={<Media/>} />
         <Route path='/mini-shop' element={<Shop/>} />
       </Routes>

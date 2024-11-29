@@ -1,0 +1,163 @@
+
+body {
+    background-color: #0d181c;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;        
+}
+
+.campaign-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin: auto;
+}
+
+.campaign-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.Date-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background:linear-gradient(135deg,#2a9f5b,#1B4137);
+    padding: 20px 15px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #fbfdfd;
+    text-align: center;
+    font-size: 1.2em;
+    border-radius: 25px;
+    width: 80px;
+    height: 65px;
+    line-height: 1px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;        
+}
+
+.Date-box:hover {
+    box-shadow: 4px 6px 4px #fbfdfd;
+}
+
+.Campaign-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #fbfdfd;
+    color: black;
+    padding: 5px;
+    border-radius: 25px;
+    max-width: 950px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;        
+
+}
+
+.Campaign-card:hover {
+    box-shadow: 4px 6px 4px #1B4137;
+}
+
+.Content {
+    font-size: large;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.CampaignPhoto {
+    flex: 1;
+    max-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.CampaignPhoto img {
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+    object-fit: cover;
+}
+
+.vertical-line {
+    position: fixed; 
+    top: 100px; 
+    right: 340px;
+    width: 3px;
+    height: 80%;
+    background: linear-gradient(135deg, #2a9f5b, #1b4137); 
+}
+
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position:fixed;
+    right: 0px;
+    padding: 5px;
+    margin: 20px;
+    color: white;
+}
+
+.profile-name {
+    display: flex;
+    padding: 5px 10px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    border-radius: 20px;
+    font-size: 14px; 
+    color: white;
+    background: linear-gradient(135deg, #2a9f5b, #1B4137);
+    max-width: 150px; 
+    font-family:'Segoe UI';
+    line-height: 0.1;
+}
+
+.profile-data table {
+    width:fit-content;
+    border-spacing: 10px;
+    background-color: #ccc;
+    border-radius: 20px;
+    margin-top: 10px;
+    color: #0d181c;
+  }
+  
+  .profile-data td:first-child {
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .profile-data td:last-child {
+    text-align: right;
+    color: #2a9f5b;
+  }
+  
+  .profile-data tr:last-child td:last-child {
+    color: red; 
+}
+
+.info   {
+    
+    padding-left: 0;
+    list-style: none;
+}
+
+.icon{
+    margin-right: 8px;
+}
+
+.campaign-link{
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #fbfdfd;
+    color: black;
+    padding: 20px;
+    border-radius: 25px;
+    max-width: 950px;
+    gap: 20px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;  
+}

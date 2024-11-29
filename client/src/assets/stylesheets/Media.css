@@ -1,0 +1,19 @@
+.Gallery {
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start;
+gap: 20px;
+padding: 20px;
+}
+
+.GalleryImage{
+    flex: 2 1 200px;
+    height: 500px;
+    object-fit: contain;
+    position: relative;
+}
+
+.GalleryImage:hover{
+    scale: 110%;
+    z-index: 2;
+}
