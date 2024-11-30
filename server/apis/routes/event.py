@@ -13,6 +13,10 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from requests_oauthlib import OAuth2Session
 from models.dbSchema import db, Event, Charity
 
+                                ##############################################
+                                #   REVIEW THE DELETE AND UPDATE FUNCTIONS   #
+                                ##############################################
+
 event_bp = Blueprint('event', __name__)
 
 
@@ -76,13 +80,14 @@ def create():
 @event_bp.route('/update', methods=['PUT'])
 def update():
     event = request.json
-    event_id = event.get('eventId')
-    event_name = event.get('eventName')
-    event_reward = event.get('eventRe')
-    event_desc = event.get('eventDesc')
-    event_date = event.get('eventDate')
-    event_cap = event.get('eventCap')
+    event_id = event.get        ('eventId')
+    event_name = event.get    ('eventName')
+    event_reward = event.get    ('eventRe')
+    event_desc = event.get    ('eventDesc')
+    event_date = event.get    ('eventDate')
+    event_cap = event.get      ('eventCap')
     connected_charity = event.get('charId')
+    #add field to check for the user that is requesting to update (if admin, update. else, insufficient privilliges)
 
     if not event_id:
         return jsonify({"error": "Event ID is required"}), 400
@@ -120,7 +125,7 @@ def update():
 @event_bp.route('/delete', methods=['DELETE'])
 def delete():
     event_id = request.json.get('eventId')
-
+    #add field to check for the user that is requesting to delete (if admin, delete. else, insufficient privilliges)
     if not event_id:
         return jsonify({"error": "Event ID is required"}), 400
 

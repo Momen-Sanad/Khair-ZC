@@ -12,7 +12,7 @@ class User(db.Model):
     # Consider hashing for security
     password = db.Column(db.String(1000), nullable=False)
     points = db.Column(db.Integer(), default=0)
-
+    is_admin = db.Column(db.Boolean(), default=False)
     # Relationships
 
 

@@ -2,6 +2,12 @@ from flask import Blueprint, request, jsonify, redirect, url_for, session
 from models.dbSchema import db, Charity, Event
 
 
+                    #################################################################################
+                    #   TO IMPLEMENT: STRING MATCHING OF USER INPUT AND CURRENT NAMES IN DB         #
+                    #   SHOW ALL NAMES BASED ON THEIR STRING MATCHING SCORES IN DESCENDING ORDER    #
+                    #   PRIORITY : LOW                                                              #
+                    #################################################################################
+
 serach_bp = Blueprint('search', __name__)
 
 # two search endpoints, one for charities and one for events
