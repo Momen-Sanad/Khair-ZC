@@ -63,6 +63,57 @@ def create():
     db.session.commit()
     return jsonify({"message": "Events created successfully", "events": created_events}), 201
 
+
+# Create an API endpoint that allows admins to edit (create, update, delete) campaigns. Admins should be able to control event visibility, details, and capacity.
+
+# Acceptance criteria:
+
+# Endpoint allows admins to create, update, and delete campaigns.
+# Admins can manage which charities are linked to specific campaigns.
+# Priority: Medium-High
+
+
+@event_bp.route('/update', methods=['PUT'])
+def update():
+    event = request.json
+    event_id = event.get('eventId')
+    event_name = event.get('eventName')
+    event_reward = event.get('eventRe')
+    event_desc = event.get('eventDesc')
+    event_date = event.get('eventDate')
+    event_cap = event.get('eventCap')
+    connected_charity = event.get('charId')
+
+    if not event_id:
+        return jsonify({"error": "Event ID is required"}), 400
+
+    existing_event = Event.query.filter_by(id=event_id).first()
+    if not existing_event:
+        return jsonify({"error": "Event not found"}), 404
+
+    if event_name:
+        existing_event.title = event_name
+
+    if event_reward:
+        existing_event.reward = event_reward
+
+    if event_desc:
+        existing_event.description = event_desc
+
+    if event_date:
+        existing_event.date = event_date
+
+    if event_cap:
+        existing_event.capacity = event_cap
+
+    if connected_charity:
+        if not Charity.query.filter_by(id=connected_charity).first():
+            return jsonify({"error": "Charity not found"}), 404
+        existing_event.charity_id = connected_charity
+
+    db.session.commit()
+    return jsonify({"message": "Event updated successfully"}), 200
+
     # event_id = request.json.get('eventId')
     # event_name = request.json.get('eventName')
     # event_reward = request.json.get('eventRe')

@@ -5,7 +5,7 @@ from config import Config
 from models.dbSchema import db
 from apis.routes.auth_login import auth_bp  # Import the auth blueprint
 from apis.routes.create_charity import charity_bp
-from apis.routes.create_event import event_bp
+from apis.routes.event import event_bp
 from apis.routes.points_system import points_bp
 from apis.routes.Campaign_Registeration import registration_bp
 from apis.routes.search import serach_bp
