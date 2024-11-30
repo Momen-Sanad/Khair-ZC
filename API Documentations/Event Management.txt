@@ -1,0 +1,236 @@
+﻿Event Management
+
+
+
+
+
+
+Endpoints:
+
+
+1. Create Events
+
+
+URL > POST /create
+
+
+Description
+Creates one or more events and associates them with a charity
+
+
+Request body
+* Expected input is a JSON array of event objects
+* Each event object must include the following fields ->
+
+
+        Field                Type                 Required        Description
+                
+        eventId        String                 No                Unique ID for the event (optional)
+        eventName        String                 Yes                Name of the event
+        eventRe        String                 Yes                Reward for attending or participating
+        eventDesc        String                 Yes                 Description of the event
+        eventDate        String                 No                Date of the event (format: YYYY-MM-DD)
+        eventCap        Int                 Yes                Maximum capacity of participants
+        charId                String                 Yes                ID of the associated charity
+
+
+        
+
+
+________________
+
+
+________________
+
+
+
+
+        Example Request:
+
+
+        [
+        {
+            "eventId": "101",
+            "eventName": "Charity Run 2024",
+            "eventRe": "T-shirt",
+            "eventDesc": "A 5K run to raise funds for education.",
+            "eventDate": "2024-12-01",
+            "eventCap": 500,
+            "charId": "1"
+        },
+        {
+            "eventId": "102",
+            "eventName": "Food Drive",
+            "eventRe": "Certificate",
+            "eventDesc": "Collecting non-perishable food items.",
+            "eventCap": 300,
+            "charId": "2"
+        }
+]
+
+
+
+
+
+
+Response:
+
+    Status Code        Description                                Response Body
+
+
+        201                Events created successfully                Details of created events
+        400                Invalid input or missing fields                Error detailing the issue
+400                Charity not found                        Error indicating non-existent charity
+400                Event already exists                        Error indicating duplicate event
+________________
+
+
+
+
+
+
+Example Successful Response:
+
+
+{
+        "message": "Events created successfully",
+        "events": [
+            {
+                "eventId": "101",
+                "eventName": "Charity Run 2024"
+            },
+            {
+                "eventId": "102",
+                "eventName": "Food Drive"
+            }
+        ]
+}
+
+
+________________
+
+
+
+
+2- Update Event
+
+
+URL > PUT /update
+
+
+Description
+Allows updating details of an existing event
+
+
+Request Body:
+
+
+* Expected input is a JSON object
+* Include the event ID to identify the event to update
+* Fields not provided in the request will remain unchanged
+
+
+
+
+Field                Type                 Required        Description
+                
+eventId        String                 Yes                Unique ID for the event (optional)
+eventName        String                 No                Name of the event
+eventRe        String                 No                Reward for attending or participating
+eventDesc        String                 No                 Description of the event
+eventDate        String                 No                Date of the event (format: YYYY-MM-DD)
+eventCap        Int                 No                Maximum capacity of participants
+charId                String                 No                ID of the associated charity
+
+
+Example Request: 
+
+
+{
+        "eventId": "101",
+        "eventName": "Updated Charity Run",
+        "eventDate": "2024-12-15",
+        "eventCap": 600
+}
+
+
+
+
+Response:
+
+    Status Code        Description                                Response Body
+
+
+        201                Events updated successfully                A success message
+        400                Event ID missing                        Error message
+400                Event or Charity not found                Error indicating the issue
+
+
+
+
+Example response:
+
+
+{
+        "message": "Event updated successfully"
+}
+
+
+
+
+________________
+
+
+
+
+
+
+3- Delete Event
+
+
+URL > DELETE /delete
+
+
+Description
+Deletes and existing event
+
+
+Request Body 
+* Expected input is a JSON object
+
+
+Field                Type                 Required        Description
+                
+eventId        String                 Yes                ID of the event to delete
+
+
+________________
+
+
+Example Request: 
+
+
+{
+        "eventId": "101"
+}
+
+
+Response:
+
+
+         Status Code                Description                            Response Body
+
+
+        200                    Event deleted successfully                    A success message
+        400                    Event ID missing                                Error message
+404                    Event not found                            Error indicating the issue
+
+
+
+
+Example Response:
+
+
+{
+        "message": "Event deleted successfully"
+}
