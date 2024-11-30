@@ -62,7 +62,7 @@ const CampaignPage: React.FC = () => {
                         </div>
                     </div>
                     <div className='Campaign-image'>
-                        <img src={campaignPhoto1} className='Campaign-image'></img>
+                        <img src={campaignPhoto1} className='Campaign-image' alt="altPhoto"></img>
                     </div>
                 </>
             ) : (<h1>Loading..</h1>)}
