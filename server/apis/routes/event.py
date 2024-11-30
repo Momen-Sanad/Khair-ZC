@@ -114,6 +114,25 @@ def update():
     db.session.commit()
     return jsonify({"message": "Event updated successfully"}), 200
 
+
+# delete event
+
+@event_bp.route('/delete', methods=['DELETE'])
+def delete():
+    event_id = request.json.get('eventId')
+
+    if not event_id:
+        return jsonify({"error": "Event ID is required"}), 400
+
+    existing_event = Event.query.filter_by(id=event_id).first()
+
+    if not existing_event:
+        return jsonify({"error": "Event not found"}), 404
+
+    db.session.delete(existing_event)
+    db.session.commit()
+    return jsonify({"message": "Event deleted successfully"}), 200
+
     # event_id = request.json.get('eventId')
     # event_name = request.json.get('eventName')
     # event_reward = request.json.get('eventRe')
