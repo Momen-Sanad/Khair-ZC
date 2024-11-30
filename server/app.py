@@ -1,4 +1,6 @@
-
+import oauth
+import oauthlib
+from authlib.integrations.flask_client import OAuth
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
@@ -9,9 +11,8 @@ from apis.routes.event import event_bp
 from apis.routes.points_system import points_bp
 from apis.routes.Campaign_Registeration import registration_bp
 from apis.routes.search import serach_bp
-from authlib.integrations.flask_client import OAuth
-import oauthlib
-import oauth
+from apis.routes.join import join_bp
+from apis.routes.user import user_bp
 
 # Initialize the db object
 
@@ -40,7 +41,10 @@ def create_app():
     app.register_blueprint(registration_bp, url_prefix='/registration')
     # Prefix routes with /search
     app.register_blueprint(serach_bp, url_prefix='/search')
-
+    # Prefix routes with /join
+    app.register_blueprint(join_bp, url_prefix='/join')
+    # Prefix routes with /user
+    app.register_blueprint(user_bp, url_prefix='/user')
     return app
 
 
