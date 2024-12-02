@@ -1,7 +1,7 @@
 import oauth
 import oauthlib
 from authlib.integrations.flask_client import OAuth
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from models.dbSchema import db
@@ -18,7 +18,7 @@ from apis.routes.user import user_bp
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static', template_folder='templates')
     app.config['SECRET_KEY'] = 'your_secret_key'
 
     # Load configuration
@@ -45,6 +45,11 @@ def create_app():
     app.register_blueprint(join_bp, url_prefix='/join')
     # Prefix routes with /user
     app.register_blueprint(user_bp, url_prefix='/user')
+
+    @app.route('/')
+    def index():
+        return render_template('index.html')
+
     return app
 
 
