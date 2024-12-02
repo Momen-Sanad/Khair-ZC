@@ -8,7 +8,8 @@ from werkzeug.exceptions import NotFound
 
 from models.dbSchema import db
 
-from apis.routes.auth_login import auth_bp  # Import the auth blueprint
+# Import blueprints from respective modules
+from apis.routes.auth_login import auth_bp 
 from apis.routes.create_charity import charity_bp
 from apis.routes.event import event_bp
 from apis.routes.points_system import points_bp
@@ -18,9 +19,8 @@ from apis.routes.join import join_bp
 from apis.routes.user import user_bp
 
 
-# Import blueprints from respective modules
 
-# Function to create and configure the Flask app
+# Function to create and configure the Flask app (API gateway)
 def create_app():
     app = Flask(__name__)
 
