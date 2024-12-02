@@ -8,7 +8,7 @@ from models.dbSchema import db, Charity, Event
                     #   PRIORITY : LOW                                                              #
                     #################################################################################
 
-serach_bp = Blueprint('search', _name_)
+serach_bp = Blueprint('search', __name__)
 
 # two search endpoints, one for charities and one for events
 

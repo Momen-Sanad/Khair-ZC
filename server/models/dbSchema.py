@@ -51,8 +51,7 @@ class Event(db.Model):
                      default=datetime.datetime.utcnow)
     reward = db.Column(db.Integer(), default=0, nullable=False)
     # Specify which charity is responsible for this event
-    charity_id = db.Column(db.Integer(), db.ForeignKey(
-        'charity.id'), ondelete ="CASCADE", nullable=False)
+    charity_id = db.Column(db.Integer(), db.ForeignKey('charity.id', ondelete="CASCADE"), nullable=False)
     capacity = db.Column(db.Integer(), default=0)
 
     # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image

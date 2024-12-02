@@ -3,7 +3,7 @@ import oauthlib
 from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from werkzeug.exceptions import NotFound
 
 from models.dbSchema import db
