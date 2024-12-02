@@ -25,7 +25,7 @@ wheel==0.45.0
 pymssql
 pyodbc
 requests-oauthlib
-python-oauth2
+python-oauth2  # or oauth
 oauthlib
 oauth
 flask-bcrypt

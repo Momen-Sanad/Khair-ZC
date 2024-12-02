@@ -8,13 +8,14 @@ user_bp = Blueprint('user_bp', __name__)
 
 @user_bp.route('/create', methods=['POST'])
 def create_user():
-    user_id = request.json.get('user_id')
+    user_id = request.json.get  ('user_id')
     password = request.json.get('password')
-    fname = request.json.get('fname')
-    lname = request.json.get('lname')
-    email = request.json.get('email')
-    points = request.json.get('points')
-
+    fname = request.json.get      ('fname')
+    lname = request.json.get      ('lname')
+    email = request.json.get      ('email')
+    points = request.json.get    ('points')
+    is_admin = request.json.get   ('admin')     #boolean
+    
     # Check if user already exists
     if db.session.query(User).filter(User.id == user_id).first():
         return jsonify({'message': 'User already exists'}), 400
