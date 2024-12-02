@@ -8,7 +8,7 @@ from models.dbSchema import db, Charity, Event
                     #   PRIORITY : LOW                                                              #
                     #################################################################################
 
-serach_bp = Blueprint('search', __name__)
+serach_bp = Blueprint('search', _name_)
 
 # two search endpoints, one for charities and one for events
 
@@ -17,15 +17,17 @@ serach_bp = Blueprint('search', __name__)
 def search_charity():
     # search by name and filter by category (optional)
     name = request.json.get('name')
+    name = name.lower()
     category = request.json.get('category')
     charities = []
 
-    if not name:
-        return jsonify({"error": "Missing data"}), 400
+
 
     # add regex for partial search
     # a regex pattern that matches any string that contains the name
+
     regex_name = f"%{name}%"
+    regex_name = regex_name.lower()
 
     # Perform the query with the possibility of filtering by category as well
     if category:
