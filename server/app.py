@@ -1,9 +1,10 @@
 import oauth
 import oauthlib
 from authlib.integrations.flask_client import OAuth
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
+from flask import Flask, jsonify
+from werkzeug.exceptions import NotFound
 
 from models.dbSchema import db
 
@@ -15,23 +16,9 @@ from apis.routes.Campaign_Registeration import registration_bp
 from apis.routes.search import serach_bp
 from apis.routes.join import join_bp
 from apis.routes.user import user_bp
-from werkzeug.exceptions import NotFound
 
-from flask import Flask, jsonify
-from config import Config
-from models.dbSchema import db
-from werkzeug.exceptions import NotFound
-from authlib.integrations.flask_client import OAuth
 
 # Import blueprints from respective modules
-from apis.routes.auth_login import auth_bp
-from apis.routes.create_charity import charity_bp
-from apis.routes.event import event_bp
-from apis.routes.points_system import points_bp
-from apis.routes.Campaign_Registeration import registration_bp
-from apis.routes.search import serach_bp
-from apis.routes.join import join_bp
-from apis.routes.user import user_bp
 
 # Function to create and configure the Flask app
 def create_app():
