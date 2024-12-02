@@ -22,7 +22,8 @@ from apis.routes.user import user_bp
 
 # Function to create and configure the Flask app (API gateway)
 def create_app():
-    app = Flask(__name__)
+    
+    app = Flask(__name__, static_folder='static', template_folder='templates')
 
     # Load configuration
     app.config.from_object(Config)
@@ -47,10 +48,16 @@ def create_app():
     def health_check():
         return jsonify({"status": "API Gateway is running"}), 200
 
+    @app.route('/')
+    def index():
+        return render_template('index.html')
+
     # Error handler for invalid routes
     @app.errorhandler(NotFound)
     def handle_not_found(error):
         return jsonify({"error": "Endpoint not found"}), 404
+
+
 
     return app
 
