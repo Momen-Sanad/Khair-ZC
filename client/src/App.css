@@ -4,6 +4,11 @@ body {
   overflow-x: hidden;
   font-family: 'DejaVu Sans', Arial, sans-serif;
   text-decoration: none;
+  background: url(./assets/images/full-background.png) no-repeat center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 @font-face {
