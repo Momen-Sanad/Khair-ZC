@@ -25,6 +25,7 @@ def create():
 
     created_events = []
     for event_data in events:
+        
         user_id = event_data.get('userId')
         event_id = event_data.get('eventId')
         event_name = event_data.get('eventName')

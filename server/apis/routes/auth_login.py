@@ -58,12 +58,13 @@ def register():
     db.session.add(new_user)
     db.session.commit()
     
-    pattern = r'^s-[a-zA-Z]+\.[a-zA-Z]+@zewailcity\.edu\.eg$'
-
+    pattern = r'^s-[a-zA-Z]+\.[a-zA-Z]+@zewailcity\.edu\.eg$'           # s-aefaef.awdaw@zewailcity.edu.eg
+                                                                        # ^^______^_____^^^^^^^^^^^^^^^^^^
 
 # Check if the email matches the pattern
     if regex.match(pattern, email):
         return jsonify({"message": "User Registered as Zewailian"}), 201
+
     else:
         return jsonify({"message" :"User Registered as a Guest"}) , 201
     
@@ -87,6 +88,7 @@ def login():
         'your_secret_key',  # Your secret key for encoding
         algorithm="HS256"   # The algorithm to use
         )
+
         return jsonify({"message": "Login successful!" , 'token': token}), 200
     
     else:
