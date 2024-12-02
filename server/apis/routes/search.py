@@ -25,7 +25,7 @@ def search_charity():
 
     # add regex for partial search
     # a regex pattern that matches any string that contains the name
-
+    
     regex_name = f"%{name}%"
     regex_name = regex_name.lower()
 
