@@ -13,10 +13,6 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from requests_oauthlib import OAuth2Session
 from models.dbSchema import db, Event, Charity
 
-                                ##############################################
-                                #   REVIEW THE DELETE AND UPDATE FUNCTIONS   #
-                                ##############################################
-
 event_bp = Blueprint('event', __name__)
 
 
@@ -29,6 +25,7 @@ def create():
 
     created_events = []
     for event_data in events:
+        user_id = event_data.get('userId')
         event_id = event_data.get('eventId')
         event_name = event_data.get('eventName')
         event_reward = event_data.get('eventRe')
@@ -36,6 +33,11 @@ def create():
         event_date = event_data.get('eventDate')
         event_cap = event_data.get('eventCap')
         connected_charity = event_data.get('charId')
+
+        # check if user is admin
+        user = User.query.filter_by(id=user_id).first()
+        if not user or not user.is_admin:
+            return jsonify({"error": "Only admins can create events"}), 403
 
         # Validate required fields
         if not all([event_name, event_reward, event_desc, event_cap, connected_charity]):
@@ -80,14 +82,18 @@ def create():
 @event_bp.route('/update', methods=['PUT'])
 def update():
     event = request.json
-    event_id = event.get        ('eventId')
-    event_name = event.get    ('eventName')
-    event_reward = event.get    ('eventRe')
-    event_desc = event.get    ('eventDesc')
-    event_date = event.get    ('eventDate')
-    event_cap = event.get      ('eventCap')
+    event_id = event.get('eventId')
+    event_name = event.get('eventName')
+    event_reward = event.get('eventRe')
+    event_desc = event.get('eventDesc')
+    event_date = event.get('eventDate')
+    event_cap = event.get('eventCap')
     connected_charity = event.get('charId')
     #add field to check for the user that is requesting to update (if admin, update. else, insufficient privilliges)
+
+    user = User.query.filter_by(id=user_id).first()
+    if not user or not user.is_admin:
+        return jsonify({"error": "Only admins can update events"}), 403
 
     if not event_id:
         return jsonify({"error": "Event ID is required"}), 400
@@ -124,8 +130,9 @@ def update():
 
 @event_bp.route('/delete', methods=['DELETE'])
 def delete():
+    user_id = request.json.get('userId')
     event_id = request.json.get('eventId')
-    #add field to check for the user that is requesting to delete (if admin, delete. else, insufficient privilliges)
+
     if not event_id:
         return jsonify({"error": "Event ID is required"}), 400
 
