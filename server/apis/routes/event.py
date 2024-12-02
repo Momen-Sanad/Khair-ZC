@@ -89,7 +89,8 @@ def update():
     event_date = event.get('eventDate')
     event_cap = event.get('eventCap')
     connected_charity = event.get('charId')
-    #add field to check for the user that is requesting to update (if admin, update. else, insufficient privilliges)
+    is_admin = event.get('is_admin')
+
 
     user = User.query.filter_by(id=user_id).first()
     if not user or not user.is_admin:
@@ -130,11 +131,17 @@ def update():
 
 @event_bp.route('/delete', methods=['DELETE'])
 def delete():
+    from models.dbSchema import User
     user_id = request.json.get('userId')
     event_id = request.json.get('eventId')
+    
 
+    user = User.query.filter_by(id=user_id).first()
+    if not user or not user.is_admin:
+        return jsonify({"error": "Only admins can delete events"}), 403
+    
     if not event_id:
-        return jsonify({"error": "Event ID is required"}), 400
+        return jsonify({"error": "Event ID is required"}), 400   
 
     existing_event = Event.query.filter_by(id=event_id).first()
 
@@ -144,33 +151,3 @@ def delete():
     db.session.delete(existing_event)
     db.session.commit()
     return jsonify({"message": "Event deleted successfully"}), 200
-
-    # event_id = request.json.get('eventId')
-    # event_name = request.json.get('eventName')
-    # event_reward = request.json.get('eventRe')
-    # event_desc = request.json.get('eventDesc')
-    # event_date = request.json.get('eventDate')
-    # event_cap = request.json.get('eventCap')
-
-    # connected_charity = request.json.get('charId')
-    # if not all(key in request.json for key in ['eventName', 'eventRe', 'eventDesc', 'eventCap', 'charId']):
-    #     return jsonify({"error": "Missing required fields"}), 400
-    # if not event_id or not event_name  or not event_reward   or not event_desc  :
-    #     return jsonify({"error": "Missing data"}), 400
-    # existing_event = Event.query.filter_by(title=event_name).first()
-    # if existing_event:
-    #     return jsonify({"error": "The event is already found"}), 400
-
-    # if not Charity.query.filter_by(id = connected_charity).first():
-    #     return jsonify({
-    #         "error" : "You need at least a charity_id to create the event"
-    #     }),400
-
-    # # Create a new user instance
-
-    # new_event = Event(id = event_id, title = event_name , reward = event_reward, description = event_desc , charity_id = connected_charity , date = event_date , capacity = event_cap)
-
-    # # Add the user to the session
-    # db.session.add(new_event)
-    # db.session.commit()
-    # return jsonify({"message": "Event created successfully"}), 201
