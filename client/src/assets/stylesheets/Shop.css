@@ -1,7 +1,54 @@
+.ShopBar {
+  background: linear-gradient(135deg, #2a9f5b, #1B4137);
+  padding: 10px;
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex; 
+  justify-content: center; 
+}
+
+.ShopBar-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items:center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+.BackArrow {
+  cursor: pointer;
+  justify-content: flex-start;
+  color: whitesmoke;
+  font-size: 45px;
+  left: 0;
+}
+
+.BackArrow:hover{
+  scale: 110%;
+}
+
+.Available-points {
+  font-size: 20px;
+  font-family:system-ui,'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-weight: bolder;
+  color: whitesmoke;
+  justify-content: flex-end;
+}
+
+.Available-points:hover {
+  scale: 110%;
+  cursor: pointer;
+}
+
 .Products-Container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-top: 80px;
 }
 
 .Product-image {

@@ -42,7 +42,7 @@ function AppContent({ isScrolled }: { isScrolled: boolean }) {
 
   return (
     <>
-      {location.pathname !== '/auth' && <Navbar isScrolled={isScrolled}/>}
+      {location.pathname !== '/auth'&&location.pathname !== '/mini-shop' && <Navbar isScrolled={isScrolled}/>}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/auth' element={<Auth />} />
