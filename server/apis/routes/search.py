@@ -1,16 +1,10 @@
 from flask import Blueprint, request, jsonify, redirect, url_for, session
-from models.dbSchema import db, Charity, Event
+from models.dbSchema import db, Charity, campaign
 
-
-                    #################################################################################
-                    #   TO IMPLEMENT: STRING MATCHING OF USER INPUT AND CURRENT NAMES IN DB         #
-                    #   SHOW ALL NAMES BASED ON THEIR STRING MATCHING SCORES IN DESCENDING ORDER    #
-                    #   PRIORITY : LOW                                                              #
-                    #################################################################################
 
 serach_bp = Blueprint('search', _name_)
 
-# two search endpoints, one for charities and one for events
+# two search endpoints, one for charities and one for campaigns
 
 
 @serach_bp.route('/charity', methods=['GET'])  # route is /search/charity
@@ -58,31 +52,31 @@ def search_charity():
     return jsonify(json_charities), 200
 
 
-@serach_bp.route('/event', methods=['GET'])  # route is /search/event
-def search_event():
+@serach_bp.route('/campaign', methods=['GET'])  # route is /search/campaign
+def search_campaign():
     # search by title
     title = request.json.get('title')
-    events = []
+    campaigns = []
 
     if not title:
         return jsonify({"error": "Missing data"}), 400
 
     regex_title = f"%{title}%"
-    events = Event.query.filter(Event.title.like(regex_title)).all()
-    if not events:
-        return jsonify({"error": "No events found"}), 404
+    campaigns = campaign.query.filter(campaign.title.like(regex_title)).all()
+    if not campaigns:
+        return jsonify({"error": "No campaigns found"}), 404
 
-    json_events = []
-    for event in events:
-        event = {
-            "id": event.id,
-            "title": event.title,
-            "description": event.description,
-            "date": event.date,
-            "reward": event.reward,
-            "charity_id": event.charity_id,
-            "capacity": event.capacity
+    json_campaigns = []
+    for campaign in campaigns:
+        campaign = {
+            "id": campaign.id,
+            "title": campaign.title,
+            "description": campaign.description,
+            "date": campaign.date,
+            "reward": campaign.reward,
+            "charity_id": campaign.charity_id,
+            "capacity": campaign.capacity
         }
-        json_events.append(event)
+        json_campaigns.append(campaign)
 
-    return jsonify(json_events), 200
+    return jsonify(json_campaigns), 200
