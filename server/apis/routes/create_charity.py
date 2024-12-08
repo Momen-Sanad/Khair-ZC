@@ -18,6 +18,7 @@ charity_bp = Blueprint('charity', __name__)
 
 @charity_bp.route('/create', methods=['POST'])
 def create():
+    from models.dbSchema import User,db
 
     #admin checker
     user_id = request.json.get('userId')  

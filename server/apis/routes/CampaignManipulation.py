@@ -11,13 +11,15 @@ import jwt
 from authlib.integrations.flask_client import OAuth
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from requests_oauthlib import OAuth2Session
-from models.dbSchema import db, campaign, Charity
+from models.dbSchema import db, Campaign, Charity
 
 campaign_bp = Blueprint('Campaign', __name__)
 
 
 @campaign_bp.route('/create', methods=['POST'])
 def create():
+    from models.dbSchema import User,db
+    
     campaigns = request.json  # Expecting a list of campaigns in the request body
 
     if not campaigns or not isinstance(campaigns, list):
@@ -73,6 +75,8 @@ def create():
 
 @campaign_bp.route('/update', methods=['PUT'])
 def update():
+    from models.dbSchema import User,db
+    
     campaign = request.json
     campaign_id = campaign.get('campaignId')
     campaign_name = campaign.get('campaignName')
@@ -81,7 +85,7 @@ def update():
     campaign_date = campaign.get('campaignDate')
     campaign_cap = campaign.get('campaignCap')
     connected_charity = campaign.get('charId')
-    is_admin = campaign.get('is_admin')
+    user_id = campaign.get('is_admin')
 
 
     user = User.query.filter_by(id=user_id).first()
