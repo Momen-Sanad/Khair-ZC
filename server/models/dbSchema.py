@@ -5,7 +5,7 @@ db = SQLAlchemy()
 
 
 class User(db.Model):
-    id = db.Column(db.Integer(), primary_key=True, nullable=False)
+    id = db.Column(db.String(1000), primary_key=True, nullable=False)
     fname = db.Column(db.String(16), nullable=False)
     lname = db.Column(db.String(16), nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
@@ -36,10 +36,7 @@ class Charity(db.Model):
     # Use Text for longer descriptions
     description = db.Column(db.Text, nullable=False)
     category = db.Column(db.String(50), nullable=True)
-    # logo = db.Column(db.image.png, nullable=False)  # Uncomment when implementing logo
-
-    # Relationship
-    campaigns = db.relationship('campaign', backref='charity', lazy=True)
+    campaigns = db.relationship('Campaign', backref='charity', lazy=True)
 
 
 class Campaign(db.Model):
@@ -51,8 +48,7 @@ class Campaign(db.Model):
                      default=datetime.datetime.utcnow)
     reward = db.Column(db.Integer(), default=0, nullable=False)
     # Specify which charity is responsible for this campaign
-    charity_id = db.Column(db.Integer(), db.ForeignKey(
-        'charity.id'), ondelete ="CASCADE", nullable=False)
+    charity_id = db.Column(db.Integer(), db.ForeignKey('charity.id', ondelete ="CASCADE"), nullable=False)
     capacity = db.Column(db.Integer(), default=0)
 
     # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image
@@ -78,4 +74,4 @@ class RedeemedMerch(db.Model):
 class RegisteredCampaign(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
     campaign_id = db.Column(db.Integer(), db.ForeignKey(
-        'Campaign.id'), primary_key=True)
+        'campaign.id'), primary_key=True)

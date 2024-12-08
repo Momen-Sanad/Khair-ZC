@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify, redirect, url_for, session
-from models.dbSchema import db, Charity, campaign
+from models.dbSchema import db, Charity, Campaign
 
 
-serach_bp = Blueprint('search', _name_)
+serach_bp = Blueprint('search', __name__)
 
 # two search endpoints, one for charities and one for campaigns
 
