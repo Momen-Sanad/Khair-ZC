@@ -7,8 +7,9 @@ const Auth = () =>
 {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [fname, setFName] = useState('');
+  const [lname, setLName] = useState('');
+  const [userPass, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const toggleAuth = () => { setIsSignUp(!isSignUp); };
@@ -16,7 +17,7 @@ const Auth = () =>
   const handleSubmit = async(event: React.FormEvent) => {
     event.preventDefault();
     
-    if (isSignUp && password !== confirmPassword)
+    if (isSignUp && userPass !== confirmPassword)
     {
       alert("Passwords don't match!");
       return;
@@ -25,7 +26,7 @@ const Auth = () =>
     try
     {
       const authType = (isSignUp) ? '/auth/register' : '/auth/login';
-      const authParameters = (isSignUp) ? { email, username, password } : { email, password }
+      const authParameters = (isSignUp) ? { email, fname, lname, userPass } : { email, userPass }
 
       const request = await fetch(authType,
         {
@@ -75,7 +76,11 @@ const Auth = () =>
                 (
                   <>
                     <div className="input-data-container">
-                      <input required type="text" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)}/>
+                      <input required type="text" placeholder="First name" value={fname} onChange={(event) => setFName(event.target.value)}/>
+                      <FaUser className="icon" />
+                    </div>
+                    <div className="input-data-container">
+                      <input required type="text" placeholder="Last name" value={lname} onChange={(event) => setLName(event.target.value)}/>
                       <FaUser className="icon" />
                     </div>
                   </>
@@ -83,7 +88,7 @@ const Auth = () =>
               }
 
               <div className="input-data-container">
-                <input required type="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)}/>
+                <input required type="password" placeholder="Password" value={userPass} onChange={(event) => setPassword(event.target.value)}/>
                 <FaLock className="icon" />
               </div>
 

@@ -1,0 +1,117 @@
+﻿                                                                Create Charity
+
+
+Endpoints
+
+
+1. Create new charities:
+
+
+This endpoint allows users to create one or more new charity entries in the system
+
+
+Request body:
+
+
+        -Expected input is a JSON array of charity objects
+        -Each charity object must include the following fields:
+
+
+* charId          String   !Mandatory  Unique ID for the charity
+* charName        String   Mandatory   Unique name of the charity
+* charAdd         String   Mandatory   Address of the charity
+* charDesc        String   Mandatory   Description of the charity
+* charCat         String   Mandatory   Category of the charity
+
+
+Example Request:
+
+
+[
+        {
+            "charId": "1",
+            "charName": "Helping Hands",
+            "charAdd": "6 October",
+            "charDesc": "Provides assistance to those in need.",
+            "charCat": "Community Support"
+        },
+        {
+            "charId": "2",
+            "charName": "Green Earth",
+            "charAdd": "Giza",
+            "charDesc": "Focuses on environmental conservation.",
+            "charCat": "Environment"
+        }
+]
+
+
+________________
+
+
+________________
+
+
+
+
+Response:
+
+
+ Status Code  Description                             Response Body
+
+
+        201           Charities created successfully          Details of the created charity
+        400           Invalid input or missing fields         Error mesg detailing the issue
+        400           Charity with the same name exists   Error stating duplicate charity
+
+
+
+
+Example of successful response:
+
+
+
+
+{
+        "message": "Charities created successfully",
+        "charities": [
+            {
+                "charityId": "1",
+                "charityName": "Helping Hands"
+            },
+            {
+                "charityId": "2",
+                "charityName": "Green Earth"
+            }
+        ]
+}
+
+
+
+
+Example of error responses:
+
+
+Invalid input:
+
+
+{
+        "error": "Invalid input, expected a list of charities"
+}
+
+
+Missing required fields:
+
+
+{
+        "error": "Missing required fields for one or more charities"
+}
+
+
+Duplicate charity:
+
+
+
+
+{
+        "error": "Charity 'Helping Hands' already exists"
+}

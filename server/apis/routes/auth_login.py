@@ -8,6 +8,9 @@ import regex
 from functools import wraps
 import cryptography
 import jwt
+import uuid         #   for auto generating unique IDs
+
+
 auth_bp = Blueprint('auth', __name__)
 bcrypt = Bcrypt()
 def token_required(f):
@@ -15,7 +18,7 @@ def token_required(f):
     
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        token = None
+        token = None        
         if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
         if not token:
@@ -32,14 +35,16 @@ def token_required(f):
 def register():
     from models.dbSchema import db,User
     
-    userId = request.json.get('id')
+    userId = str(uuid.uuid4())          #auto generated user id
+
     firstName = request.json.get('fname')
     lastName = request.json.get('lname')
     password = request.json.get('userPass')
     email = request.json.get('email')
 
-    if not firstName or not lastName  or not password or not email or not userId  :
+    if not firstName or not lastName  or not password or not email:
         return jsonify({"error": "Missing data"}), 400
+
     existing_user = User.query.filter_by(email=email).first()
     if existing_user:
         return jsonify({"error": "Email already registered"}), 400
@@ -52,12 +57,14 @@ def register():
     # Add the user to the session
     db.session.add(new_user)
     db.session.commit()
-    pattern = r'^s-[a-zA-Z]+\.[a-zA-Z]+@zewailcity\.edu\.eg$'
-
+    
+    pattern = r'^s-[a-zA-Z]+\.[a-zA-Z]+@zewailcity\.edu\.eg$'           # s-aefaef.awdaw@zewailcity.edu.eg
+                                                                        # ^^______^_____^^^^^^^^^^^^^^^^^^
 
 # Check if the email matches the pattern
     if regex.match(pattern, email):
         return jsonify({"message": "User Registered as Zewailian"}), 201
+
     else:
         return jsonify({"message" :"User Registered as a Guest"}) , 201
     
@@ -81,6 +88,7 @@ def login():
         'your_secret_key',  # Your secret key for encoding
         algorithm="HS256"   # The algorithm to use
         )
+
         return jsonify({"message": "Login successful!" , 'token': token}), 200
     
     else:
