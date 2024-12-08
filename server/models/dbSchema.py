@@ -39,10 +39,10 @@ class Charity(db.Model):
     # logo = db.Column(db.image.png, nullable=False)  # Uncomment when implementing logo
 
     # Relationship
-    events = db.relationship('Event', backref='charity', lazy=True)
+    campaigns = db.relationship('campaign', backref='charity', lazy=True)
 
 
-class Event(db.Model):
+class Campaign(db.Model):
     id = db.Column(db.Integer(), unique=True, primary_key=True, nullable=False)
     title = db.Column(db.String(100), nullable=False)
     # Use Text for longer descriptions
@@ -50,8 +50,9 @@ class Event(db.Model):
     date = db.Column(db.DateTime(), nullable=False,
                      default=datetime.datetime.utcnow)
     reward = db.Column(db.Integer(), default=0, nullable=False)
-    # Specify which charity is responsible for this event
-    charity_id = db.Column(db.Integer(), db.ForeignKey('charity.id', ondelete="CASCADE"), nullable=False)
+    # Specify which charity is responsible for this campaign
+    charity_id = db.Column(db.Integer(), db.ForeignKey(
+        'charity.id'), ondelete ="CASCADE", nullable=False)
     capacity = db.Column(db.Integer(), default=0)
 
     # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image
@@ -74,7 +75,7 @@ class RedeemedMerch(db.Model):
     date = db.Column(db.Date(), nullable=False)  # Date of redemption
 
 
-class RegisteredEvent(db.Model):
+class RegisteredCampaign(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
-    event_id = db.Column(db.Integer(), db.ForeignKey(
-        'event.id'), primary_key=True)
+    campaign_id = db.Column(db.Integer(), db.ForeignKey(
+        'Campaign.id'), primary_key=True)

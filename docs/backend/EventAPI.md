@@ -1,43 +1,167 @@
-#                                           Event API Documentation
+#                                            **Event Management API**
 
-## Base URL
-`/event`
+This API allows administrators to manage events for a charity platform. It includes endpoints for creating, updating, and deleting events.
 
-### **Create Events**
-- **Endpoint:** `POST /create`
-- **Description:** Create multiple events.
-- **Request Body:** JSON array of events with the following fields:
+## **Base URL**
+The base URL for all endpoints in this documentation is determined by the application where this `Blueprint` is registered.
 
-| Field         | Type   | Required | Description                   |
-|---------------|--------|----------|-------------------------------|
-| `eventId`     | String | No       | Unique ID (optional).         |
-| `eventName`   | String | Yes      | Name of the event.            |
-| `eventRe`     | String | Yes      | Reward for participation.     |
-| `eventDesc`   | String | Yes      | Description of the event.     |
-| `eventDate`   | String | No       | Date of the event.            |
-| `eventCap`    | Int    | Yes      | Capacity of participants.     |
-| `charId`      | String | Yes      | Associated charity ID.        |
+---
 
-### **Update Event**
-- **Endpoint:** `PUT /update`
-- **Description:** Update an event's details.
-- **Request Body:** JSON object with the fields:
+## **Endpoints**
 
-| Field         | Type   | Required | Description                   |
-|---------------|--------|----------|-------------------------------|
-| `eventId`     | String | Yes      | Event ID to update.           |
-| `eventName`   | String | No       | New name of the event.        |
-| `eventRe`     | String | No       | New reward.                   |
-| `eventDesc`   | String | No       | New description.              |
-| `eventDate`   | String | No       | New date.                     |
-| `eventCap`    | Int    | No       | New capacity.                 |
-| `charId`      | String | No       | New associated charity ID.    |
+### 1. **Create Events**
 
-### **Delete Event**
-- **Endpoint:** `DELETE /delete`
-- **Description:** Delete an event.
-- **Request Body:** JSON object with the field:
+**Endpoint**: `/create`  
+**Method**: `POST`
 
-| Field         | Type   | Required | Description                   |
-|---------------|--------|----------|-------------------------------|
-| `eventId`     | String | Yes      | Event ID to delete.           |
+**Description**: Allows admins to create new events associated with charities.
+
+#### **Request**
+
+**Headers**:
+- Content-Type: `application/json`
+
+**Body**:
+```json
+[
+  {
+    "userId": "int",
+    "eventId": "int",
+    "eventName": "string",
+    "eventRe": "string",
+    "eventDesc": "string",
+    "eventDate": "string (YYYY-MM-DD format)",
+    "eventCap": "int",
+    "charId": "int"
+  }
+]
+\`\`\`
+
+**Response**
+- **201 Created**:
+```json
+  {
+    "message": "Events created successfully",
+    "events": [
+      {
+        "eventId": "int",
+        "eventName": "string"
+      }
+    ]
+  }
+  \`\`\`
+- **400 Bad Request**:
+  - Invalid input or missing required fields.
+- **403 Forbidden**:
+  - Only admins can create events.
+- **400 Bad Request**:
+  - Event already exists or charity ID not found.
+
+---
+
+### 2. **Update Events**
+
+**Endpoint**: `/update`  
+**Method**: `PUT`
+
+**Description**: Allows admins to update existing event details.
+
+#### **Request**
+
+**Headers**:
+- Content-Type: `application/json`
+
+**Body**:
+```json
+{
+  "userId": "int",
+  "eventId": "int",
+  "eventName": "string (optional)",
+  "eventRe": "string (optional)",
+  "eventDesc": "string (optional)",
+  "eventDate": "string (YYYY-MM-DD, optional)",
+  "eventCap": "int (optional)",
+  "charId": "int (optional)"
+}
+\`\`\`
+
+**Response**
+- **200 OK**:
+  \`\`\`json
+  {
+    "message": "Event updated successfully"
+  }
+  \`\`\`
+- **400 Bad Request**:
+  - Missing event ID.
+- **403 Forbidden**:
+  - Only admins can update events.
+- **404 Not Found**:
+  - Event or charity not found.
+
+---
+
+### 3. **Delete Events**
+
+**Endpoint**: `/delete`  
+**Method**: `DELETE`
+
+**Description**: Allows admins to delete events.
+
+#### **Request**
+
+**Headers**:
+- Content-Type: `application/json`
+
+**Body**:
+\`\`\`json
+{
+  "userId": "int",
+  "eventId": "int"
+}
+\`\`\`
+
+**Response**
+- **200 OK**:
+  \`\`\`json
+  {
+    "message": "Event deleted successfully"
+  }
+  \`\`\`
+- **400 Bad Request**:
+  - Missing event ID.
+- **403 Forbidden**:
+  - Only admins can delete events.
+- **404 Not Found**:
+  - Event not found.
+
+---
+
+## **Models**
+
+### **Event**
+- `id`: `int` (Primary key, unique identifier for the event)
+- `title`: `string` (Name of the event)
+- `reward`: `string` (Description of the reward for participation)
+- `description`: `string` (Details of the event)
+- `charity_id`: `int` (Foreign key linked to a charity)
+- `date`: `string` (Date of the event)
+- `capacity`: `int` (Maximum number of participants)
+
+---
+
+### **Charity**
+- `id`: `int` (Primary key, unique identifier for the charity)
+
+---
+
+### **User**
+- `id`: `int` (Primary key, unique identifier for the user)
+- `is_admin`: `boolean` (Indicates if the user is an admin)
+
+---
+
+### **Notes**
+- Ensure the user calling the endpoints has admin privileges.
+- The `eventName` should be unique to prevent duplicate event creation.
+- Use the proper JSON format for requests to avoid `400 Bad Request` responses.

@@ -4,13 +4,6 @@ from models.dbSchema import db, Charity, FollowedCharity
 join_bp = Blueprint('join', __name__)
 
 
-# class FollowedCharity(db.Model):
-#     id = db.Column(db.Integer(), primary_key=True)
-#     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
-#     charity_id = db.Column(db.Integer(), db.ForeignKey(
-#         'charity.id'), nullable=False)
-
-
 @join_bp.route('/charity', methods=['POST'])  # route is /join/charity
 def join_charity():
     user_id = request.json.get('user_id')

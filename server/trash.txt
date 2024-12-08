@@ -1,0 +1,101 @@
+AUTH Login
+
+
+REGISTER:
+{
+
+    "fname": "momen",
+    "lname": "mahmoud",
+    "userPass": "S3cUr3pa$$w0rd",
+    "email": "s-xyz.abc@zewailcity.edu.eg"
+}
+
+LOGIN:
+
+{
+    "email": "s-xyz.abc@zewailcity.edu.eg",
+    "userPass": "S3cUr3pa$$w0rd"
+}
+
+
+CHARITY CREATION
+
+{
+    "charId": "1",
+    "charName": "Helping Hands",
+    "charAdd": "Cairo",
+    "charDesc": "Assists the needy.",
+    "charCat": "Community"
+}
+
+CAMPAIGN MANAGEMENT
+
+    CREATE:
+
+    
+    {
+        "userId": (user's random generated id),
+        "eventId": "123",
+        "eventName": "marathon",
+        "eventRe": "100",
+        "eventDesc": "Run a 5km marathon for raising awareness",
+        "eventDate": "2025-10-04",
+        "eventCap": "100",
+        "charId": "1"
+    }
+
+    UPDATE:
+
+    {
+        "userId": (user's random generated id),
+        "eventId": 123,
+        "eventName": "marathon",
+        "eventRe": "150",       
+        "eventDesc": "Run a 10km marathon for raising awareness",
+        "eventDate": "2025-01-04",
+        "eventCap": "100",
+        "charId": "1"
+    }
+
+    DELETE:
+
+    {
+        "userId": "(user's random generated id)",
+        "eventId": "123"
+    }
+
+
+CAMPAIGN REGISTRATION
+
+{
+    "event_id": 123,
+    "current_id": (user's random generated id)
+}
+
+
+
+FOLLOW CHARITY
+
+{
+    "user_id": (user's random generated id),
+    "charity_id": 456
+}
+
+SEARCH 
+
+    CHARITY:
+
+    {
+        "id": 1,
+        "name": "Helping Hands",
+        "address": "Cairo",
+        "description": "Assists the needy.",
+        "category": "education"
+    }
+
+
+    CAMPAIGN:
+
+    {
+        "title": "marathon"
+    }
