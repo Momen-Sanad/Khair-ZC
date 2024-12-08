@@ -18,7 +18,7 @@ campaign_bp = Blueprint('Campaign', __name__)
 
 @campaign_bp.route('/create', methods=['POST'])
 def create():
-    from models.dbSchema import User,db
+    from models.dbSchema import User,db,Campaign
     
     campaigns = request.json  # Expecting a list of campaigns in the request body
 
@@ -47,7 +47,7 @@ def create():
             return jsonify({"error": "Missing required fields for one or more campaigns"}), 400
 
         # Check if campaign already exists
-        existing_campaign = campaign.query.filter_by(title=campaign_name).first()
+        existing_campaign = Campaign.query.filter_by(title=campaign_name).first()
         if existing_campaign:
             return jsonify({"error": f"campaign '{campaign_name}' already exists"}), 400
 
@@ -56,7 +56,7 @@ def create():
             return jsonify({"error": f"Charity ID {connected_charity} not found"}), 400
 
         # Create new campaign
-        new_campaign = campaign(
+        new_campaign = Campaign(
             id=campaign_id,
             title=campaign_name,
             reward=campaign_reward,
@@ -127,7 +127,7 @@ def update():
 
 @campaign_bp.route('/delete', methods=['DELETE'])
 def delete():
-    from models.dbSchema import User
+    from models.dbSchema import User,Campaign
     user_id = request.json.get('userId')
     campaign_id = request.json.get('campaignId')
     
@@ -139,7 +139,7 @@ def delete():
     if not campaign_id:
         return jsonify({"error": "campaign ID is required"}), 400   
 
-    existing_campaign = campaign.query.filter_by(id=campaign_id).first()
+    existing_campaign = Campaign.query.filter_by(id=campaign_id).first()
 
     if not existing_campaign:
         return jsonify({"error": "campaign not found"}), 404
