@@ -26,8 +26,9 @@ def create():
         return jsonify({"error": "Invalid input, expected a list of campaigns"}), 400
 
     created_campaigns = []
-    for campaign_data in campaigns:
         
+    for campaign_data in campaigns:
+        #sql query "join"
         user_id = campaign_data.get('userId')
         campaign_id = campaign_data.get('campaignId')
         campaign_name = campaign_data.get('campaignName')
@@ -36,7 +37,8 @@ def create():
         campaign_date = campaign_data.get('campaignDate')
         campaign_cap = campaign_data.get('campaignCap')
         connected_charity = campaign_data.get('charId')
-
+        #O(1)
+        #O(N)
         # check if user is admin
         user = User.query.filter_by(id=user_id).first()
         if not user or not user.is_admin:
