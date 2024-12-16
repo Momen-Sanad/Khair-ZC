@@ -73,6 +73,27 @@ def create():
     return jsonify({"message": "campaigns created successfully", "campaigns": created_campaigns}), 201
 
 
+@campaign_bp.route('/campaigns', methods=['GET'])
+def get_campaigns():
+    # Fetch all campaigns from the database
+    campaigns = Campaign.query.all()
+
+    # Serialize the campaigns to JSON
+    campaigns_data = [
+        {
+            "id": campaign.id,
+            "title": campaign.title,
+            "description": campaign.description,
+            "day": campaign.date.day,
+            "month": campaign.date.strftime('%B').upper(), 
+            "author": campaign.user.fname + " " + campaign.user.lname if campaign.user else "Unknown", 
+            "time": "Posted " + str((datetime.utcnow() - campaign.date).days) + " days ago"
+        }
+        for campaign in campaigns
+    ]
+
+    return jsonify({"campaigns": campaigns_data}), 200
+
 @campaign_bp.route('/update', methods=['PUT'])
 def update():
     from models.dbSchema import User,db

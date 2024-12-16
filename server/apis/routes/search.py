@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, redirect, url_for, session
 from models.dbSchema import db, Charity, Campaign
+from datetime import datetime
 
 
 serach_bp = Blueprint('search', __name__)
@@ -79,4 +80,21 @@ def search_campaign():
         }
         json_campaigns.append(campaign)
 
+    return jsonify(json_campaigns), 200
+
+@serach_bp.route('/campaigns', methods=['GET'])
+def get_campaigns():
+    campaigns = Campaign.query.all()
+    json_campaigns = [
+        {
+            "id": campaign.id,
+            "title": campaign.title,
+            "description": campaign.description,
+            "date": campaign.date.isoformat(),
+            "reward": campaign.reward,
+            "charity_id": campaign.charity_id,
+            "capacity": campaign.capacity
+        }
+        for campaign in campaigns
+    ]
     return jsonify(json_campaigns), 200

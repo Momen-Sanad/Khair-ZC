@@ -1,4 +1,4 @@
-
+from flask_cors import CORS
 from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
@@ -25,7 +25,7 @@ from apis.routes.CampaignManipulation import campaign_bp
 def create_app():
     
     app = Flask(__name__, static_folder='static', template_folder='templates')
-
+    CORS(app, resources={r"/search/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
     # Load configuration
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = 'your_secret_key'
@@ -73,3 +73,4 @@ with app.app_context():
 # Run the app
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+    CORS(app)
