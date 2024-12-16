@@ -1,5 +1,4 @@
-import oauth
-import oauthlib
+from flask_cors import CORS
 from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
@@ -11,12 +10,14 @@ from models.dbSchema import db
 # Import blueprints from respective modules
 from apis.routes.auth_login import auth_bp 
 from apis.routes.create_charity import charity_bp
-from apis.routes.event import event_bp
+
 from apis.routes.points_system import points_bp
 from apis.routes.Campaign_Registeration import registration_bp
 from apis.routes.search import serach_bp
 from apis.routes.join import join_bp
-from apis.routes.user import user_bp
+from apis.routes.CampaignManipulation import campaign_bp
+
+
 
 
 
@@ -24,7 +25,7 @@ from apis.routes.user import user_bp
 def create_app():
     
     app = Flask(__name__, static_folder='static', template_folder='templates')
-
+    CORS(app, resources={r"/search/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
     # Load configuration
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = 'your_secret_key'
@@ -36,12 +37,11 @@ def create_app():
     # blueprints
     app.register_blueprint(auth_bp,         url_prefix='/auth')
     app.register_blueprint(charity_bp,      url_prefix='/charity')
-    app.register_blueprint(event_bp,        url_prefix='/event')
+    app.register_blueprint(campaign_bp,        url_prefix='/Campaign')
     app.register_blueprint(points_bp,       url_prefix='/points')
     app.register_blueprint(registration_bp, url_prefix='/registration')
     app.register_blueprint(serach_bp,       url_prefix='/search')
     app.register_blueprint(join_bp,         url_prefix='/join')
-    app.register_blueprint(user_bp,         url_prefix='/user')
 
     # Health check endpoint
     @app.route('/health', methods=['GET'])
@@ -73,3 +73,4 @@ with app.app_context():
 # Run the app
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+    CORS(app)

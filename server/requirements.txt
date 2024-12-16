@@ -34,4 +34,4 @@ cryptography
 jwt
 authlib
 flask_login
-uuid
+uuid 

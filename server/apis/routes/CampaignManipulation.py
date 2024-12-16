@@ -11,13 +11,15 @@ import jwt
 from authlib.integrations.flask_client import OAuth
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from requests_oauthlib import OAuth2Session
-from models.dbSchema import db, campaign, Charity
+from models.dbSchema import db, Campaign, Charity
 
 campaign_bp = Blueprint('Campaign', __name__)
 
 
 @campaign_bp.route('/create', methods=['POST'])
 def create():
+    from models.dbSchema import User,db,Campaign
+    
     campaigns = request.json  # Expecting a list of campaigns in the request body
 
     if not campaigns or not isinstance(campaigns, list):
@@ -45,7 +47,7 @@ def create():
             return jsonify({"error": "Missing required fields for one or more campaigns"}), 400
 
         # Check if campaign already exists
-        existing_campaign = campaign.query.filter_by(title=campaign_name).first()
+        existing_campaign = Campaign.query.filter_by(title=campaign_name).first()
         if existing_campaign:
             return jsonify({"error": f"campaign '{campaign_name}' already exists"}), 400
 
@@ -54,7 +56,7 @@ def create():
             return jsonify({"error": f"Charity ID {connected_charity} not found"}), 400
 
         # Create new campaign
-        new_campaign = campaign(
+        new_campaign = Campaign(
             id=campaign_id,
             title=campaign_name,
             reward=campaign_reward,
@@ -71,8 +73,31 @@ def create():
     return jsonify({"message": "campaigns created successfully", "campaigns": created_campaigns}), 201
 
 
+@campaign_bp.route('/campaigns', methods=['GET'])
+def get_campaigns():
+    # Fetch all campaigns from the database
+    campaigns = Campaign.query.all()
+
+    # Serialize the campaigns to JSON
+    campaigns_data = [
+        {
+            "id": campaign.id,
+            "title": campaign.title,
+            "description": campaign.description,
+            "day": campaign.date.day,
+            "month": campaign.date.strftime('%B').upper(), 
+            "author": campaign.user.fname + " " + campaign.user.lname if campaign.user else "Unknown", 
+            "time": "Posted " + str((datetime.utcnow() - campaign.date).days) + " days ago"
+        }
+        for campaign in campaigns
+    ]
+
+    return jsonify({"campaigns": campaigns_data}), 200
+
 @campaign_bp.route('/update', methods=['PUT'])
 def update():
+    from models.dbSchema import User,db
+    
     campaign = request.json
     campaign_id = campaign.get('campaignId')
     campaign_name = campaign.get('campaignName')
@@ -81,7 +106,7 @@ def update():
     campaign_date = campaign.get('campaignDate')
     campaign_cap = campaign.get('campaignCap')
     connected_charity = campaign.get('charId')
-    is_admin = campaign.get('is_admin')
+    user_id = campaign.get('is_admin')
 
 
     user = User.query.filter_by(id=user_id).first()
@@ -123,7 +148,7 @@ def update():
 
 @campaign_bp.route('/delete', methods=['DELETE'])
 def delete():
-    from models.dbSchema import User
+    from models.dbSchema import User,Campaign
     user_id = request.json.get('userId')
     campaign_id = request.json.get('campaignId')
     
@@ -135,7 +160,7 @@ def delete():
     if not campaign_id:
         return jsonify({"error": "campaign ID is required"}), 400   
 
-    existing_campaign = campaign.query.filter_by(id=campaign_id).first()
+    existing_campaign = Campaign.query.filter_by(id=campaign_id).first()
 
     if not existing_campaign:
         return jsonify({"error": "campaign not found"}), 404

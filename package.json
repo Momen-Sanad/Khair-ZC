@@ -1,0 +1,27 @@
+{
+  "name": "khair-zc",
+  "version": "1.0.0",
+  "description": "A charity-based project designed to support and empower the \"Khair-ZC\" club. It serves as a platform for donors and volunteers to connect and work towards various humanitarian causes. This project consists of a **frontend** (React, in the `client` folder) and a **backend** (Python Flask, in the `server` folder).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.2",
+    "@storybook/addon-essentials": "^8.4.6",
+    "@storybook/addon-webpack5-compiler-swc": "^1.0.5",
+    "@storybook/blocks": "^8.4.6",
+    "@storybook/react": "^8.4.6",
+    "@storybook/test": "^8.4.6",
+    "@storybook/web-components": "^8.4.6",
+    "@storybook/web-components-vite": "^8.4.6",
+    "@storybook/web-components-webpack5": "^8.4.6",
+    "lit": "^3.2.1",
+    "storybook": "^8.4.6"
+  }
+}
