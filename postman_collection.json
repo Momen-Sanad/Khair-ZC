@@ -1,0 +1,241 @@
+{
+  "info": {
+    "_postman_id": "12345-67890-abcdef",
+    "name": "Khair",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Campaign",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "[\n  {\n    \"userId\": \"1\",\n    \"campaignId\": \"2\",\n    \"campaignName\": \"Charity Fundraiser\",\n    \"campaignRe\": \"1000\",\n    \"campaignDesc\": \"Help raise funds\",\n    \"campaignDate\": \"2024-12-01\",\n    \"campaignCap\": \"100\",\n    \"charId\": \"1\"\n  }\n]"
+        },
+        "url": {
+          "raw": "http://localhost:5000/campaign/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "campaign",
+            "create"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Register User for Campaign",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"campaign_id\": \"1\",\n  \"current_id\": \"2\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/registration/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "registration",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fname\": \"John\",\n  \"lname\": \"Doe\",\n  \"userPass\": \"password123\",\n  \"email\": \"john.doe@example.com\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "auth",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"userPass\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Charity",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "[\n  {\n    \"userId\": \"1\",\n    \"charId\": \"2\",\n    \"charName\": \"Food Bank\",\n    \"charAdd\": \"123 Street\",\n    \"charDesc\": \"Helping the hungry\",\n    \"charCat\": \"Food\"\n  }\n]"
+        },
+        "url": {
+          "raw": "http://localhost:5000/charity/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "charity",
+            "create"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Join Charity",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"1\",\n  \"charity_id\": \"2\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/join/charity",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "join",
+            "charity"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Search Charity",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/search/charity?name=food&category=Food",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "search",
+            "charity"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "food"
+            },
+            {
+              "key": "category",
+              "value": "Food"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Search Campaign",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/search/campaign?title=charity",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "search",
+            "campaign"
+          ],
+          "query": [
+            {
+              "key": "title",
+              "value": "charity"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

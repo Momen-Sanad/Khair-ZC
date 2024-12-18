@@ -18,6 +18,7 @@ charity_bp = Blueprint('charity', __name__)
 
 @charity_bp.route('/create', methods=['POST'])
 def create():
+    from models.dbSchema import User,db
 
     #admin checker
     user_id = request.json.get('userId')  
@@ -31,7 +32,7 @@ def create():
         return jsonify({"error": "Only admins can create charities"}), 403
 
 
-    # Create a new charity    from models.dbSchema import db,User
+    # Create a new charity
     charities = request.json  # Expecting a list of charities in the request body
 
     if not charities or not isinstance(charities, list):
