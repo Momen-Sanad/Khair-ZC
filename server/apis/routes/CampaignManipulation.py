@@ -12,9 +12,10 @@ from authlib.integrations.flask_client import OAuth
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from requests_oauthlib import OAuth2Session
 from models.dbSchema import db, Campaign, Charity
-from Security import session_data_required, admin_required
+from security import session_data_required, admin_required
 
 campaign_bp = Blueprint('Campaign', __name__)
+
 
 @campaign_bp.route('/create', methods=['POST'])
 @session_data_required
@@ -45,7 +46,8 @@ def create():
             return jsonify({"error": "Missing required fields for one or more campaigns"}), 400
 
         # Check if campaign already exists
-        existing_campaign = Campaign.query.filter_by(title=campaign_name).first()
+        existing_campaign = Campaign.query.filter_by(
+            title=campaign_name).first()
         if existing_campaign:
             return jsonify({"error": f"campaign '{campaign_name}' already exists"}), 400
 
@@ -65,10 +67,12 @@ def create():
         )
 
         db.session.add(new_campaign)
-        created_campaigns.append({"campaignId": campaign_id, "campaignName": campaign_name})
+        created_campaigns.append(
+            {"campaignId": campaign_id, "campaignName": campaign_name})
 
     db.session.commit()
     return jsonify({"message": "campaigns created successfully", "campaigns": created_campaigns}), 201
+
 
 @campaign_bp.route('/update', methods=['PUT'])
 @session_data_required
@@ -114,6 +118,7 @@ def update():
 
     db.session.commit()
     return jsonify({"message": "campaign updated successfully"}), 200
+
 
 @campaign_bp.route('/delete', methods=['DELETE'])
 @session_data_required
