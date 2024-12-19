@@ -7,7 +7,8 @@ load_dotenv()
 
 # Switch to choose between database configurations
 # Possible values: 'local' or 'railway'
-DATABASE_MODE = 'railway'
+DATABASE_MODE = 'local'
+
 
 class Config:
     SECRET_KEY = os.getenv('FLASK_SECRET_KEY', 'default-secret-key')
@@ -41,7 +42,8 @@ class Config:
             port = cls.RAILWAY_DB_PORT
             db_name = cls.RAILWAY_DB_NAME
         else:
-            raise ValueError("Invalid DATABASE_MODE. Choose 'local' or 'railway'")
+            raise ValueError(
+                "Invalid DATABASE_MODE. Choose 'local' or 'railway'")
 
         print(f"Connecting to database: {username}@{host}:{port}/{db_name}")
 
@@ -49,6 +51,7 @@ class Config:
             return f'mysql+pymysql://{username}:{password}@{host}:{port}/{db_name}'
         elif DATABASE_MODE == 'railway':
             return f'mysql://{username}:{password}@{host}:{port}/{db_name}'
+
 
 SQLALCHEMY_DATABASE_URI = Config.get_database_uri()
 
