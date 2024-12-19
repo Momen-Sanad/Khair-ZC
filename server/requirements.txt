@@ -37,9 +37,11 @@ flask-bcrypt
 authlib
 pyjwt
 session
+functools
 
 # Additional Utilities
 regex
 cryptography
 flask_login
 uuid
+error_processor

@@ -12,12 +12,12 @@ from authlib.integrations.flask_client import OAuth
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from requests_oauthlib import OAuth2Session
 from models.dbSchema import db, Campaign, Charity
-from Security import session_required, admin_required
+from Security import session_data_required, admin_required
 
 campaign_bp = Blueprint('Campaign', __name__)
 
 @campaign_bp.route('/create', methods=['POST'])
-@session_required
+@session_data_required
 @admin_required
 def create():
     from models.dbSchema import User, db, Campaign
@@ -71,7 +71,7 @@ def create():
     return jsonify({"message": "campaigns created successfully", "campaigns": created_campaigns}), 201
 
 @campaign_bp.route('/update', methods=['PUT'])
-@session_required
+@session_data_required
 @admin_required
 def update():
     from models.dbSchema import db, Campaign
@@ -116,7 +116,7 @@ def update():
     return jsonify({"message": "campaign updated successfully"}), 200
 
 @campaign_bp.route('/delete', methods=['DELETE'])
-@session_required
+@session_data_required
 @admin_required
 def delete():
     from models.dbSchema import Campaign
