@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, redirect, url_for, session
 from models.dbSchema import db, Charity, Campaign
+from Security import session_required
 
 
 serach_bp = Blueprint('search', __name__)
@@ -8,6 +9,7 @@ serach_bp = Blueprint('search', __name__)
 
 
 @serach_bp.route('/charity', methods=['GET'])  # route is /search/charity
+@session_required
 def search_charity():
     # search by name and filter by category (optional)
     name = request.json.get('name')
@@ -53,6 +55,7 @@ def search_charity():
 
 
 @serach_bp.route('/campaign', methods=['GET'])  # route is /search/campaign
+@session_required
 def search_campaign():
     # search by title
     title = request.json.get('title')

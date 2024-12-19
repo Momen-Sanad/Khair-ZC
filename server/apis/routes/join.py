@@ -1,10 +1,12 @@
 from flask import Blueprint, request, jsonify, redirect, url_for, session
 from models.dbSchema import db, Charity, FollowedCharity
+from Security import session_required
 
 join_bp = Blueprint('join', __name__)
 
 
 @join_bp.route('/charity', methods=['POST'])  # route is /join/charity
+@session_required
 def join_charity():
     user_id = request.json.get('user_id')
     charity_id = request.json.get('charity_id')

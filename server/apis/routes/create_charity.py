@@ -12,21 +12,25 @@ from authlib.integrations.flask_client import OAuth
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from requests_oauthlib import OAuth2Session
 from models.dbSchema import db, Charity
+from Security import session_required, admin_required
 
 charity_bp = Blueprint('charity', __name__)
 
 
 @charity_bp.route('/create', methods=['POST'])
+@session_required
+@admin_required
 def create():
     from models.dbSchema import User,db
 
-    #admin checker
-    user_id = request.json.get('userId')  
+    # #admin checker
+    # user_id = request.json.get('userId')  
 
-    if not user_id:
-        return jsonify({"error": "User ID is required"}), 400
+    # if not user_id:
+    #     return jsonify({"error": "User ID is required"}), 400
 
     # retrieve the user from the database
+    # double admin checker in case of failure
     user = User.query.filter_by(id=user_id).first()
     if not user or not user.is_admin:
         return jsonify({"error": "Only admins can create charities"}), 403

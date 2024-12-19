@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
-from Security import session_data_required, admin_required
+from Security import session_required, admin_required
 
 registration_bp = Blueprint('registration', __name__)
 @registration_bp.route('/register', methods=['POST'])
 
-@session_data_required
+@session_required
 def register_user_for_campaign():
     from models.dbSchema import db, User, campaign, Registeredcampaign
     
