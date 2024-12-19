@@ -1,74 +1,67 @@
-from flask import Blueprint, request, jsonify, redirect, url_for, session
-from models.dbSchema import db, Charity, Campaign
+from flask import Blueprint, request, jsonify
+from models.dbSchema import Charity, Campaign
+from Security import session_required
+from error_processor import ErrorProcessor
 
+search_bp = Blueprint('search', __name__)
+error_processor = ErrorProcessor()
 
-serach_bp = Blueprint('search', __name__)
-
-# two search endpoints, one for charities and one for campaigns
-
-
-@serach_bp.route('/charity', methods=['GET'])  # route is /search/charity
+@search_bp.route('/charity', methods=['GET'])  # route is /search/charity
+@session_required
 def search_charity():
-    # search by name and filter by category (optional)
-    name = request.json.get('name')
-    name = name.lower()
-    category = request.json.get('category')
-    charities = []
+    # Search by name and optionally filter by category
+    name = request.args.get('name', '').strip().lower()
+    category = request.args.get('category', '').strip()
 
+    if not name:
+        return jsonify(error_processor.process_error("search_invalid_name")), 400
 
-
-    # add regex for partial search
-    # a regex pattern that matches any string that contains the name
-    
+    # Add regex for partial search
     regex_name = f"%{name}%"
-    regex_name = regex_name.lower()
 
-    # Perform the query with the possibility of filtering by category as well
+    # Query charities with optional category filtering
+    charities = Charity.query.filter(Charity.name.ilike(regex_name))
     if category:
-        # Partial match for name and filter by category
-        charities = Charity.query.filter(
-            Charity.name.like(regex_name), Charity.category == category
-        ).all()
-    else:
-        # Partial match for name only
-        charities = Charity.query.filter(Charity.name.like(regex_name)).all()
+        charities = charities.filter(Charity.category == category)
 
-    # Return an error if no charities are found
+    charities = charities.all()
+
     if not charities:
-        return jsonify({"error": "No charities found"}), 404
+        return jsonify(error_processor.process_error("search_no_results")), 404
 
-    # serialize charity and return as json object, no attribute serialize in dbSchema
-    json_charities = []
-    for charity in charities:
-        charity = {
+    # Serialize charities into JSON
+    json_charities = [
+        {
             "id": charity.id,
             "name": charity.name,
             "address": charity.address,
             "description": charity.description,
             "category": charity.category
-        }
-        json_charities.append(charity)
+        } for charity in charities
+    ]
 
     return jsonify(json_charities), 200
 
-
-@serach_bp.route('/campaign', methods=['GET'])  # route is /search/campaign
+@search_bp.route('/campaign', methods=['GET'])  # route is /search/campaign
+@session_required
 def search_campaign():
-    # search by title
-    title = request.json.get('title')
-    campaigns = []
+    # Search by title
+    title = request.args.get('title', '').strip()
 
     if not title:
-        return jsonify({"error": "Missing data"}), 400
+        return jsonify(error_processor.process_error("search_invalid_title")), 400
 
+    # Add regex for partial match
     regex_title = f"%{title}%"
-    campaigns = campaign.query.filter(campaign.title.like(regex_title)).all()
-    if not campaigns:
-        return jsonify({"error": "No campaigns found"}), 404
 
-    json_campaigns = []
-    for campaign in campaigns:
-        campaign = {
+    campaigns = Campaign.query.filter(Campaign.title.ilike(regex_title)).all()
+
+    if not campaigns:
+        return jsonify(error_processor.process_error("search_no_results")), 404
+
+    # Serialize campaigns into JSON
+    json_campaigns = [
+        {
             "id": campaign.id,
             "title": campaign.title,
             "description": campaign.description,
@@ -76,7 +69,7 @@ def search_campaign():
             "reward": campaign.reward,
             "charity_id": campaign.charity_id,
             "capacity": campaign.capacity
-        }
-        json_campaigns.append(campaign)
+        } for campaign in campaigns
+    ]
 
     return jsonify(json_campaigns), 200

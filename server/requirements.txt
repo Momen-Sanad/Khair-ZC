@@ -36,11 +36,10 @@ oauth
 flask-bcrypt
 authlib
 pyjwt
-
+session
 
 # Additional Utilities
 regex
 cryptography
 flask_login
 uuid
-Security
