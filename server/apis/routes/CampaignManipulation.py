@@ -12,7 +12,6 @@ from authlib.integrations.flask_client import OAuth
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from requests_oauthlib import OAuth2Session
 from models.dbSchema import db, Campaign, Charity
-
 campaign_bp = Blueprint('Campaign', __name__)
 
 

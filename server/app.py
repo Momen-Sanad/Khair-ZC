@@ -37,7 +37,7 @@ def create_app():
     # blueprints
     app.register_blueprint(auth_bp,         url_prefix='/auth')
     app.register_blueprint(charity_bp,      url_prefix='/charity')
-    app.register_blueprint(campaign_bp,        url_prefix='/Campaign')
+    app.register_blueprint(campaign_bp,     url_prefix='/Campaign')
     app.register_blueprint(points_bp,       url_prefix='/points')
     app.register_blueprint(registration_bp, url_prefix='/registration')
     app.register_blueprint(serach_bp,       url_prefix='/search')
