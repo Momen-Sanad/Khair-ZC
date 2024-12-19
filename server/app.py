@@ -42,6 +42,7 @@ def create_app():
     app.register_blueprint(registration_bp, url_prefix='/registration')
     app.register_blueprint(serach_bp,       url_prefix='/search')
     app.register_blueprint(join_bp,         url_prefix='/join')
+    app.register_blueprint(remove_user,     url_prefix='/remove_user')
 
     # Health check endpoint
     @app.route('/health', methods=['GET'])
