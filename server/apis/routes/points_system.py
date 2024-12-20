@@ -17,7 +17,5 @@ points_bp = Blueprint('points', __name__)
 
 @points_bp.route('/create' , methods=['POST'])
 def points():
-    #This is the sample of the points
     from models.dbSchema import db
-    #We still don't know what should we do here
     pass

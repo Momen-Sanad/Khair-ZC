@@ -13,7 +13,7 @@ from apis.routes.create_charity import charity_bp
 
 from apis.routes.points_system import points_bp
 from apis.routes.Campaign_Registeration import registration_bp
-from apis.routes.search import serach_bp
+from apis.routes.search import search_bp
 from apis.routes.join import join_bp
 from apis.routes.CampaignManipulation import campaign_bp
 
