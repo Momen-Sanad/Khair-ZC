@@ -52,6 +52,24 @@ class AdminUserResponseHandler(ResponseHandler):
     def handle(self, action):
         return jsonify({"message": f"Admin has performed {action} on a user.", "status": "success"})
 
+class ShopResponseHandler:
+    def __init__(self):
+        self.messages = {
+            "no_products": "No products found in the shop.",
+            "missing_fields": "Missing required fields for the product.",
+            "invalid_price": "Invalid price. It must be a positive number.",
+            "duplicate_product": "Product with the same name already exists.",
+            "product_added": "Product added successfully to the shop.",
+            "add_product_error": "An error occurred while adding the product."
+        }
+
+    def handle(self, action):
+        if action not in self.messages:
+            return jsonify({"message": "Unknown shop error.", "status": "error"})
+
+        status = "success" if "added" in action or action == "product_added" else "error"
+        return jsonify({"message": self.messages[action], "status": status})
+
 class ErrorProcessor:
     def __init__(self):
         self.error_map = {
@@ -79,6 +97,13 @@ class ErrorProcessor:
             "admin_campaign_delete":   lambda:  AdminCampaignResponseHandler().handle("delete"),
             "admin_user_update":       lambda:  AdminUserResponseHandler().handle("update (points)"),
             "admin_user_delete":       lambda:  AdminUserResponseHandler().handle("delete (bad behaviour)")
+            "shop_no_products":        lambda:  ShopResponseHandler().handle("no_products"),
+            "shop_missing_fields":     lambda:  ShopResponseHandler().handle("missing_fields"),
+            "shop_invalid_price":      lambda:  ShopResponseHandler().handle("invalid_price"),
+            "shop_duplicate_product":  lambda:  ShopResponseHandler().handle("duplicate_product"),
+            "shop_product_added":      lambda:  ShopResponseHandler().handle("product_added"),
+            "shop_add_product_error":  lambda:  ShopResponseHandler().handle("add_product_error"),
+
         }
 
     def process_error(self, error):

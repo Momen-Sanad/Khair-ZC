@@ -27,6 +27,7 @@ wheel==0.45.0
 # Database Libraries
 pymssql
 pyodbc
+urllib
 
 # OAuth and Authentication
 requests-oauthlib
