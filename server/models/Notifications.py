@@ -10,7 +10,10 @@ class CharityResponseHandler(ResponseHandler):
 
 class CampaignResponseHandler(ResponseHandler):
     def handle(self, action):
+        if action == "camp_not_found"
+            return {"message": "Campaign not fonud.", "status": "error"}   
         return {"message": f"User has {action} a campaign successfully.", "status": "success"}
+
 
 class CampaignAttendanceHandler(ResponseHandler):
     def handle(self, attended):
@@ -89,7 +92,7 @@ class ErrorProcessor:
             "campaign_unregister":     lambda:  CampaignResponseHandler().handle("unregistered"),
             "campaign_attended":       lambda:  CampaignAttendanceHandler().handle("camp_attend"),
             "campaign_not_attended":   lambda:  CampaignAttendanceHandler().handle("camp_not_attend"),
-            
+            "campaign_not_found":      lambda:  CampaignResponseHandler().handle("camp_not_found"),
             "login_success":           lambda:  LoginResponseHandler().handle("success"),
             "login_invalid":           lambda:  LoginResponseHandler().handle("invalid"),
             "login_server_issue":      lambda:  LoginResponseHandler().handle("server_issue"),
