@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models.dbSchema import Charity, Campaign
-from Security import session_required
+from apis.routes.Security import session_required
 from models.Notifications import ErrorProcessor
 
 search_bp = Blueprint('search', __name__)

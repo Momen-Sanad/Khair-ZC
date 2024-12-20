@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models.dbSchema import db, Charity, FollowedCharity
-from Security import session_required
+from apis.routes.Security import session_required
 from models.Notifications import ErrorProcessor
 
 join_bp = Blueprint('join', __name__)

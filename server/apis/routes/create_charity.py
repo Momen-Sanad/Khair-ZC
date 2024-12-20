@@ -1,7 +1,7 @@
 import datetime
 from flask import Blueprint, request, jsonify
 from models.dbSchema import db, Charity
-from Security import session_required, admin_required
+from apis.routes.Security import session_required, admin_required
 from models.Notifications import ErrorProcessor
 
 charity_bp = Blueprint('charity', __name__)

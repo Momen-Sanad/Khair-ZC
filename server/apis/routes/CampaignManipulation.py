@@ -13,7 +13,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from requests_oauthlib import OAuth2Session
 from models.dbSchema import db, Campaign, Charity
 from models.Notifications import ErrorProcessor
-from Security import session_data_required, admin_required
+from apis.routes.Security import session_data_required, admin_required
 
 campaign_bp = Blueprint('Campaign', __name__)
 Notifications = ErrorProcessor()

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from Security import session_required, admin_required
+from apis.routes.Security import session_required, admin_required
 from models.Notifications import ErrorProcessor
 
 registration_bp = Blueprint('registration', __name__)
