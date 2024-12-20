@@ -16,18 +16,13 @@ from apis.routes.Campaign_Registeration import registration_bp
 from apis.routes.search import serach_bp
 from apis.routes.join import join_bp
 from apis.routes.CampaignManipulation import campaign_bp
+from apis.routes.shop import shop_bp
 
 
 def create_app():
     
     app = Flask(__name__, static_folder='static', template_folder='templates')
-    CORS(app, resources={
-        r"/auth/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]},
-        r"/search/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]},
-        r"/charity/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]},
-        # Add other routes as needed
-    }, supports_credentials=True)
-
+    CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
     # Load configuration
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = 'your_secret_key'
@@ -44,6 +39,8 @@ def create_app():
     app.register_blueprint(registration_bp, url_prefix='/registration')
     app.register_blueprint(serach_bp,       url_prefix='/search')
     app.register_blueprint(join_bp,         url_prefix='/join')
+    app.register_blueprint(shop_bp,     url_prefix='/shop')
+
 
     # Health check endpoint
     @app.route('/health', methods=['GET'])

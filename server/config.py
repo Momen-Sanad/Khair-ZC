@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import urllib.parse
 from sqlalchemy import create_engine
+from sqlalchemy import create_engine
 
 load_dotenv()
 
