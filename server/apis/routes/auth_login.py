@@ -56,16 +56,17 @@ def register():
     new_user = User(id=user_id, fname=first_name, lname=last_name, password=hashed_password, email=email)
 
     # Add the user to the session
-    db.session.add(new_user)
-    db.session.commit()
+
 
     # Pattern for Zewailian email validation
     pattern = r'^s-[a-zA-Z]+\.[a-zA-Z]+@zewailcity\.edu\.eg$'
 
     if regex.match(pattern, email):
+        db.session.add(new_user)
+        db.session.commit()
         return jsonify(Notifications.process_error("signup_success")), 201
     else:
-        return jsonify({"message": "User Registered as a Guest", "status": "success"}), 201
+        return jsonify({"message": "User Entered as a Guest", "status": "success"}), 201
 
 @auth_bp.route('/login', methods=['POST'])
 def login():

@@ -14,7 +14,7 @@ class CampaignResponseHandler(ResponseHandler):
 
 class CampaignAttendanceHandler(ResponseHandler):
     def handle(self, attended):
-        if attended:
+        if attended == "camp_attend":
             return jsonify({"message": "You have successfully attended this campaign.", "status": "success"})
         return jsonify({"message": "You did not attend this campaign.", "status": "error"})
 
@@ -52,6 +52,12 @@ class AdminUserResponseHandler(ResponseHandler):
     def handle(self, action):
         return jsonify({"message": f"Admin has performed {action} on a user.", "status": "success"})
 
+class UserResponseHandler(ResponseHandler):
+    def handle(self, found):
+        if found == "user_found":
+            return jsonify({"message": "User found successfully.", "status": "success"})
+        return jsonify({"message": "User not found.", "status": "error"})
+
 class ShopResponseHandler:
     def __init__(self):
         self.messages = {
@@ -81,8 +87,8 @@ class ErrorProcessor:
             "campaign_unfollow":       lambda:  CampaignResponseHandler().handle("unfollowed"),
             "campaign_register":       lambda:  CampaignResponseHandler().handle("registered"),
             "campaign_unregister":     lambda:  CampaignResponseHandler().handle("unregistered"),
-            "campaign_attended":       lambda:  CampaignAttendanceHandler().handle(True),
-            "campaign_not_attended":   lambda:  CampaignAttendanceHandler().handle(False),
+            "campaign_attended":       lambda:  CampaignAttendanceHandler().handle("camp_attend"),
+            "campaign_not_attended":   lambda:  CampaignAttendanceHandler().handle("camp_not_attend"),
             "login_success":           lambda:  LoginResponseHandler().handle("success"),
             "login_invalid":           lambda:  LoginResponseHandler().handle("invalid"),
             "login_server_issue":      lambda:  LoginResponseHandler().handle("server_issue"),
@@ -96,13 +102,15 @@ class ErrorProcessor:
             "admin_campaign_update":   lambda:  AdminCampaignResponseHandler().handle("update"),
             "admin_campaign_delete":   lambda:  AdminCampaignResponseHandler().handle("delete"),
             "admin_user_update":       lambda:  AdminUserResponseHandler().handle("update (points)"),
-            "admin_user_delete":       lambda:  AdminUserResponseHandler().handle("delete (bad behaviour)")
+            "admin_user_delete":       lambda:  AdminUserResponseHandler().handle("delete (bad behaviour)"),
             "shop_no_products":        lambda:  ShopResponseHandler().handle("no_products"),
             "shop_missing_fields":     lambda:  ShopResponseHandler().handle("missing_fields"),
             "shop_invalid_price":      lambda:  ShopResponseHandler().handle("invalid_price"),
             "shop_duplicate_product":  lambda:  ShopResponseHandler().handle("duplicate_product"),
             "shop_product_added":      lambda:  ShopResponseHandler().handle("product_added"),
             "shop_add_product_error":  lambda:  ShopResponseHandler().handle("add_product_error"),
+            "user_found":              lambda:  UserResponseHandler().handle("user_found"),
+            "user_not_found":          lambda:  UserResponseHandler().handle("user_not_found"),
 
         }
 
