@@ -2,10 +2,10 @@ import datetime
 from flask import Blueprint, request, jsonify
 from models.dbSchema import db, Charity
 from Security import session_required, admin_required
-from error_processor import ErrorProcessor
+from models.Notifications import ErrorProcessor
 
 charity_bp = Blueprint('charity', __name__)
-error_processor = ErrorProcessor()
+Notifications = ErrorProcessor()
 
 @charity_bp.route('/create', methods=['POST'])
 @session_required
@@ -16,7 +16,7 @@ def create():
     charities = request.json  # Expecting a list of charities in the request body
 
     if not charities or not isinstance(charities, list):
-        return jsonify(error_processor.process_error("charity_invalid_input")), 400
+        return jsonify(Notifications.process_error("charity_invalid_input")), 400
 
     created_charities = []
     for charity_data in charities:
@@ -28,12 +28,12 @@ def create():
 
         # Validate required fields
         if not all([charity_name, charity_address, charity_desc, charity_cat]):
-            return jsonify(error_processor.process_error("charity_missing_fields")), 400
+            return jsonify(Notifications.process_error("charity_missing_fields")), 400
 
         # Check if charity already exists
         existing_charity = Charity.query.filter_by(name=charity_name).first()
         if existing_charity:
-            return jsonify(error_processor.process_error("charity_exists", name=charity_name)), 400
+            return jsonify(Notifications.process_error("charity_exists", name=charity_name)), 400
 
         # Create new charity
         new_charity = Charity(

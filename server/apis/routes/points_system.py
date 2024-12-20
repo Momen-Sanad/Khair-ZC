@@ -12,7 +12,7 @@ from authlib.integrations.flask_client import OAuth
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from requests_oauthlib import OAuth2Session
 from Security import session_required, admin_required
-
+from models.Notifications import ErrorProcessor
 points_bp = Blueprint('points', __name__)
 
 @points_bp.route('/create' , methods=['POST'])

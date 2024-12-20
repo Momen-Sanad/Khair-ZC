@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
 from models.dbSchema import Charity, Campaign
 from Security import session_required
-from error_processor import ErrorProcessor
+from models.Notifications import ErrorProcessor
 
 search_bp = Blueprint('search', __name__)
-error_processor = ErrorProcessor()
+Notifications = ErrorProcessor()
 
 @search_bp.route('/charity', methods=['GET'])  # route is /search/charity
 @session_required
@@ -14,7 +14,7 @@ def search_charity():
     category = request.args.get('category', '').strip()
 
     if not name:
-        return jsonify(error_processor.process_error("search_invalid_name")), 400
+        return jsonify(Notifications.process_error("search_invalid_name")), 400
 
     # Add regex for partial search
     regex_name = f"%{name}%"
@@ -27,7 +27,7 @@ def search_charity():
     charities = charities.all()
 
     if not charities:
-        return jsonify(error_processor.process_error("search_no_results")), 404
+        return jsonify(Notifications.process_error("search_no_results")), 404
 
     # Serialize charities into JSON
     json_charities = [
@@ -49,7 +49,7 @@ def search_campaign():
     title = request.args.get('title', '').strip()
 
     if not title:
-        return jsonify(error_processor.process_error("search_invalid_title")), 400
+        return jsonify(Notifications.process_error("search_invalid_title")), 400
 
     # Add regex for partial match
     regex_title = f"%{title}%"
@@ -57,7 +57,7 @@ def search_campaign():
     campaigns = Campaign.query.filter(Campaign.title.ilike(regex_title)).all()
 
     if not campaigns:
-        return jsonify(error_processor.process_error("search_no_results")), 404
+        return jsonify(Notifications.process_error("search_no_results")), 404
 
     # Serialize campaigns into JSON
     json_campaigns = [

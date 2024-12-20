@@ -6,12 +6,12 @@ import regex
 from functools import wraps
 import jwt
 import uuid  # for auto-generating unique IDs
-from error_processor import ErrorProcessor
+from models.Notifications import ErrorProcessor
 
 # Initialize blueprint and utilities
 auth_bp = Blueprint('auth', __name__)
 bcrypt = Bcrypt()
-error_processor = ErrorProcessor()
+Notifications = ErrorProcessor()
 
 def token_required(f):
     from models.dbSchema import db, User
@@ -22,12 +22,12 @@ def token_required(f):
         if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
         if not token:
-            return error_processor.process_error("login_invalid"), 403
+            return Notifications.process_error("login_invalid"), 403
         try:
             data = jwt.decode(token, auth_bp.config['SECRET_KEY'], algorithms=["HS256"])
             current_user = User.query.filter_by(id=data['user_id']).first()
         except Exception as e:
-            return jsonify(error_processor.process_error("login_invalid")), 403
+            return jsonify(Notifications.process_error("login_invalid")), 403
         return f(current_user, *args, **kwargs)
 
     return decorated_function
@@ -44,11 +44,11 @@ def register():
     email = request.json.get('email')
 
     if not first_name or not last_name or not password or not email:
-        return jsonify(error_processor.process_error("signup_invalid_password")), 400
+        return jsonify(Notifications.process_error("signup_invalid_password")), 400
 
     existing_user = User.query.filter_by(email=email).first()
     if existing_user:
-        return jsonify(error_processor.process_error("signup_invalid_email")), 400
+        return jsonify(Notifications.process_error("signup_invalid_email")), 400
 
     # Create a new user instance
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -63,7 +63,7 @@ def register():
     pattern = r'^s-[a-zA-Z]+\.[a-zA-Z]+@zewailcity\.edu\.eg$'
 
     if regex.match(pattern, email):
-        return jsonify(error_processor.process_error("signup_success")), 201
+        return jsonify(Notifications.process_error("signup_success")), 201
     else:
         return jsonify({"message": "User Registered as a Guest", "status": "success"}), 201
 
@@ -76,7 +76,7 @@ def login():
     user = User.query.filter_by(email=email).first()
 
     if user is None:
-        return jsonify(error_processor.process_error("login_invalid")), 404
+        return jsonify(Notifications.process_error("login_invalid")), 404
 
     # Check if the provided password matches the stored hash
     if bcrypt.check_password_hash(user.password, password):
@@ -85,6 +85,6 @@ def login():
             'your_secret_key',  # Your secret key for encoding
             algorithm="HS256"  # The algorithm to use
         )
-        return jsonify(error_processor.process_error("login_success"), token=token), 200
+        return jsonify(Notifications.process_error("login_success"), token=token), 200
     else:
-        return jsonify(error_processor.process_error("login_invalid")), 401
+        return jsonify(Notifications.process_error("login_invalid")), 401
