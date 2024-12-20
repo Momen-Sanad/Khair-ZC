@@ -18,15 +18,22 @@ interface campaign{
   image:string
 }
 interface user{
-  
+  id: string
+  firstName: string,
+  lastName: string,
+  email: string,
+  isAdmin:boolean,
+  points:number
 }
 
 const Campaigns = () => {
   const [searchInput, setSearchInput] = useState('');
   const [campaigns, setCampaigns] = useState<campaign[]>([]);
-  const fetchLink='http://localhost:5000/search/campaigns'
+  const [user,setUser]=useState<user>();
+  const fetchCampaigns='http://localhost:5000/search/campaigns'
+  const fetchUser='http://localhost:5000/auth/user'
   useEffect(() => {
-    fetch(fetchLink) 
+    fetch(fetchCampaigns) 
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch campaigns');
@@ -40,6 +47,26 @@ const Campaigns = () => {
         console.error('Error:', error);
       });
   }, []);
+
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      const response = await fetch('http://localhost:5000/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, userPass: password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        // Store token in localStorage
+        localStorage.setItem('token', data.token);
+        // Redirect to dashboard or another page after successful login
+      } else {
+        console.error('Login failed:', data.error);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
 
   const filteredCampaigns = campaigns.filter((campaign) =>
     campaign.title.toLowerCase().includes(searchInput.toLowerCase())
@@ -118,17 +145,17 @@ const Campaigns = () => {
       <div className='profile-container'>
         <div className='profile-name'>
           <IoPersonOutline size={30} />
-          <h1>Name</h1>
+          <h1>{user?.firstName} {user?.lastName}</h1>
         </div>
         <div className="profile-data">
           <table>
             <tr>
               <td>Current points:</td>
-              <td>160</td>
+              <td>{user?.points}</td>
             </tr>
             <tr>
               <td>Followed charities:</td>
-              <td>26</td>
+              <td>{26}</td>
             </tr>
             <tr>
               <td>Attended Campaigns:</td>
@@ -136,7 +163,7 @@ const Campaigns = () => {
             </tr>
             <tr>
               <td>Status:</td>
-              <td>Admin</td>
+              <td>{user?.isAdmin ?"Admin":"User"}</td>
             </tr>
           </table>
         </div>

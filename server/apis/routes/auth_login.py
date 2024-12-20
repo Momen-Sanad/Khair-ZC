@@ -24,7 +24,7 @@ def token_required(f):
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403
         try:
-            data = jwt.decode(token, auth_bp.config['SECRET_KEY'], algorithms=["HS256"])
+            data = jwt.decode(token, 'your_secret_key', algorithms=["HS256"])
             current_user = User.query.filter_by(id=data['user_id']).first()
         except Exception as e:
             return jsonify({'message': 'Token is invalid!'}), 403
@@ -86,12 +86,11 @@ def login():
         'your_secret_key',  # Your secret key for encoding
         algorithm="HS256"   # The algorithm to use
         )
-
         return jsonify({"message": "Login successful!" , 'token': token}), 200
     
     else:
         # Password is incorrect
-        return jsonify({"error": "Invalid credentials!" ,'token': token}), 401
+        return jsonify({"error": "Invalid credentials!"}), 401
     
 @auth_bp.route('/user', methods=['GET'])
 @token_required
