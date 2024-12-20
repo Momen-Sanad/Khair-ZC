@@ -70,8 +70,6 @@ def register():
     
 @auth_bp.route('/login', methods=['POST'])
 def login():
-
-   
     from models.dbSchema import db,User
     email = request.json.get('email')
     password = request.json.get('userPass')
@@ -94,3 +92,16 @@ def login():
     else:
         # Password is incorrect
         return jsonify({"error": "Invalid credentials!" ,'token': token}), 401
+    
+@auth_bp.route('/user', methods=['GET'])
+@token_required
+def get_user_details(current_user):
+    from models.dbSchema import User
+    return jsonify({
+        'id': current_user.id,
+        'firstName': current_user.fname,
+        'lastName': current_user.lname,
+        'email': current_user.email,
+        'isAdmin':current_user.is_admin,
+        'points':current_user.points
+    }), 200

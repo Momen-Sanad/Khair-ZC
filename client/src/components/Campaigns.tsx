@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from 'react';
 import '../assets/stylesheets/Campaigns.css';
-import campaignPhoto from '../assets/images/campaignPhoto1.jpg';
 import { IoPersonOutline } from "react-icons/io5";
 import { IoTimeOutline } from "react-icons/io5";
 import { FaPencil } from "react-icons/fa6";
@@ -15,6 +14,11 @@ interface campaign{
   reward:string,
   charity_id: number,
   capacity: number,
+  author:string
+  image:string
+}
+interface user{
+  
 }
 
 const Campaigns = () => {
@@ -95,7 +99,7 @@ const Campaigns = () => {
             <ul className='info'>
               <li>
                 <FaPencil className='icon' />
-                {campaign.capacity}
+                {campaign.author}
               </li>
               <li>
                 <IoTimeOutline className='icon' />
@@ -104,7 +108,7 @@ const Campaigns = () => {
             </ul>
           </div>
           <div className='CampaignPhoto'>
-            <img src={campaignPhoto} alt='Campaign' />
+            <img src={campaign.image} alt='Campaign' />
           </div>
         </Link>
       </div>

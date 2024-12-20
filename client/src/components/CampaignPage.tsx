@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../assets/stylesheets/CampaignPage.css';
-import campaignPhoto1 from '../assets/images/campaignPhoto1.jpg';
 
 interface Campaign {
     id: number,
@@ -13,6 +12,8 @@ interface Campaign {
     reward:string,
     charity_id: number,
     capacity: number
+    author:string
+    image:string
 }
 
 const CampaignPage: React.FC = () => {
@@ -50,7 +51,12 @@ const CampaignPage: React.FC = () => {
     const date = new Date(campaign.date);
     const day = date.getDate();
     const month = date.toLocaleString('default', { month: 'short' });
-
+    const handleDescription = (description: string) => {
+        return description.replace(
+            /(https?:\/\/[^\s]+)/g,  // Match URLs starting with http:// or https://
+            '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'  // Convert to <a> tag
+        ).replace(/\n/g, '<br />');  // Keep the line breaks
+    };
     return (
         <div className='Campaign-page'>
             <div className='Campaign-container'>
@@ -58,16 +64,17 @@ const CampaignPage: React.FC = () => {
                     <h1>{campaign.title}</h1>
                 </div>
                 <div className='Campaign-Desc'>
-                    <p>{campaign.description}</p>
+                    <h5 dangerouslySetInnerHTML={{ __html: handleDescription(campaign.description) }} />
                 </div>
                 <div className='Campaign-Info'>
                     <p>{campaign.capacity} participants</p>
                     <p>Reward: {campaign.reward} points</p>
                     <p>{day} {month}</p>
+                    <p>{campaign.author}</p>
                 </div>
             </div>
             <div className='Campaign-image'>
-                <img src={campaignPhoto1} className='Campaign-image' alt="altPhoto" />
+                <img src={campaign.image} className='Campaign-image' alt="Campaign visual" />
             </div>
         </div>
     );

@@ -23,5 +23,9 @@
     "@storybook/web-components-webpack5": "^8.4.6",
     "lit": "^3.2.1",
     "storybook": "^8.4.6"
+  },
+  "dependencies": {
+    "@cloudinary/react": "^1.13.1",
+    "@cloudinary/url-gen": "^1.21.0"
   }
 }
