@@ -10,7 +10,7 @@ class CharityResponseHandler(ResponseHandler):
 
 class CampaignResponseHandler(ResponseHandler):
     def handle(self, action):
-        if action == "camp_not_found"
+        if action == "camp_not_found":
             return {"message": "Campaign not fonud.", "status": "error"}   
         return {"message": f"User has {action} a campaign successfully.", "status": "success"}
 

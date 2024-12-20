@@ -15,14 +15,15 @@ def register_user_for_campaign():
     Requires user authentication.
     """
     data = request.json
-    campaign_id = data.get('campaign_id')
+    campaign_id = int(data.get('campaign_id'))
     current_id = data.get('current_id')
 
     if not campaign_id:
         return jsonify(Notifications.process_error("campaign_id_missing")), 400
 
     # Check if the campaign exists
-    campaign = Campaign.query.get( campaign_id)
+    campaign = Campaign.query.get(campaign_id)
+
     if not campaign:
         return jsonify(Notifications.process_error("campaign_not_found")), 404
 
@@ -41,7 +42,7 @@ def register_user_for_campaign():
     db.session.add(new_registration)
     db.session.commit()
 
-    return jsonify(Notifications.process_error("registration_success")), 201
+    return jsonify(Notifications.process_error("campaign_attended")), 201
 
 @registration_bp.route('/remove_user', methods=['POST'])
 @session_required
