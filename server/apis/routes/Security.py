@@ -1,7 +1,8 @@
 from functools import wraps
 from flask import session, jsonify
+from apis.routes.auth_login import check_session_timeout
 
-
+@check_session_timeout
 def session_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):

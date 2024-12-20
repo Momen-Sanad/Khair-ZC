@@ -1,5 +1,5 @@
-import datetime
-from flask import Blueprint, request, jsonify, session
+from datetime import timedelta, datetime
+from flask import Blueprint, request, jsonify, session, current_app
 from requests_oauthlib import OAuth2Session
 from flask_bcrypt import Bcrypt
 import regex
@@ -7,14 +7,29 @@ from functools import wraps
 import jwt
 import uuid  # for auto-generating unique IDs
 from models.Notifications import ErrorProcessor
+from apis.routes.Security import session_required 
+from models.dbSchema import db, User
 
 # Initialize blueprint and utilities
 auth_bp = Blueprint('auth', __name__)
 bcrypt = Bcrypt()
 Notifications = ErrorProcessor()
 
+# session expiration
+@auth_bp.before_app_request
+def check_session_timeout():
+    session.permanent = True
+    current_app.permanent_session_lifetime = timedelta(hours=1)  # Session timeout set to 1 hour
+
+    last_activity = session.get('last_activity')
+    if last_activity:
+        if datetime.utcnow() > datetime.fromisoformat(last_activity) + timedelta(hours=1):
+            session.clear()  # Clear session if timeout exceeded
+            return jsonify({"message": "Session expired, please log in again."}), 403
+    session['last_activity'] = datetime.utcnow().isoformat()
+
+
 def token_required(f):
-    from models.dbSchema import db, User
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -24,7 +39,7 @@ def token_required(f):
         if not token:
             return Notifications.process_error("login_invalid"), 403
         try:
-            data = jwt.decode(token, auth_bp.config['SECRET_KEY'], algorithms=["HS256"])
+            data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=["HS256"])
             current_user = User.query.filter_by(id=data['user_id']).first()
         except Exception as e:
             return jsonify(Notifications.process_error("login_invalid")), 403
@@ -32,9 +47,9 @@ def token_required(f):
 
     return decorated_function
 
+# Register route
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    from models.dbSchema import db, User
 
     user_id = str(uuid.uuid4())  # auto-generated user ID
 
@@ -55,9 +70,6 @@ def register():
 
     new_user = User(id=user_id, fname=first_name, lname=last_name, password=hashed_password, email=email)
 
-    # Add the user to the session
-
-
     # Pattern for Zewailian email validation
     pattern = r'^s-[a-zA-Z]+\.[a-zA-Z]+@zewailcity\.edu\.eg$'
 
@@ -68,9 +80,9 @@ def register():
     else:
         return jsonify({"message": "User Entered as a Guest", "status": "success"}), 201
 
+# Login route
 @auth_bp.route('/login', methods=['POST'])
 def login():
-    from models.dbSchema import User
 
     email = request.json.get('email')
     password = request.json.get('userPass')
@@ -81,11 +93,30 @@ def login():
 
     # Check if the provided password matches the stored hash
     if bcrypt.check_password_hash(user.password, password):
+        # Create a JWT token
         token = jwt.encode(
-            {'user_id': user.id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)},
-            'your_secret_key',  # Your secret key for encoding
+            {'user_id': user.id, 'exp': datetime.utcnow() + timedelta(hours=1)},
+            current_app.config['SECRET_KEY'],  # Your secret key for encoding
             algorithm="HS256"  # The algorithm to use
         )
+
+        # Set session values
+        session['logged_in'] = True
+        session['user_id'] = user.id  # Optionally store the user ID in the session
+        session['last_activity'] = datetime.utcnow().isoformat()  # Track activity for timeout
+
         return jsonify(Notifications.process_error("login_success"), token=token), 200
     else:
         return jsonify(Notifications.process_error("login_invalid")), 401
+
+# Logout route
+@auth_bp.route('/logout', methods=['POST'])
+@session_required
+def logout():
+    session.pop('logged_in', None)
+    session.pop('user_id', None)  # Clear the user ID from the session
+    session.pop('last_activity', None)  # Clear the last activity timestamp
+    return jsonify({
+        "message": "Logged out successfully!",
+        "notification": "You have been logged out."
+    })
