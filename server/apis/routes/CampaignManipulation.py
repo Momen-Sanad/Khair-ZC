@@ -13,13 +13,13 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from requests_oauthlib import OAuth2Session
 from models.dbSchema import db, Campaign, Charity
 from models.Notifications import ErrorProcessor
-from apis.routes.Security import session_data_required, admin_required
+from apis.routes.Security import session_required, admin_required
 
 campaign_bp = Blueprint('Campaign', __name__)
 Notifications = ErrorProcessor()
 
 @campaign_bp.route('/create', methods=['POST'])
-@session_data_required
+@session_required
 @admin_required
 def create():
     from models.dbSchema import User, db, Campaign
@@ -73,7 +73,7 @@ def create():
     return Notifications.process_error("admin_campaign_create"), 201
 
 @campaign_bp.route('/update', methods=['PUT'])
-@session_data_required
+@session_required
 @admin_required
 def update():
     from models.dbSchema import db, Campaign
@@ -118,7 +118,7 @@ def update():
     return Notifications.process_error("admin_campaign_update"), 200
 
 @campaign_bp.route('/delete', methods=['DELETE'])
-@session_data_required
+@session_required
 @admin_required
 def delete():
     from models.dbSchema import Campaign
