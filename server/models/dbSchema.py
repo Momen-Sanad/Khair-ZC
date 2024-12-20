@@ -50,8 +50,8 @@ class Campaign(db.Model):
     # Specify which charity is responsible for this campaign
     charity_id = db.Column(db.Integer(), db.ForeignKey('charity.id', ondelete ="CASCADE"), nullable=False)
     capacity = db.Column(db.Integer(), default=0)
-
-    # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image
+    image = db.Column(db.String(255), nullable=True)
+    author = db.Column(db.String(100), nullable=False)
 
 
 class Merch(db.Model):
@@ -60,6 +60,7 @@ class Merch(db.Model):
     # Use Text for longer descriptions
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Integer(), nullable=False)
+    image = db.Column(db.String(255), nullable=True)
     # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image
 
 

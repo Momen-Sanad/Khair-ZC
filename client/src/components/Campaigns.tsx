@@ -11,7 +11,7 @@ interface campaign{
   title: string,
   address: string,
   description: string,
-  date: Date,
+  date: string,
   reward:string,
   charity_id: number,
   capacity: number,
@@ -50,38 +50,67 @@ const Campaigns = () => {
           onChange={(e) => setSearchInput(e.target.value)}
         />
       </div>
-      {filteredCampaigns.map((campaign) => (
-        <div className='campaign-wrapper'>
-          <div className='Date-box'>
-            <h1>{campaign.capacity}</h1>
-            <h1>{campaign.capacity}</h1>
-          </div>
-          <div className='Campaign-card'>
-            <Link to={`/campaigns/${campaign.id}`} className="campaign-link">
-              <div className='Content'>
-                <h1>{campaign.title}</h1>
-                <p>
-                  {campaign.description.slice(0,100)}.....
-                </p>
-                <ul className='info'>
-                  <li>
-                    <FaPencil className='icon' />
-                    {campaign.capacity}
-                  </li>
-                  <li>
-                    <IoTimeOutline className='icon' />
-                    {campaign.capacity}
-                  </li>
-                </ul>
-              </div>
-              <div className='CampaignPhoto'>
-                <img src={campaignPhoto} alt='Campaign' />
-              </div>
-            </Link>
-          </div>
+      {filteredCampaigns.map((campaign) => {
+  const date = new Date(campaign.date);
+  const day = date.getDate(); 
+  const month = date.toLocaleString('default', { month: 'short' });
+  const timeAgo = (dateString: string) => {
+    const now = new Date();
+    const campaignDate = new Date(dateString);
+    const diffInSeconds = Math.floor((now.getTime() - campaignDate.getTime()) / 1000);
 
-        </div>
-      ))}
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} second${diffInSeconds === 1 ? '' : 's'} ago`;
+    } else if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+    } else if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+    } else if (diffInSeconds < 2592000) {
+      const days = Math.floor(diffInSeconds / 86400);
+      return `${days} day${days === 1 ? '' : 's'} ago`;
+    } else if (diffInSeconds < 31536000) {
+      const months = Math.floor(diffInSeconds / 2592000);
+      return `${months} month${months === 1 ? '' : 's'} ago`;
+    } else {
+      const years = Math.floor(diffInSeconds / 31536000);
+      return `${years} year${years === 1 ? '' : 's'} ago`;
+    }
+  };
+
+  return (
+    <div className='campaign-wrapper' key={campaign.id}>
+      <div className='Date-box'>
+        <h1>{day}</h1>
+        <h1>{month}</h1>
+      </div>
+      <div className='Campaign-card'>
+        <Link to={`/campaigns/${campaign.id}`} className="campaign-link">
+          <div className='Content'>
+            <h1>{campaign.title}</h1>
+            <p>
+              {campaign.description.slice(0, 100)}.....
+            </p>
+            <ul className='info'>
+              <li>
+                <FaPencil className='icon' />
+                {campaign.capacity}
+              </li>
+              <li>
+                <IoTimeOutline className='icon' />
+                {timeAgo(campaign.date)}
+              </li>
+            </ul>
+          </div>
+          <div className='CampaignPhoto'>
+            <img src={campaignPhoto} alt='Campaign' />
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
+})}
       <div className='profile-container'>
         <div className='profile-name'>
           <IoPersonOutline size={30} />

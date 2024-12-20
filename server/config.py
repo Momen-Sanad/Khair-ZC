@@ -5,6 +5,8 @@ import urllib.parse
 # Load environment variables from .env file
 load_dotenv()
 
+DATABASE_MODE='railway'
+
 class Config:
     # Secret key for session management (required by Flask)
     SECRET_KEY = os.getenv('FLASK_SECRET_KEY', 'default-secret-key')  # default for development
