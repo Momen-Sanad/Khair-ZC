@@ -18,9 +18,10 @@ Notifications = ErrorProcessor()
 # session expiration
 @auth_bp.before_app_request
 def register_session_timeout():
-    response = check_session_timeout()
-    if response:
-        return response
+    response = check_session_timeout() 
+    if isinstance(response, dict):
+        return jsonify(response)
+    return response
 
 def token_required(f):
 
@@ -30,7 +31,7 @@ def token_required(f):
         if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
         if not token:
-            return Notifications.process_error("login_invalid"), 403
+            return jsonify(Notifications.process_error("login_invalid")), 403
         try:
             data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=["HS256"])
             current_user = User.query.filter_by(id=data['user_id']).first()
@@ -97,8 +98,12 @@ def login():
         session['logged_in'] = True
         session['user_id'] = user.id  # Optionally store the user ID in the session
         session['last_activity'] = datetime.utcnow().isoformat()  # Track activity for timeout
+        response_data = Notifications.process_error("login_success")  # This should be a dict
+        response_data['token'] = token  # Add the token
 
-        return jsonify(Notifications.process_error("login_success"), token=token), 200
+
+
+        return jsonify(response_data), 200
     else:
         return jsonify(Notifications.process_error("login_invalid")), 401
 

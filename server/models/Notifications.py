@@ -10,13 +10,13 @@ class CharityResponseHandler(ResponseHandler):
 
 class CampaignResponseHandler(ResponseHandler):
     def handle(self, action):
-        return jsonify({"message": f"User has {action} a campaign successfully.", "status": "success"})
+        return {"message": f"User has {action} a campaign successfully.", "status": "success"}
 
 class CampaignAttendanceHandler(ResponseHandler):
     def handle(self, attended):
         if attended == "camp_attend":
-            return jsonify({"message": "You have successfully attended this campaign.", "status": "success"})
-        return jsonify({"message": "You did not attend this campaign.", "status": "error"})
+            return {"message": "You have successfully attended this campaign.", "status": "success"}
+        return {"message": "You did not attend this campaign.", "status": "error"}
 
 class LoginResponseHandler(ResponseHandler):
     def handle(self, result):
@@ -25,7 +25,7 @@ class LoginResponseHandler(ResponseHandler):
             "invalid": "Invalid credentials. Please try again.",
             "server_issue": "Server issue. Please try again later."
         }
-        return jsonify({"message": messages.get(result, "Unknown login error."), "status": result})
+        return {"message": messages.get(result, "Unknown login error."), "status": result}
 
 class SignupResponseHandler(ResponseHandler):
     def handle(self, result):
@@ -34,7 +34,7 @@ class SignupResponseHandler(ResponseHandler):
             "invalid_email": "Invalid email address. Email must be zewailian.",
             "invalid_password": "Invalid password. Password must include at least 1 capital case, 1 small case, 1 number, and be at least 7 characters long."
         }
-        return jsonify({"message": messages.get(result, "Unknown sign-up error."), "status": result})
+        return {"message": messages.get(result, "Unknown sign-up error."), "status": result}
 
 class SearchResponseHandler(ResponseHandler):
     def handle(self, result):
@@ -89,6 +89,7 @@ class ErrorProcessor:
             "campaign_unregister":     lambda:  CampaignResponseHandler().handle("unregistered"),
             "campaign_attended":       lambda:  CampaignAttendanceHandler().handle("camp_attend"),
             "campaign_not_attended":   lambda:  CampaignAttendanceHandler().handle("camp_not_attend"),
+            
             "login_success":           lambda:  LoginResponseHandler().handle("success"),
             "login_invalid":           lambda:  LoginResponseHandler().handle("invalid"),
             "login_server_issue":      lambda:  LoginResponseHandler().handle("server_issue"),
