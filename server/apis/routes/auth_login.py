@@ -7,7 +7,7 @@ from functools import wraps
 import jwt
 import uuid  # for auto-generating unique IDs
 from models.Notifications import ErrorProcessor
-from apis.routes.Security import session_required 
+from apis.routes.Security import session_required, check_session_timeout
 from models.dbSchema import db, User
 
 # Initialize blueprint and utilities
@@ -17,17 +17,10 @@ Notifications = ErrorProcessor()
 
 # session expiration
 @auth_bp.before_app_request
-def check_session_timeout():
-    session.permanent = True
-    current_app.permanent_session_lifetime = timedelta(hours=1)  # Session timeout set to 1 hour
-
-    last_activity = session.get('last_activity')
-    if last_activity:
-        if datetime.utcnow() > datetime.fromisoformat(last_activity) + timedelta(hours=1):
-            session.clear()  # Clear session if timeout exceeded
-            return jsonify({"message": "Session expired, please log in again."}), 403
-    session['last_activity'] = datetime.utcnow().isoformat()
-
+def register_session_timeout():
+    response = check_session_timeout()
+    if response:
+        return response
 
 def token_required(f):
 
