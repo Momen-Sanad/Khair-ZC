@@ -18,14 +18,16 @@ from apis.routes.join import join_bp
 from apis.routes.CampaignManipulation import campaign_bp
 
 
-
-
-
-# Function to create and configure the Flask app (API gateway)
 def create_app():
     
     app = Flask(__name__, static_folder='static', template_folder='templates')
-    CORS(app, resources={r"/search/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
+    CORS(app, resources={
+        r"/auth/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]},
+        r"/search/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]},
+        r"/charity/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]},
+        # Add other routes as needed
+    }, supports_credentials=True)
+
     # Load configuration
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = 'your_secret_key'
