@@ -39,6 +39,7 @@ class Charity(db.Model):
     description = db.Column(db.Text, nullable=False)
     category = db.Column(db.String(50), nullable=True)
     campaigns = db.relationship('Campaign', backref='charity', lazy=True)
+    image = db.Column(db.String(255), nullable=True)
 
 
 class Campaign(db.Model):
@@ -51,8 +52,10 @@ class Campaign(db.Model):
     reward = db.Column(db.Integer(), default=0, nullable=False)
     # Specify which charity is responsible for this campaign
     charity_id = db.Column(db.Integer(), db.ForeignKey(
-        'charity.id', ondelete="CASCADE"), nullable=False)
+        'charity.id', ondelete="CASCADE",onupdate="CASCADE"),nullable=False)
     capacity = db.Column(db.Integer(), default=0)
+    image = db.Column(db.String(255), nullable=True)
+    author = db.Column(db.String(100),nullable=False , default="Khair")
 
     # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image
 
