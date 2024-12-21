@@ -58,6 +58,16 @@ class RegistrationTestCase(unittest.TestCase):
         )
         db.session.add(self.admin)
         
+        # Create a campaign with capacity 1 for testing
+        self.campaign = Campaign(
+            
+            id=1,
+            name='Test Charity',
+            address= '6th of october'
+            description='A charity for testing purposes',
+            category='whatever'
+            
+        )
 
         # Create a campaign with capacity 1 for testing
         self.campaign = Campaign(

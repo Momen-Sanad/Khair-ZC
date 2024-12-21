@@ -1,3 +1,6 @@
+from models.Notifications import ErrorProcessor
+from models.dbSchema import db, User
+from apis.routes.Security import session_required, check_session_timeout
 from datetime import datetime, timedelta
 from flask import Blueprint, request, jsonify, session
 from requests_oauthlib import OAuth2Session
@@ -6,10 +9,13 @@ import regex
 from functools import wraps
 import jwt
 import uuid  # for auto-generating unique IDs
-from models.Notifications import ErrorProcessor
-from apis.routes.Security import session_required, check_session_timeout
-from models.dbSchema import db, User
 
+
+
+# Initialize blueprint and utilities
+auth_bp = Blueprint('auth', __name__)
+bcrypt = Bcrypt()
+Notifications = ErrorProcessor()
 
 
 # session expiration
@@ -19,12 +25,6 @@ def register_session_timeout():
     if isinstance(response, dict):
         return jsonify(response)
     return response
-
-
-# Initialize blueprint and utilities
-auth_bp = Blueprint('auth', __name__)
-bcrypt = Bcrypt()
-Notifications = ErrorProcessor()
 
 def token_required(f):
 
