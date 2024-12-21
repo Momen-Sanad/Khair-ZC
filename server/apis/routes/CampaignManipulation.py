@@ -134,8 +134,12 @@ def delete():
 
     campaign_id = request.json.get('campaignId')
 
-    if not campaign_id:
+    if not campaign_id or not isinstance(campaign_id, int):
         return jsonify(Notifications.process_error("campaign_unregister")), 400
+
+    # if the campaign does not exist, return 404
+    if not Campaign.query.filter_by(id=campaign_id).first():
+        return jsonify(Notifications.process_error("campaign_not_attended")), 404
 
     existing_campaign = Campaign.query.filter_by(id=campaign_id).first()
 
