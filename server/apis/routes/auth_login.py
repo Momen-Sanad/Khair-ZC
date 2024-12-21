@@ -59,7 +59,10 @@ def register():
     if existing_user:
         return jsonify(Notifications.process_error("signup_invalid_email")), 400
 
-    # Create a new user instance
+    PasswordRegex = r'^(?=(.*[a-zA-Z]))(?=(.*\d))(?=.{7,})'
+    if not regex.match(PasswordRegex, password):
+        return jsonify(Notifications.process_error("signup_invalid_password")), 400
+    
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     new_user = User(id=user_id, fname=first_name, lname=last_name, password=hashed_password, email=email)
