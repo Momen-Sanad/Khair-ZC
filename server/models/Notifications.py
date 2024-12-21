@@ -1,11 +1,9 @@
 from flask import Flask, jsonify
 
-
 class ResponseHandler:
     def handle(self, error):
         raise NotImplementedError(
             "This method should be overridden in subclasses")
-
 
 class CharityResponseHandler(ResponseHandler):
     def handle(self, action):
@@ -25,43 +23,17 @@ class CharityResponseHandler(ResponseHandler):
             return {"message": "User is already following this charity.", "status": "error"}
         return {"message": f"User has {action} a charity successfully.", "status": "success"}
 
-class PasswordResponseHandler(ResponseHandler):
-    def handle(self, action):
-        messages = {
-            "email_missing": "Email is required to reset the password.",
-            "user_not_found": "No user found with the provided email address.",
-            "reset_invalid_data": "Invalid data provided for password reset.",
-            "reset_invalid_password": "Invalid password. It must include at least 1 letter, 1 number, and be at least 7 characters long.",
-            "reset_token_expired": "The password reset token has expired.",
-            "reset_token_invalid": "The password reset token is invalid.",
-            "password_reset_success": "Password has been reset successfully.",
-            "change_invalid_data": "Invalid data provided for changing the password.",
-            "password_incorrect": "The current password is incorrect.",
-            "password_change_success": "Password has been changed successfully."
-        }
-        status = "success" if "success" in action else "error"
-        return {"message": messages.get(action, "Unknown password error."), "status": status}
-
-
 class CampaignResponseHandler(ResponseHandler):
     def handle(self, action):
         if action == "camp_not_found":
-            return {"message": "Campaign not fonud.", "status": "error"}
-        if action == "camp_id_missing":
-            return {"message": "Campaign ID is required.", "status": "error"}
-        if action == "camp_full":
-            return {"message": "Campaign is full. Cannot register.", "status": "error"}
-        if action == "removal_success":
-            return {"message": "Campaign removed successfully.", "status": "success"}
+            return {"message": "Campaign not found.", "status": "error"}
         return {"message": f"User has {action} a campaign successfully.", "status": "success"}
-
 
 class CampaignAttendanceHandler(ResponseHandler):
     def handle(self, attended):
         if attended == "camp_attend":
             return {"message": "You have successfully attended this campaign.", "status": "success"}
         return {"message": "You did not attend this campaign.", "status": "error"}
-
 
 class LoginResponseHandler(ResponseHandler):
     def handle(self, result):
@@ -72,7 +44,6 @@ class LoginResponseHandler(ResponseHandler):
         }
         return {"message": messages.get(result, "Unknown login error."), "status": result}
 
-
 class SignupResponseHandler(ResponseHandler):
     def handle(self, result):
         messages = {
@@ -82,7 +53,6 @@ class SignupResponseHandler(ResponseHandler):
         }
         return {"message": messages.get(result, "Unknown sign-up error."), "status": result}
 
-
 class SearchResponseHandler(ResponseHandler):
     def handle(self, result):
         if result == "success":
@@ -91,16 +61,13 @@ class SearchResponseHandler(ResponseHandler):
             return {"message": "Invalid search input. Avoid using special characters.", "status": "error"}
         return {"message": "Unknown search error.", "status": "error"}
 
-
 class AdminCampaignResponseHandler(ResponseHandler):
     def handle(self, action):
         return {"message": f"Admin has performed {action} on a campaign.", "status": "success"}
 
-
 class AdminUserResponseHandler(ResponseHandler):
     def handle(self, action):
-        return jsonify({"message": f"Admin has performed {action} on a user.", "status": "success"})
-
+        return {"message": f"Admin has performed {action} on a user.", "status": "success"}
 
 class UserResponseHandler(ResponseHandler):
     def handle(self, found):
@@ -113,7 +80,6 @@ class UserResponseHandler(ResponseHandler):
         if found == "user_not_registered":
             return {"message": "User is not registered.", "status": "error"}
         return {"message": "User not found.", "status": "error"}
-
 
 class ShopResponseHandler:
     def __init__(self):
@@ -128,11 +94,10 @@ class ShopResponseHandler:
 
     def handle(self, action):
         if action not in self.messages:
-            return jsonify({"message": "Unknown shop error.", "status": "error"})
+            return {"message": "Unknown shop error.", "status": "error"}
 
         status = "success" if "added" in action or action == "product_added" else "error"
-        return jsonify({"message": self.messages[action], "status": status})
-
+        return {"message": self.messages[action], "status": status}
 
 class ErrorProcessor:
     def __init__(self):
@@ -226,8 +191,7 @@ class ErrorProcessor:
         }
 
     def process_error(self, error, name=None, id=None):
-        if id:
-            return self.error_map.get(error)(id)
-        if name:
-            return self.error_map.get(error)(name)
-        return self.error_map.get(error, lambda: jsonify({"message": "Unknown error.", "status": "error"}))()
+        handler = self.error_map.get(error)
+        if handler:
+            return handler()  # Ensure this returns a dictionary, not a Response object.
+        return {"message": "Unknown error.", "status": "error"}  # Return a default error as a dictionary

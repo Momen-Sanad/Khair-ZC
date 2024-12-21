@@ -27,7 +27,7 @@ const Auth = () => {
     try {
       const authType = isSignUp ? '/auth/register' : '/auth/login';
       const authParameters = isSignUp
-        ? { fname, lname, email, userPass }
+        ? { fname, lname, email, userPass}
         : { email, userPass };
 
       const response = await fetch(`http://localhost:5000${authType}`, {

@@ -113,15 +113,15 @@ def login():
         )
 
         # Set session values
-        session.permanent = True  # Enable permanent sessions
+        session.permanent = True  # Makes the session persist
         session['logged_in'] = True
         # Optionally store the user ID in the session
         session['user_id'] = user.id
-        session['last_activity'] = datetime.now(
-        ).isoformat()  # Track activity for timeout
-        response_data = Notifications.process_error(
-            "login_success")  # This should be a dict
-        response_data['token'] = token  # Add the token
+        session['email'] = user.email
+        session['last_activity'] = datetime.utcnow().isoformat()
+        # Prepare the success response
+        response_data = Notifications.process_error("login_success")
+        response_data['token'] = token
 
         return jsonify(response_data), 200
 
