@@ -17,8 +17,6 @@ def check_session_timeout():
             return jsonify({"message": "Session expired, please log in again."}), 403
     session['last_activity'] = datetime.utcnow().isoformat()
 
-from flask import session, jsonify
-
 
 def session_required(f):
     """

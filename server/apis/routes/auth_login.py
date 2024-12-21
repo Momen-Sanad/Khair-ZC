@@ -1,3 +1,6 @@
+from models.Notifications import ErrorProcessor
+from models.dbSchema import db, User
+from apis.routes.Security import session_required, check_session_timeout
 from datetime import datetime, timedelta
 from flask import Blueprint, request, jsonify, session
 from requests_oauthlib import OAuth2Session
@@ -6,7 +9,7 @@ import regex
 from functools import wraps
 import jwt
 import uuid  # for auto-generating unique IDs
-from models.Notifications import ErrorProcessor
+
 
 # Initialize blueprint and utilities
 auth_bp = Blueprint('auth', __name__)
@@ -14,8 +17,16 @@ bcrypt = Bcrypt()
 Notifications = ErrorProcessor()
 
 
+# session expiration
+@auth_bp.before_app_request
+def register_session_timeout():
+    response = check_session_timeout()
+    if isinstance(response, dict):
+        return jsonify(response)
+    return response
+
+
 def token_required(f):
-    from models.dbSchema import db, User
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -37,7 +48,6 @@ def token_required(f):
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    from models.dbSchema import db, User
 
     user_id = str(uuid.uuid4())  # auto-generated user ID
 
@@ -70,14 +80,15 @@ def register():
     pattern = r'^s-[a-zA-Z]+\.[a-zA-Z]+@zewailcity\.edu\.eg$'
 
     if regex.match(pattern, email):
+        db.session.add(new_user)
+        db.session.commit()
         return jsonify(Notifications.process_error("signup_success")), 201
     else:
-        return jsonify({"message": "User Registered as a Guest", "status": "success"}), 201
+        return jsonify({"message": "User Entered as a Guest", "status": "success"}), 201
 
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
-    from models.dbSchema import User
 
     email = request.json.get('email')
     password = request.json.get('userPass')
@@ -108,3 +119,16 @@ def login():
         return jsonify(response_data), 200
     else:
         return jsonify(Notifications.process_error("login_invalid")), 401
+
+
+# Logout route
+@auth_bp.route('/logout', methods=['POST'])
+@session_required
+def logout():
+    session.pop('logged_in', None)
+    session.pop('user_id', None)  # Clear the user ID from the session
+    session.pop('last_activity', None)  # Clear the last activity timestamp
+    return jsonify({
+        "message": "Logged out successfully!",
+        "notification": "You have been logged out."
+    })

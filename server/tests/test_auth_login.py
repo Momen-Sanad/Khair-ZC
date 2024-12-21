@@ -84,7 +84,7 @@ class AuthLoginTestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 201)
         data = json.loads(response.data)
-        self.assertEqual(data['message'], "User Registered as a Guest")
+        self.assertEqual(data['message'], "User Entered as a Guest")
         self.assertEqual(data['status'], "success")
 
     def test_register_missing_fields(self):
