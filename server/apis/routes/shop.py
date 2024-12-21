@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from models.dbSchema import db, Merch
 from datetime import datetime
-from Security import session_required, admin_required
+from apis.routes.Security import session_required, admin_required
 from models.Notifications import ErrorProcessor
 
 shop_bp = Blueprint('shop', __name__)
