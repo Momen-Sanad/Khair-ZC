@@ -11,6 +11,8 @@ import Campaigns from './components/Campaigns';
 import Media from './components/Media';
 import Shop from './components/Shop';
 import CampaignPage from "./components/CampaignPage";
+import Charities from './components/Charties';
+import CharityPage from './components/CharityPage';
 
 
 function App() {
@@ -50,6 +52,8 @@ function AppContent({ isScrolled }: { isScrolled: boolean }) {
         <Route path="/campaigns/:id" element={<CampaignPage/>}/>
         <Route path='/media' element={<Media/>} />
         <Route path='/mini-shop' element={<Shop/>} />
+        <Route path='/charities' element={<Charities/>}/>
+        <Route path="/charities/:id" element={<CharityPage/>} />
       </Routes>
     </>
   );

@@ -1,4 +1,3 @@
-
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 db = SQLAlchemy()
@@ -37,6 +36,7 @@ class Charity(db.Model):
     description = db.Column(db.Text, nullable=False)
     category = db.Column(db.String(50), nullable=True)
     campaigns = db.relationship('Campaign', backref='charity', lazy=True)
+    image = db.Column(db.String(255), nullable=True)
 
 
 class Campaign(db.Model):
@@ -76,3 +76,7 @@ class RegisteredCampaign(db.Model):
     user_id = db.Column(db.String(500), db.ForeignKey('user.id'), nullable=False)
     campaign_id = db.Column(db.Integer(), db.ForeignKey(
         'campaign.id'), primary_key=True)
+    
+class Media(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # Auto-incrementing ID
+    image_link = db.Column(db.String(500), nullable=False)   

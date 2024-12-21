@@ -42,6 +42,39 @@ def search_charity():
 
     return jsonify(json_charities), 200
 
+@search_bp.route('/charities', methods=['GET'])
+def get_charties():
+    charities = Charity.query.all()
+    json_charities = [
+        {
+            "id": charity.id,
+            "name": charity.name,
+            "address": charity.address,
+            "description": charity.description,
+            "category": charity.category,
+            "image":charity.image
+        } for charity in charities
+    ]
+
+    return jsonify(json_charities), 200
+
+
+@search_bp.route('/charities/<int:charity_id>', methods=['GET'])
+def get_charity(charity_id):
+    charity = Charity.query.filter_by(id=charity_id).first()
+    if charity:
+        return jsonify({
+            "id": charity.id,
+            "name": charity.name,
+            "address": charity.address,
+            "description": charity.description,
+            "category": charity.category,
+            "image":charity.image
+        }), 200
+
+    return jsonify({"error": "Charity not found"}), 404
+
+
 @search_bp.route('/campaign', methods=['GET'])  # route is /search/campaign
 @session_required
 def search_campaign():

@@ -17,6 +17,7 @@ from apis.routes.search import search_bp
 from apis.routes.join import join_bp
 from apis.routes.CampaignManipulation import campaign_bp
 from apis.routes.shop import shop_bp
+from apis.routes.media import media_bp
 
 
 def create_app():
@@ -39,7 +40,8 @@ def create_app():
     app.register_blueprint(registration_bp, url_prefix='/registration')
     app.register_blueprint(search_bp,       url_prefix='/search')
     app.register_blueprint(join_bp,         url_prefix='/join')
-    app.register_blueprint(shop_bp,     url_prefix='/shop')
+    app.register_blueprint(shop_bp,         url_prefix='/shop')
+    app.register_blueprint(media_bp,        url_prefix='/media' )
 
 
     # Health check endpoint

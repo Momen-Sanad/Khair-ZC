@@ -13,22 +13,20 @@
     margin-bottom: 0.5em;
 }
 
-
-
-.Campaign-page {
+.Charity-page {
     display: flex;
     justify-content: space-around;
     gap: 10px;
 }
 
-.Campaign-container{
+.Charity-container{
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding-left: 40px;
 }
 
-.Campaign-name{
+.Charity-name{
     font-family:Tahoma, Geneva, Verdana, sans-serif;
     justify-items: center;
     border-radius: 15px;
@@ -41,7 +39,7 @@
 
 }
 
-.Campaign-Desc{
+.Charity-Desc{
     border-radius: 15px;
     border-color: black;
     font-size:larger;
@@ -51,17 +49,17 @@
     font-family: 'Cairo';
     font-weight: bold;
 }
-.Campaign-Info{
+.Charity-Info{
     border-radius: 15px;
     background:linear-gradient(135deg,#2a9f5b,#1B4137);
     display:flex;
     justify-content: space-around;
 }
-.Campaign-Info p {
+.Charity-Info p {
     margin-right: 10px;
   }
 
-.Campaign-image{
+.Charity-image{
     height: 500px;
     border-radius: 15px;
 }
