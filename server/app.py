@@ -4,11 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from flask import Flask, jsonify, render_template
 from werkzeug.exceptions import NotFound
+from flask_bcrypt import Bcrypt
 
 from models.dbSchema import db
 
 # Import blueprints from respective modules
-from apis.routes.auth_login import auth_bp 
+from apis.routes.auth_login import auth_bp,oauth_bp
 from apis.routes.create_charity import charity_bp
 
 from apis.routes.points_system import points_bp
@@ -19,6 +20,10 @@ from apis.routes.CampaignManipulation import campaign_bp
 from apis.routes.shop import shop_bp
 from apis.routes.media import media_bp
 from apis.routes.Security import security_bp
+
+
+
+bcrypt = Bcrypt()  # Initialize Bcrypt
 
 
 def create_app():
@@ -44,7 +49,8 @@ def create_app():
     app.register_blueprint(join_bp,         url_prefix='/join')
     app.register_blueprint(shop_bp,         url_prefix='/shop')
     app.register_blueprint(media_bp,        url_prefix='/media' )
-    app.register_blueprint(security_bp, url_prefix='/security')
+    app.register_blueprint(oauth_bp,        url_prefix='/oauth' )
+    
 
 
     # Health check endpoint

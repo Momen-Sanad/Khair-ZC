@@ -1,5 +1,7 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
 import { FaUser, FaCog, FaShieldAlt, FaChartBar, FaSignOutAlt } from "react-icons/fa";
+import { FiHome } from "react-icons/fi";
 import '../assets/stylesheets/Profile.css';
 import logo from '../assets/images/icon.png';
 
@@ -15,28 +17,38 @@ interface user {
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('appearance');
   const [user, setUser] = useState<user>();
-  const fetchUser = 'http://localhost:5000/security/user'
+  const fetchUser = 'http://localhost:5000/security/user';
+  
+  const navigate = useNavigate(); // Initialize useNavigate here
+
+  const handleHomeButtonClick = () => {
+    navigate('/'); // Navigate to the home page
+  };
+
+  const handleLogOutButtonClick = () => {
+    navigate('/logout'); // Navigate to the logout page
+  };
 
   useEffect(() => {
-      const fetchUserData = async () => {
-        try {
-          const response = await fetch(fetchUser, {
-            method: 'GET',
-            credentials: 'include',
-          });
-          if (!response.ok) {
-            throw new Error('Failed to fetch user data');
-          }
-    
-          const userData = await response.json();
-          setUser(userData);
-        } catch (error) {
-          console.error('Error:', error);
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(fetchUser, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data');
         }
-      };
-    
-      fetchUserData();
-    }, []);
+
+        const userData = await response.json();
+        setUser(userData);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -47,9 +59,9 @@ const Profile = () => {
             <div className="profile-details">
               <div className="detail-item">
                 <p>ID: {user?.id}</p>
-                <p>Name: {user?.firstName}{user?.lastName}</p>
+                <p>Name: {user?.firstName} {user?.lastName}</p>
                 <p>Email: {user?.email}</p>
-                <p>Description: {}</p>
+                <p>Description: { }</p>
               </div>
             </div>
           </div>
@@ -62,8 +74,8 @@ const Profile = () => {
             <div className="statistics-grid">
               <div className="stat-item">
                 <p>Current Points: {user?.points}</p>
-                <p>Followed Charities: {}</p>
-                <p>Attended Campaigns: {}</p>
+                <p>Followed Charities: { }</p>
+                <p>Attended Campaigns: { }</p>
                 <p>Status: {user?.isAdmin ? "Admin" : "User"}</p>
               </div>
             </div>
@@ -141,13 +153,13 @@ const Profile = () => {
               <span>Settings</span>
             </button>
           </nav>
-          <button className="logout-button">
+          <button onClick={handleLogOutButtonClick} className="logout-button">
             <FaSignOutAlt className="icon" />
-            <span>Home Page</span>
+            <span>Log Out</span>
           </button>
-          <button className="logout-button">
-            <FaSignOutAlt className="icon" />
-            <span>Logout</span>
+          <button onClick={handleHomeButtonClick} className="home-button">
+            <FiHome className="icon" />
+            <span>Home Page</span>
           </button>
         </div>
 

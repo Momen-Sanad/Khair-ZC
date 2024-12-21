@@ -92,16 +92,6 @@
   padding: 10px 30px;
 }
 
-.navbar {
-  position: relative;
-}
-
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .notification-bell {
   position: relative;
   cursor: pointer;

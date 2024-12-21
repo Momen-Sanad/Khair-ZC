@@ -135,7 +135,7 @@
     width: 220px;
     /* Ensures it fits within padding */
     margin: 0 20px 20px;
-    background: linear-gradient(135deg, #d32f2f, #9a0007);
+    background: linear-gradient(135deg, #2fd3aa, #006949);
     /* Red gradient */
     text-align: center;
     /* Centers the text */
@@ -156,6 +156,7 @@
     /* Adjusts the icon position to the left */
     font-size: 18px;
     pointer-events: none;
+    color: white;
     /* Prevents interaction issues */
   }
   
@@ -167,6 +168,7 @@
     /* Adjusts the icon position to the left */
     font-size: 18px;
     pointer-events: none;
+    color: white;
     /* Prevents interaction issues */
   }
   
@@ -178,8 +180,8 @@
   }
   
   .home-button:hover {
-    background: linear-gradient(135deg, #ff5252, #d32f2f);
-    box-shadow: 0 4px 10px rgba(211, 47, 47, 0.4);
+    background: linear-gradient(135deg, #197f66, #00835b);
+    box-shadow: 0 4px 10px rgba(47, 211, 184, 0.4);
     transform: translateY(-2px);
   }
   

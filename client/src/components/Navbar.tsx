@@ -8,8 +8,13 @@ import logo from '../assets/images/KhairZcLogo.png';
 import Notification from './Notification';
 import { FiBell } from "react-icons/fi";
 
-interface User {
-  username: string;
+interface user {
+  id: string
+  firstName: string,
+  lastName: string,
+  email: string,
+  isAdmin: boolean,
+  points: number
 }
 
 interface NavbarProps {
@@ -19,7 +24,7 @@ interface NavbarProps {
 
 
 const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
-  const [user, setUser] = useState<User | null>(null); // State for user data
+  const [user, setUser] = useState<user | null>(null); // State for user data
   const [showNotifications, setShowNotifications] = useState<boolean>(false);
   const fetchUser = 'http://localhost:5000/security/user'
 
@@ -33,14 +38,14 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
         if (!response.ok) {
           throw new Error('Failed to fetch user data');
         }
-  
+
         const userData = await response.json();
         setUser(userData);
       } catch (error) {
         console.error('Error:', error);
       }
     };
-  
+
     fetchUserData();
   }, []);
 
@@ -73,7 +78,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
               </div>
               <Link to='/profile' className='auth-button'>
                 <CgProfile />
-                Profile
+                {user.firstName}
               </Link>
             </>
           ) : (

@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import session, jsonify, current_app,Blueprint
+from flask import session, jsonify, current_app, make_response, Blueprint
 from datetime import datetime, timedelta
 from models.dbSchema import User
 
@@ -11,14 +11,23 @@ def check_session_timeout():
     Middleware function to check session timeout.
     Should be registered as a @before_app_request function.
     """
-    #session.permanent = True                   #only for debugging
     current_app.permanent_session_lifetime = timedelta(minutes=30)  # Session timeout set to 30 minutes
 
     last_activity = session.get('last_activity')
     if last_activity:
+        # Check if the session has timed out
         if datetime.utcnow() > datetime.fromisoformat(last_activity) + timedelta(minutes=30):
-            session.clear()  # Clear session if timeout exceeded
-            return jsonify({"message": "Session expired, please log in again."}), 403
+            session.clear()  # Clear the session
+
+            # Create a response object to clear cookies
+            response = make_response(jsonify({"message": "Session expired, please log in again."}), 403)
+            response.delete_cookie('session')  # Delete the session cookie
+            response.delete_cookie('csrf_token', path='/')  # If using CSRF tokens stored in cookies
+            # Add any additional cookies to clear as needed
+            
+            return response
+
+    # Update the last activity timestamp
     session['last_activity'] = datetime.utcnow().isoformat()
 
 

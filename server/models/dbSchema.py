@@ -47,7 +47,7 @@ class Campaign(db.Model):
     # Use Text for longer descriptions
     description = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime(), nullable=False,
-                     default=datetime.datetime.utcnow)
+default=datetime.datetime.utcnow)
     reward = db.Column(db.Integer(), default=0, nullable=False)
     # Specify which charity is responsible for this campaign
     charity_id = db.Column(db.Integer(), db.ForeignKey(
