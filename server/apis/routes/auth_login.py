@@ -51,6 +51,27 @@ def token_required(f):
     return decorated_function
 
 
+#some helper functions
+def clear_session():
+    """Clears all session data securely."""
+    session_keys = ['logged_in', 'user_id', 'last_activity', 'email', 'state', 'access_token']
+    for key in session_keys:
+        session.pop(key, None)
+
+
+def generate_token(user_id, expiration_hours=24):
+    """Generates a JWT for the user."""
+    return jwt.encode(
+        {
+            'user_id': user_id,
+            'exp': datetime.utcnow() + timedelta(hours=expiration_hours),
+        },
+        os.environ.get('SECRET_KEY', 'your_secret_key'),  # Securely fetch the secret key
+        algorithm="HS256"
+    )
+
+
+#first route
 @auth_bp.route('/register', methods=['POST'])
 def register():
 
@@ -91,39 +112,47 @@ def register():
     else:
         return jsonify({"message": "User Entered as a Guest", "status": "success"}), 201
 
-
 @auth_bp.route('/login', methods=['POST'])
 def login():
+    try:
+        email = request.json.get('email')
+        password = request.json.get('userPass')
 
-    email = request.json.get('email')
-    password = request.json.get('userPass')
-    user = User.query.filter_by(email=email).first()
+        if not email or not password:
+            return jsonify(Notifications.process_error("login_invalid_fields")), 400
 
-    if user is None:
-        return jsonify(Notifications.process_error("login_invalid")), 404
+        user = User.query.filter_by(email=email).first()
+        if user is None:
+            return jsonify(Notifications.process_error("login_invalid")), 404
 
-    # Check if the provided password matches the stored hash
-    if bcrypt.check_password_hash(user.password, password):
+        # Check password validity
+        if not bcrypt.check_password_hash(user.password, password):
+            return jsonify(Notifications.process_error("login_invalid")), 401
+
+        # Generate token
         token = jwt.encode(
-            {'user_id': user.id, 'exp': datetime.now() +
-             timedelta(hours=24)},
-            'your_secret_key',  # Your secret key for encoding
-            algorithm="HS256"  # The algorithm to use
+            {
+                'user_id': user.id,
+                'exp': datetime.utcnow() + timedelta(hours=24),
+            },
+            os.environ.get('SECRET_KEY', 'your_secret_key'),  # Use an environment variable
+            algorithm="HS256"
         )
 
-        # Set session values
+        # Set session data securely
         session['logged_in'] = True
-        # Optionally store the user ID in the session
         session['user_id'] = user.id
-        session['last_activity'] = datetime.now(
-        ).isoformat()  # Track activity for timeout
-        response_data = Notifications.process_error(
-            "login_success")  # This should be a dict
-        response_data['token'] = token  # Add the token
+        session['last_activity'] = datetime.utcnow().isoformat()
+
+        response_data = Notifications.process_error("login_success")
+        response_data['token'] = token
 
         return jsonify(response_data), 200
-    else:
-        return jsonify(Notifications.process_error("login_invalid")), 401
+
+    except Exception as e:
+        # Log unexpected errors
+        app.logger.error(f"Error during login: {str(e)}")
+        return jsonify({"message": "An error occurred during login.", "status": "error"}), 500
 
 
 @oauth_bp.route('/oauth2callback', methods=['GET'])
@@ -257,26 +286,24 @@ def login():
 from flask import make_response
 
 
-
 @auth_bp.route('/logout', methods=['POST'])
 @session_required
 def logout():
-    """
-    Handles user logout by clearing the session and deleting cookies.
-    """
-    # Clear session data
-    session.pop('logged_in', None)
-    session.pop('user_id', None)
-    session.pop('last_activity', None)
-    session.pop('email', None)  # Clear the email session if stored
+    try:
+        # Clear session data
+        clear_session()
 
-    # Create a response to delete cookies
-    response = make_response(jsonify({
-        "message": "Logged out successfully!",
-        "notification": "You have been logged out."
-    }))
-    response.delete_cookie('session')  # Delete the session cookie
-    response.delete_cookie('csrf_token', path='/')  # Delete CSRF token cookie if applicable
-    # Add any additional cookies to clear as needed
+        # Prepare response with cookie clearing
+        response = make_response(jsonify({
+            "message": "Logged out successfully!",
+            "notification": "You have been logged out."
+        }))
+        response.delete_cookie('session')  # Delete the session cookie
+        response.delete_cookie('csrf_token', path='/')  # Delete CSRF token cookie if applicable
 
-    return response
+        return response
+
+    except Exception as e:
+        # Log unexpected errors
+        app.logger.error(f"Error during logout: {str(e)}")
+        return jsonify({"message": "An error occurred during logout.", "status": "error"}), 500
