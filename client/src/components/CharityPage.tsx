@@ -1,25 +1,21 @@
 // CampaignDetails.tsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import '../assets/stylesheets/CampaignPage.css';
+import '../assets/stylesheets/CharityPage.css';
 
-interface Campaign {
+interface charity {
     id: number,
-    title: string,
+    name: string,
     address: string,
     description: string,
-    date: string,
-    reward:string,
-    charity_id: number,
-    capacity: number
-    author:string
-    image:string
+    category: string,
+    image: string
 }
 
-const CampaignPage: React.FC = () => {
-    const { id } = useParams<{ id: string }>(); // Get campaign ID from the URL
-    const [campaign, setCampaign] = useState<Campaign | null>(null);
-    const fetchLink = 'http://localhost:5000/search/campaigns';
+const CharityPage: React.FC = () => {
+    const { id } = useParams<{ id: string }>(); // Get charity ID from the URL
+    const [charity, setCharity] = useState<charity | null>(null);
+    const fetchLink = 'http://localhost:5000/search/charities';
 
     useEffect(() => {
         if (id) {
@@ -31,12 +27,12 @@ const CampaignPage: React.FC = () => {
             })
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error('Failed to fetch campaign');
+                    throw new Error('Failed to fetch charity');
                 }
                 return response.json();
             })
             .then((data) => {
-                setCampaign(data); 
+                setCharity(data); 
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -44,13 +40,10 @@ const CampaignPage: React.FC = () => {
         }
     }, [id]);
 
-    if (!campaign) {
+    if (!charity) {
         return <h1>Loading..</h1>;
     }
 
-    const date = new Date(campaign.date);
-    const day = date.getDate();
-    const month = date.toLocaleString('default', { month: 'short' });
     const renderDescription = (description: string) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;  // Regex to detect URLs
     
@@ -76,26 +69,24 @@ const CampaignPage: React.FC = () => {
     };
     
     return (
-        <div className='Campaign-page'>
-            <div className='Campaign-container'>
-                <div className='Campaign-name'>
-                    <h1>{campaign.title}</h1>
+        <div className='Charity-page'>
+            <div className='Charity-container'>
+                <div className='Charity-name'>
+                    <h1>{charity.name}</h1>
                 </div>
-                <div className='Campaign-Desc'>
-                    {renderDescription(campaign.description)}
+                <div className='Charity-Desc'>
+                    {renderDescription(charity.description)}
                 </div>
-                <div className='Campaign-Info'>
-                    <p>{campaign.capacity} participants</p>
-                    <p>Reward: {campaign.reward} points</p>
-                    <p>{day} {month}</p>
-                    <p>{campaign.author}</p>
+                <div className='Charity-Info'>
+                    <p>Location: {charity.address}</p>
+                    <p>category: {charity.category}</p>
                 </div>
             </div>
-            <div className='Campaign-image'>
-                <img src={campaign.image} className='Campaign-image' alt="Campaign visual" />
+            <div className='Charity-image'>
+                <img src={charity.image} className='Charity-image' alt="Charity visual" />
             </div>
         </div>
     );
 };
 
-export default CampaignPage;
+export default CharityPage;

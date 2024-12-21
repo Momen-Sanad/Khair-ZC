@@ -33,13 +33,15 @@
 }
 
 .navbar-items {
-  flex: 1;
+  display: flex;
+  flex-grow: 1;
   justify-content: center;
   text-align: center;
   align-items: center;
   list-style-type: none;
-  display: flex;
-  gap: 150px;
+  margin: 0;
+  padding: 0;
+  gap: 70px;
 }
 
 .navbar-item {
@@ -89,3 +91,61 @@
   font-size: 20px;
   padding: 10px 30px;
 }
+
+.navbar {
+  position: relative;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-bell {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification-bell svg {
+  color: #333;
+  transition: color 0.3s;
+}
+
+.notification-bell:hover svg {
+  color:#80cc28;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  width: 250px;
+  z-index: 10;
+  color: #333;
+}
+
+.notification-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-list li {
+  padding: 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.notification-list li:last-child {
+  border-bottom: none;
+}
+
+.notification-list p {
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+} 

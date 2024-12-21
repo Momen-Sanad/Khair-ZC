@@ -18,11 +18,15 @@ from apis.routes.search import search_bp
 from apis.routes.join import join_bp
 from apis.routes.CampaignManipulation import campaign_bp
 from apis.routes.shop import shop_bp
+from apis.routes.media import media_bp
 
 
+<<<<<<< HEAD
 bcrypt = Bcrypt()  # Initialize Bcrypt
 
 
+=======
+>>>>>>> 1cd5b0c131c104fcddf0b1e153a0d7a8a0768fe8
 def create_app():
 
     app = Flask(__name__, static_folder='static', template_folder='templates')
@@ -43,7 +47,8 @@ def create_app():
     app.register_blueprint(registration_bp, url_prefix='/registration')
     app.register_blueprint(search_bp,       url_prefix='/search')
     app.register_blueprint(join_bp,         url_prefix='/join')
-    app.register_blueprint(shop_bp,     url_prefix='/shop')
+    app.register_blueprint(shop_bp,         url_prefix='/shop')
+    app.register_blueprint(media_bp,        url_prefix='/media' )
 
 
     # Health check endpoint

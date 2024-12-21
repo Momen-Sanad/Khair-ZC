@@ -102,7 +102,7 @@
 .auth-form button {
   width: 100%;
   padding: 12px 20px;
-  background-color: #0e4aff;
+  background-color: #2a9f5b;
   color: #fff;
   border: none;
   border-radius: 50px;
@@ -132,19 +132,19 @@
 .auth-link button {
   background: none;
   border: none;
-  color: #007bff;
+  color: white;
   cursor: pointer;
   padding: 0;
   font-size: inherit;  /* Ensures the button font size matches the paragraph's */
 }
 
 .auth-link button:hover {
-  color: #0056b2;  /* Optional: Change color on hover */
+  color: yellowgreen;
 }
 
 .back-button {
   display: flex;
-  color: #007bff;
+  color: #2a9f5b;
   text-decoration: none;
   font-size: 125px;
   align-self: flex-start;

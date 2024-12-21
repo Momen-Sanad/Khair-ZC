@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import '../assets/stylesheets/Campaigns.css';
+import '../assets/stylesheets/Charities.css';
 import { IoPersonOutline } from "react-icons/io5";
-import { IoTimeOutline } from "react-icons/io5";
-import { FaPencil } from "react-icons/fa6";
+import { FaMapLocationDot } from "react-icons/fa6";
+import { BiSolidCategory } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 
-interface campaign {
+interface charity {
   id: number,
-  title: string,
+  name: string,
   address: string,
   description: string,
-  date: string,
-  reward: string,
-  charity_id: number,
-  capacity: number,
-  author: string
+  category: string,
   image: string
 }
 interface user {
@@ -26,16 +22,15 @@ interface user {
   points: number
 }
 
-const Campaigns = () => {
-  const loggedIn = true;
+const Charities = () => {
+  const loggedIn= true
   const [searchInput, setSearchInput] = useState('');
-  const [campaigns, setCampaigns] = useState<campaign[]>([]);
+  const [charities, setCharities] = useState<charity[]>([]);
   const [user, setUser] = useState<user>();
-  const fetchCampaigns = 'http://localhost:5000/search/campaigns'
+  const fetchCharities = 'http://localhost:5000/search/charities'
   const fetchUser = 'http://localhost:5000/auth/user'
-
   useEffect(() => {
-
+    // Mocking the user data for testing
     const mockedUser = {
       id: '123',
       firstName: 'John',
@@ -46,21 +41,21 @@ const Campaigns = () => {
     };
     setUser(mockedUser); // Set the mocked user data
 
-    fetch(fetchCampaigns)
+    // Fetching charities from the API
+    fetch(fetchCharities)
       .then(response => {
         if (!response.ok) {
-          throw new Error('Failed to fetch campaigns');
+          throw new Error('Failed to fetch charities');
         }
         return response.json();
       })
       .then(data => {
-        setCampaigns(data);
+        setCharities(data);
       })
       .catch(error => {
         console.error('Error:', error);
       });
   }, []);
-
   const handleLogin = async (email: string, password: string) => {
     try {
       const response = await fetch('http://localhost:5000/auth/login', {
@@ -81,74 +76,43 @@ const Campaigns = () => {
     }
   };
 
-  const filteredCampaigns = campaigns.filter((campaign) =>
-    campaign.title.toLowerCase().includes(searchInput.toLowerCase())
+  const filteredCharities = charities.filter((charity) =>
+    charity.name.toLowerCase().includes(searchInput.toLowerCase())
   );
   return (
-    <div className='campaign-container'>
+    <div className='charity-container'>
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search campaigns..."
+          placeholder="Search charities..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
       </div>
-      {filteredCampaigns.map((campaign) => {
-        const date = new Date(campaign.date);
-        const day = date.getDate();
-        const month = date.toLocaleString('default', { month: 'short' });
-        const timeAgo = (dateString: string) => {
-          const now = new Date();
-          const campaignDate = new Date(dateString);
-          const diffInSeconds = Math.floor((now.getTime() - campaignDate.getTime()) / 1000);
-
-          if (diffInSeconds < 60) {
-            return `${diffInSeconds} second${diffInSeconds === 1 ? '' : 's'} ago`;
-          } else if (diffInSeconds < 3600) {
-            const minutes = Math.floor(diffInSeconds / 60);
-            return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
-          } else if (diffInSeconds < 86400) {
-            const hours = Math.floor(diffInSeconds / 3600);
-            return `${hours} hour${hours === 1 ? '' : 's'} ago`;
-          } else if (diffInSeconds < 2592000) {
-            const days = Math.floor(diffInSeconds / 86400);
-            return `${days} day${days === 1 ? '' : 's'} ago`;
-          } else if (diffInSeconds < 31536000) {
-            const months = Math.floor(diffInSeconds / 2592000);
-            return `${months} month${months === 1 ? '' : 's'} ago`;
-          } else {
-            const years = Math.floor(diffInSeconds / 31536000);
-            return `${years} year${years === 1 ? '' : 's'} ago`;
-          }
-        };
+      {filteredCharities.map((charity) => {
 
         return (
-          <div className='campaign-wrapper' key={campaign.id}>
-            <div className='Date-box'>
-              <h1>{day}</h1>
-              <h1>{month}</h1>
-            </div>
-            <div className='Campaign-card'>
-              <Link to={`/campaigns/${campaign.id}`} className="campaign-link">
+          <div className='charity-wrapper' key={charity.id}>
+            <div className='Charity-card'>
+              <Link to={`/charities/${charity.id}`} className="charity-link">
                 <div className='Content'>
-                  <h1>{campaign.title}</h1>
+                  <h1>{charity.name}</h1>
                   <p>
-                    {campaign.description.slice(0, 100)}.....
+                    {charity.description.slice(0, 100)}.....
                   </p>
                   <ul className='info'>
                     <li>
-                      <FaPencil className='icon' />
-                      {campaign.author}
+                      <FaMapLocationDot className='icon' />
+                      {charity.address}
                     </li>
                     <li>
-                      <IoTimeOutline className='icon' />
-                      {timeAgo(campaign.date)}
+                      <BiSolidCategory className='icon' />
+                      {charity.category}
                     </li>
                   </ul>
                 </div>
-                <div className='CampaignPhoto'>
-                  <img src={campaign.image} alt='Campaign' />
+                <div className='CharityPhoto'>
+                  <img src={charity.image} alt='Charity' />
                 </div>
               </Link>
             </div>
@@ -218,4 +182,4 @@ const Campaigns = () => {
   );
 };
 
-export default Campaigns;
+export default Charities;
