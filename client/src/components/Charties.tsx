@@ -23,6 +23,7 @@ interface user {
 }
 
 const Charities = () => {
+  const loggedIn= false
   const [searchInput, setSearchInput] = useState('');
   const [charities, setCharities] = useState<charity[]>([]);
   const [user, setUser] = useState<user>();
@@ -119,57 +120,61 @@ const Charities = () => {
         );
       })}
       <div className='profile-container'>
-        {user?.isAdmin ? (
+        {loggedIn && (
           <>
-            <div className='profile-name'>
-              <IoPersonOutline size={30} />
-              <h1>{user.firstName}</h1>
-            </div>
-            <div className="profile-data">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Followed charities:</td>
-                    <td>{26}</td>
-                  </tr>
-                  <tr>
-                    <td>Status:</td>
-                    <td>Admin</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="vertical-line"></div>
-          </>
-        ) : (
-          <>
-            <div className='profile-name'>
-              <IoPersonOutline size={30} />
-              <h1>{user?.firstName}</h1>
-            </div>
-            <div className="profile-data">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Current points:</td>
-                    <td>{user?.points}</td>
-                  </tr>
-                  <tr>
-                    <td>Followed charities:</td>
-                    <td>{26}</td>
-                  </tr>
-                  <tr>
-                    <td>Attended Campaigns:</td>
-                    <td>2</td>
-                  </tr>
-                  <tr>
-                    <td>Status:</td>
-                    <td>User</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="vertical-line"></div>
+            {user?.isAdmin ? (
+              <>
+                <div className='profile-name'>
+                  <IoPersonOutline size={30} />
+                  <h1>{user.firstName}</h1>
+                </div>
+                <div className="profile-data">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Followed charities:</td>
+                        <td>{26}</td>
+                      </tr>
+                      <tr>
+                        <td>Status:</td>
+                        <td>Admin</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="vertical-line"></div>
+              </>
+            ) : (
+              <>
+                <div className='profile-name'>
+                  <IoPersonOutline size={30} />
+                  <h1>{user?.firstName}</h1>
+                </div>
+                <div className="profile-data">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Current points:</td>
+                        <td>{user?.points}</td>
+                      </tr>
+                      <tr>
+                        <td>Followed charities:</td>
+                        <td>{26}</td>
+                      </tr>
+                      <tr>
+                        <td>Attended Campaigns:</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>Status:</td>
+                        <td>User</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="vertical-line"></div>
+              </>
+            )}
           </>
         )}
       </div>
