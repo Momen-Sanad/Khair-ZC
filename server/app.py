@@ -8,7 +8,7 @@ from werkzeug.exceptions import NotFound
 from models.dbSchema import db
 
 # Import blueprints from respective modules
-from apis.routes.auth_login import auth_bp
+from apis.routes.auth_login import auth_bp,oauth_bp
 from apis.routes.create_charity import charity_bp
 from flask_bcrypt import Bcrypt  # Import Bcrypt
 
@@ -19,6 +19,7 @@ from apis.routes.join import join_bp
 from apis.routes.CampaignManipulation import campaign_bp
 from apis.routes.shop import shop_bp
 from apis.routes.media import media_bp
+
 
 
 bcrypt = Bcrypt()  # Initialize Bcrypt
@@ -46,6 +47,8 @@ def create_app():
     app.register_blueprint(join_bp,         url_prefix='/join')
     app.register_blueprint(shop_bp,         url_prefix='/shop')
     app.register_blueprint(media_bp,        url_prefix='/media' )
+    app.register_blueprint(oauth_bp,        url_prefix='/oauth' )
+    
 
 
     # Health check endpoint
