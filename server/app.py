@@ -21,12 +21,9 @@ from apis.routes.shop import shop_bp
 from apis.routes.media import media_bp
 
 
-<<<<<<< HEAD
 bcrypt = Bcrypt()  # Initialize Bcrypt
 
 
-=======
->>>>>>> 1cd5b0c131c104fcddf0b1e153a0d7a8a0768fe8
 def create_app():
 
     app = Flask(__name__, static_folder='static', template_folder='templates')

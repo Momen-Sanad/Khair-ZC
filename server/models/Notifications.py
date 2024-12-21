@@ -25,6 +25,23 @@ class CharityResponseHandler(ResponseHandler):
             return {"message": "User is already following this charity.", "status": "error"}
         return {"message": f"User has {action} a charity successfully.", "status": "success"}
 
+class PasswordResponseHandler(ResponseHandler):
+    def handle(self, action):
+        messages = {
+            "email_missing": "Email is required to reset the password.",
+            "user_not_found": "No user found with the provided email address.",
+            "reset_invalid_data": "Invalid data provided for password reset.",
+            "reset_invalid_password": "Invalid password. It must include at least 1 letter, 1 number, and be at least 7 characters long.",
+            "reset_token_expired": "The password reset token has expired.",
+            "reset_token_invalid": "The password reset token is invalid.",
+            "password_reset_success": "Password has been reset successfully.",
+            "change_invalid_data": "Invalid data provided for changing the password.",
+            "password_incorrect": "The current password is incorrect.",
+            "password_change_success": "Password has been changed successfully."
+        }
+        status = "success" if "success" in action else "error"
+        return {"message": messages.get(action, "Unknown password error."), "status": status}
+
 
 class CampaignResponseHandler(ResponseHandler):
     def handle(self, action):
@@ -134,6 +151,16 @@ class ErrorProcessor:
             "signup_success":            lambda:  SignupResponseHandler().handle("success"),
             "signup_invalid_email":      lambda:  SignupResponseHandler().handle("invalid_email"),
             "signup_invalid_password":   lambda:  SignupResponseHandler().handle("invalid_password"),
+            "email_missing":             lambda:  PasswordResponseHandler().handle("email_missing"),
+            "user_not_found":            lambda:  PasswordResponseHandler().handle("user_not_found"),
+            "reset_invalid_data":        lambda:  PasswordResponseHandler().handle("reset_invalid_data"),
+            "reset_invalid_password":    lambda:  PasswordResponseHandler().handle("reset_invalid_password"),
+            "reset_token_expired":       lambda:  PasswordResponseHandler().handle("reset_token_expired"),
+            "reset_token_invalid":       lambda:  PasswordResponseHandler().handle("reset_token_invalid"),
+            "password_reset_success":    lambda:  PasswordResponseHandler().handle("password_reset_success"),
+            "change_invalid_data":       lambda:  PasswordResponseHandler().handle("change_invalid_data"),
+            "password_incorrect":        lambda:  PasswordResponseHandler().handle("password_incorrect"),
+            "password_change_success":   lambda:  PasswordResponseHandler().handle("password_change_success"),
             "search_success":            lambda:  SearchResponseHandler().handle("success"),
             "search_invalid":            lambda:  SearchResponseHandler().handle("invalid_search"),
             "admin_campaign_create":     lambda:  AdminCampaignResponseHandler().handle("create"),
