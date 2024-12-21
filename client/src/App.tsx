@@ -11,6 +11,8 @@ import Shop from './components/Shop';
 import CampaignPage from "./components/CampaignPage";
 import Charities from './components/Charties';
 import CharityPage from './components/CharityPage';
+import Notification from './components/Notification';
+import Profile from './components/Profile';
 
 
 function App() {
@@ -42,8 +44,7 @@ function AppContent({ isScrolled }: { isScrolled: boolean }) {
 
   return (
     <>
-      {location.pathname !== '/auth'&&location.pathname !== '/mini-shop' && <Navbar isScrolled={isScrolled}/>}
-      <Routes>
+        {location.pathname !== '/auth' && location.pathname !== '/mini-shop' && location.pathname !== '/profile' && <Navbar isScrolled={isScrolled} />}      <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/auth' element={<Auth />} />
         <Route path='/campaigns' element={<Campaigns/>} />
@@ -52,6 +53,8 @@ function AppContent({ isScrolled }: { isScrolled: boolean }) {
         <Route path='/mini-shop' element={<Shop/>} />
         <Route path='/charities' element={<Charities/>}/>
         <Route path="/charities/:id" element={<CharityPage/>} />
+        <Route path='/notification' element={<Notification/>}/>
+        <Route path='/profile' element={<Profile/>}/>
       </Routes>
     </>
   );

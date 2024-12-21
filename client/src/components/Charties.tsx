@@ -23,7 +23,7 @@ interface user {
 }
 
 const Charities = () => {
-  const loggedIn= false
+  const loggedIn= true
   const [searchInput, setSearchInput] = useState('');
   const [charities, setCharities] = useState<charity[]>([]);
   const [user, setUser] = useState<user>();

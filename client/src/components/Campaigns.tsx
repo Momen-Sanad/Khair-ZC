@@ -27,7 +27,7 @@ interface user {
 }
 
 const Campaigns = () => {
-  const loggedIn = false;
+  const loggedIn = true;
   const [searchInput, setSearchInput] = useState('');
   const [campaigns, setCampaigns] = useState<campaign[]>([]);
   const [user, setUser] = useState<user>();
