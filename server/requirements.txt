@@ -7,6 +7,7 @@ Flask
 Flask-Migrate
 Flask-MySQLdb
 Flask-SQLAlchemy
+flask_cors
 greenlet
 itsdangerous
 Jinja2

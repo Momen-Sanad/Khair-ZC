@@ -54,13 +54,9 @@ default=datetime.datetime.utcnow)
         'charity.id', ondelete="CASCADE",onupdate="CASCADE"),nullable=False)
     capacity = db.Column(db.Integer(), default=0)
     image = db.Column(db.String(255), nullable=True)
-<<<<<<< HEAD
     author = db.Column(db.String(100),nullable=False , default="Khair")
 
     # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image
-=======
-    author = db.Column(db.String(100), nullable=False)
->>>>>>> 1cd5b0c131c104fcddf0b1e153a0d7a8a0768fe8
 
 
 class Merch(db.Model):
