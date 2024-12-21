@@ -13,7 +13,7 @@ from apis.routes.create_charity import charity_bp
 
 from apis.routes.points_system import points_bp
 from apis.routes.Campaign_Registeration import registration_bp
-from apis.routes.search import serach_bp
+from apis.routes.search import search_bp
 from apis.routes.join import join_bp
 from apis.routes.CampaignManipulation import campaign_bp
 
@@ -37,9 +37,8 @@ def create_app():
     app.register_blueprint(campaign_bp,     url_prefix='/Campaign')
     app.register_blueprint(points_bp,       url_prefix='/points')
     app.register_blueprint(registration_bp, url_prefix='/registration')
-    app.register_blueprint(serach_bp,       url_prefix='/search')
+    app.register_blueprint(search_bp,       url_prefix='/search')
     app.register_blueprint(join_bp,         url_prefix='/join')
-    app.register_blueprint(remove_user,     url_prefix='/remove_user')
 
     # Health check endpoint
     @app.route('/health', methods=['GET'])

@@ -1,8 +1,26 @@
 from functools import wraps
-from flask import session, jsonify
+from flask import session, jsonify, current_app
+from datetime import datetime, timedelta
 
+def check_session_timeout():
+    """
+    Middleware function to check session timeout.
+    Should be registered as a @before_app_request function.
+    """
+    session.permanent = True
+    current_app.permanent_session_lifetime = timedelta(minutes=30)  # Session timeout set to 30 minutes
+
+    last_activity = session.get('last_activity')
+    if last_activity:
+        if datetime.utcnow() > datetime.fromisoformat(last_activity) + timedelta(minutes=30):
+            session.clear()  # Clear session if timeout exceeded
+            return jsonify({"message": "Session expired, please log in again."}), 403
+    session['last_activity'] = datetime.utcnow().isoformat()
 
 def session_required(f):
+    """
+    Decorator to ensure the user is logged in with an active session.
+    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not session.get('logged_in'):
@@ -13,8 +31,10 @@ def session_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
 def admin_required(f):
+    """
+    Decorator to ensure the user has admin privileges.
+    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         # Check if the user is logged in by verifying session data
@@ -39,6 +59,3 @@ def admin_required(f):
         # Allow access to the route
         return f(*args, **kwargs)
     return decorated_function
-
-
-
