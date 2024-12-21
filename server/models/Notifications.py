@@ -63,15 +63,15 @@ class SignupResponseHandler(ResponseHandler):
 class SearchResponseHandler(ResponseHandler):
     def handle(self, result):
         if result == "success":
-            return jsonify({"message": "Search completed successfully.", "status": "success"})
+            return {"message": "Search completed successfully.", "status": "success"}
         elif result == "invalid_search":
-            return jsonify({"message": "Invalid search input. Avoid using special characters.", "status": "error"})
-        return jsonify({"message": "Unknown search error.", "status": "error"})
+            return {"message": "Invalid search input. Avoid using special characters.", "status": "error"}
+        return {"message": "Unknown search error.", "status": "error"}
 
 
 class AdminCampaignResponseHandler(ResponseHandler):
     def handle(self, action):
-        return jsonify({"message": f"Admin has performed {action} on a campaign.", "status": "success"})
+        return {"message": f"Admin has performed {action} on a campaign.", "status": "success"}
 
 
 class AdminUserResponseHandler(ResponseHandler):
