@@ -17,7 +17,12 @@ class CharityResponseHandler(ResponseHandler):
             return {"message": "Charity with the same name already exists.", "status": "error"}
         if action == "id_exists":
             return {"message": "Charity with the same ID already exists.", "status": "error"}
-
+        if action == "id_required":
+            return {"message": "Charity ID is required.", "status": "error"}
+        if action == "not_found":
+            return {"message": "Charity not found.", "status": "error"}
+        if action == "already_following_charity":
+            return {"message": "User is already following this charity.", "status": "error"}
         return {"message": f"User has {action} a charity successfully.", "status": "success"}
 
 
@@ -76,9 +81,11 @@ class AdminUserResponseHandler(ResponseHandler):
 
 class UserResponseHandler(ResponseHandler):
     def handle(self, found):
+        if found == "user_id_required":
+            return {"message": "User ID is required.", "status": "error"}
         if found == "user_found":
-            return jsonify({"message": "User found successfully.", "status": "success"})
-        return jsonify({"message": "User not found.", "status": "error"})
+            return {"message": "User found successfully.", "status": "success"}
+        return {"message": "User not found.", "status": "error"}
 
 
 class ShopResponseHandler:
@@ -111,6 +118,9 @@ class ErrorProcessor:
             "charity_missing_fields": lambda:  CharityResponseHandler().handle("missing_fields"),
             "charity_exists": lambda name:  CharityResponseHandler().handle("exists"),
             "charity_id_exists": lambda id:  CharityResponseHandler().handle("id_exists"),
+            "charity_id_required": lambda:  CharityResponseHandler().handle("id_required"),
+            "charity_not_found": lambda:  CharityResponseHandler().handle("not_found"),
+            "already_following_charity": lambda:  CharityResponseHandler().handle("already_following_charity"),
             "campaign_follow": lambda:  CampaignResponseHandler().handle("followed"),
             "campaign_unfollow": lambda:  CampaignResponseHandler().handle("unfollowed"),
             "campaign_register": lambda:  CampaignResponseHandler().handle("registered"),
@@ -140,7 +150,7 @@ class ErrorProcessor:
             "shop_add_product_error": lambda:  ShopResponseHandler().handle("add_product_error"),
             "user_found": lambda:  UserResponseHandler().handle("user_found"),
             "user_not_found": lambda:  UserResponseHandler().handle("user_not_found"),
-
+            "user_id_required": lambda: UserResponseHandler().handle("user_id_required"),
         }
 
     def process_error(self, error, name=None, id=None):
