@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify, redirect, url_for, session
 from models.dbSchema import db, Merch
 from datetime import datetime
-from Security import session_required admin_required
 
 shop_bp = Blueprint('shop', __name__)
 
@@ -29,11 +28,8 @@ def get_products():
 
 
 @shop_bp.route('/products/add', methods=['POST'])
-@session_required
-@admin_required
 def add_products():
     try:
-
         product_data = request.json
 
         # field extraction

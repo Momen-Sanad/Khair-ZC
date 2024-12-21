@@ -61,23 +61,23 @@ def search_campaign():
 
     # Serialize campaigns into JSON
     json_campaigns = [
-        {
-            "id": campaign.id,
-            "title": campaign.title,
-            "description": campaign.description,
-            "date": campaign.date,
-            "reward": campaign.reward,
-            "charity_id": campaign.charity_id,
-<<<<<<< HEAD
-            "capacity": campaign.capacity,   
-            "author":campaign.author,
-            "image":campaign.image
-        }
-        json_campaigns.append(campaign)
+    {
+        "id": campaign.id,
+        "title": campaign.title,
+        "description": campaign.description,
+        "date": campaign.date.isoformat(),
+        "reward": campaign.reward,
+        "charity_id": campaign.charity_id,
+        "capacity": campaign.capacity,
+        "author": campaign.author,
+        "image": campaign.image
+    }
+    for campaign in campaigns
+    ]
 
     return jsonify(json_campaigns), 200
 
-@serach_bp.route('/campaigns', methods=['GET'])
+@search_bp.route('/campaigns', methods=['GET'])
 def get_campaigns():
     campaigns = Campaign.query.all()
     json_campaigns = [
@@ -96,7 +96,7 @@ def get_campaigns():
     ]
     return jsonify(json_campaigns), 200
 
-@serach_bp.route('/campaigns/<int:campaign_id>', methods=['GET'])
+@search_bp.route('/campaigns/<int:campaign_id>', methods=['GET'])
 def get_campaign(campaign_id):
     campaign = Campaign.query.filter_by(id=campaign_id).first()
     if campaign:
@@ -114,10 +114,3 @@ def get_campaign(campaign_id):
 
     return jsonify({"error": "Campaign not found"}), 404
 
-=======
-            "capacity": campaign.capacity
-        } for campaign in campaigns
-    ]
-
-    return jsonify(json_campaigns), 200
->>>>>>> backend
