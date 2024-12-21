@@ -73,16 +73,23 @@ from flask import session, jsonify
 @session_required
 def get_user():
     """
-    Endpoint to retrieve user details based on session data.
+    Endpoint to retrieve user details based on the email stored in the session.
     Returns limited information for non-admin users.
     """
-    user_id = session.get('user_id')
-    user = User.query.filter_by(id=user_id).first()
+    user_email = session.get('email')  # Retrieve email from session
+    if not user_email:
+        return jsonify({
+            "message": "Email not found in session.",
+            "notification": "Please log in to access your profile."
+        }), 404
+
+    # Query user by email
+    user = User.query.filter_by(email=user_email).first()
 
     if not user:
         return jsonify({
             "message": "User not found.",
-            "notification": "No user found with the provided ID."
+            "notification": "No user found with the provided email."
         }), 404
 
     # Admin users have a different response structure

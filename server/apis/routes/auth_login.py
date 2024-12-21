@@ -75,32 +75,47 @@ def register():
     else:
         return jsonify({"message": "User Entered as a Guest", "status": "success"}), 201
 
+
 @auth_bp.route('/login', methods=['POST'])
 def login():
+    """
+    Handles user login by verifying credentials and starting a session.
+    """
     email = request.json.get('email')
     password = request.json.get('userPass')
+
+    # Fetch the user by email
     user = User.query.filter_by(email=email).first()
 
     if user is None:
+        # Return error if user doesn't exist
         return jsonify(Notifications.process_error("login_invalid")), 404
 
+    # Verify the provided password matches the stored hash
     if bcrypt.check_password_hash(user.password, password):
+        # Generate a JWT token for the user
         token = jwt.encode(
             {'user_id': user.id, 'exp': datetime.utcnow() + timedelta(hours=1)},
-            'your_secret_key',
+            'your_secret_key',  # Replace with your actual secret key
             algorithm="HS256"
         )
 
-        session.permanent = True
+        # Set session values
+        session.permanent = True  # Enable permanent sessions
         session['logged_in'] = True
         session['user_id'] = user.id
-        session['last_activity'] = datetime.utcnow().isoformat()
+        session['email'] = user.email  # Store the user's email in the session
+        session['last_activity'] = datetime.utcnow().isoformat()  # Track session activity
+
+        # Prepare the success response
         response_data = Notifications.process_error("login_success")
         response_data['token'] = token
 
         return jsonify(response_data), 200
-    else:
-        return jsonify(Notifications.process_error("login_invalid")), 401
+
+    # Return error if password is invalid
+    return jsonify(Notifications.process_error("login_invalid")), 401
+
 
 @auth_bp.route('/logout', methods=['POST'])
 @session_required
