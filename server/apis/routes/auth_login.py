@@ -254,15 +254,29 @@ def login():
         f"&state={state}"
     )
     return redirect(auth_url)
+from flask import make_response
 
-# Logout route
+
+
 @auth_bp.route('/logout', methods=['POST'])
 @session_required
 def logout():
+    """
+    Handles user logout by clearing the session and deleting cookies.
+    """
+    # Clear session data
     session.pop('logged_in', None)
-    session.pop('user_id', None)  # Clear the user ID from the session
-    session.pop('last_activity', None)  # Clear the last activity timestamp
-    return jsonify({
+    session.pop('user_id', None)
+    session.pop('last_activity', None)
+    session.pop('email', None)  # Clear the email session if stored
+
+    # Create a response to delete cookies
+    response = make_response(jsonify({
         "message": "Logged out successfully!",
         "notification": "You have been logged out."
-    })
+    }))
+    response.delete_cookie('session')  # Delete the session cookie
+    response.delete_cookie('csrf_token', path='/')  # Delete CSRF token cookie if applicable
+    # Add any additional cookies to clear as needed
+
+    return response
