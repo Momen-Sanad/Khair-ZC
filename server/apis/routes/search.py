@@ -42,6 +42,39 @@ def search_charity():
 
     return jsonify(json_charities), 200
 
+@search_bp.route('/charities', methods=['GET'])
+def get_charties():
+    charities = Charity.query.all()
+    json_charities = [
+        {
+            "id": charity.id,
+            "name": charity.name,
+            "address": charity.address,
+            "description": charity.description,
+            "category": charity.category,
+            "image":charity.image
+        } for charity in charities
+    ]
+
+    return jsonify(json_charities), 200
+
+
+@search_bp.route('/charities/<int:charity_id>', methods=['GET'])
+def get_charity(charity_id):
+    charity = Charity.query.filter_by(id=charity_id).first()
+    if charity:
+        return jsonify({
+            "id": charity.id,
+            "name": charity.name,
+            "address": charity.address,
+            "description": charity.description,
+            "category": charity.category,
+            "image":charity.image
+        }), 200
+
+    return jsonify({"error": "Charity not found"}), 404
+
+
 @search_bp.route('/campaign', methods=['GET'])  # route is /search/campaign
 @session_required
 def search_campaign():
@@ -61,15 +94,56 @@ def search_campaign():
 
     # Serialize campaigns into JSON
     json_campaigns = [
+    {
+        "id": campaign.id,
+        "title": campaign.title,
+        "description": campaign.description,
+        "date": campaign.date.isoformat(),
+        "reward": campaign.reward,
+        "charity_id": campaign.charity_id,
+        "capacity": campaign.capacity,
+        "author": campaign.author,
+        "image": campaign.image
+    }
+    for campaign in campaigns
+    ]
+
+    return jsonify(json_campaigns), 200
+
+@search_bp.route('/campaigns', methods=['GET'])
+def get_campaigns():
+    campaigns = Campaign.query.all()
+    json_campaigns = [
         {
             "id": campaign.id,
             "title": campaign.title,
             "description": campaign.description,
-            "date": campaign.date,
+            "date": campaign.date.isoformat(),
             "reward": campaign.reward,
             "charity_id": campaign.charity_id,
-            "capacity": campaign.capacity
-        } for campaign in campaigns
+            "capacity": campaign.capacity,
+            "author":campaign.author,
+            "image":campaign.image
+        }
+        for campaign in campaigns
     ]
-
     return jsonify(json_campaigns), 200
+
+@search_bp.route('/campaigns/<int:campaign_id>', methods=['GET'])
+def get_campaign(campaign_id):
+    campaign = Campaign.query.filter_by(id=campaign_id).first()
+    if campaign:
+        return jsonify({
+            "id": campaign.id,
+            "title": campaign.title,
+            "description": campaign.description,
+            "date": campaign.date.isoformat(),
+            "reward": campaign.reward,
+            "charity_id": campaign.charity_id,
+            "capacity": campaign.capacity,
+            "author":campaign.author,
+            "image":campaign.image
+        }), 200
+
+    return jsonify({"error": "Campaign not found"}), 404
+

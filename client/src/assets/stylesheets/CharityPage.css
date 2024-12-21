@@ -1,0 +1,65 @@
+.text-content {
+    white-space: pre-wrap;
+    direction: auto;
+    text-align: start; 
+    font-family:'Cairo';
+}
+
+.text-segment {
+    display: block; 
+    margin-bottom: 0.5em;
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.Charity-page {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.Charity-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 40px;
+}
+
+.Charity-name{
+    font-family:Tahoma, Geneva, Verdana, sans-serif;
+    justify-items: center;
+    border-radius: 15px;
+    border-color: black;
+    background-color: white;
+    color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+    background:linear-gradient(135deg,#2a9f5b,#1B4137);
+
+}
+
+.Charity-Desc{
+    border-radius: 15px;
+    border-color: black;
+    font-size:larger;
+    background-color: white;
+    color: black;
+    padding-left: 40px;
+    font-family: 'Cairo';
+    font-weight: bold;
+}
+.Charity-Info{
+    border-radius: 15px;
+    background:linear-gradient(135deg,#2a9f5b,#1B4137);
+    display:flex;
+    justify-content: space-around;
+}
+.Charity-Info p {
+    margin-right: 10px;
+  }
+
+.Charity-image{
+    height: 500px;
+    border-radius: 15px;
+}

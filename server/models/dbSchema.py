@@ -1,4 +1,3 @@
-
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 db = SQLAlchemy()
@@ -48,7 +47,7 @@ class Campaign(db.Model):
     # Use Text for longer descriptions
     description = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime(), nullable=False,
-                     default=datetime.datetime.utcnow)
+default=datetime.datetime.utcnow)
     reward = db.Column(db.Integer(), default=0, nullable=False)
     # Specify which charity is responsible for this campaign
     charity_id = db.Column(db.Integer(), db.ForeignKey(
@@ -66,6 +65,7 @@ class Merch(db.Model):
     # Use Text for longer descriptions
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Integer(), nullable=False)
+    image = db.Column(db.String(255), nullable=True)
     # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image
 
 
@@ -83,3 +83,7 @@ class RegisteredCampaign(db.Model):
         'user.id'), nullable=False)
     campaign_id = db.Column(db.Integer(), db.ForeignKey(
         'campaign.id'), primary_key=True)
+    
+class Media(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # Auto-incrementing ID
+    image_link = db.Column(db.String(500), nullable=False)   

@@ -1,8 +1,38 @@
-
 body {
     background-color: #0d181c;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;        
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+.search-bar {
+    margin-left: 190px;
+    display: grid;
+    grid-area: search;
+    justify-items: center;
+    align-items: center;
+    background: hsl(0, 0%, 99%);
+    padding: 5px;
+    width: 700px;  
+    height: 35px;  
+    border-radius: 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    height: 100%;
+    padding: 5px 15px;
+    border-radius: 20px;  /* Rounded corners to match the search bar */
+    font: 16px/1 system-ui, sans-serif;
+    background-color: #fff;
+    outline: none;
+}
+
+.search-bar input:focus {
+    border-color: #2a9f5b;  /* Ensure border color remains blue when focused */
+}   
+
+.search-bar input::placeholder {
+    color: hsl(0, 0%, 50%);
+}
+
 
 .campaign-container {
     display: flex;
@@ -22,7 +52,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background:linear-gradient(135deg,#2a9f5b,#1B4137);
+    background: linear-gradient(135deg, #2a9f5b, #1B4137);
     padding: 20px 15px;
     font-weight: bold;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -33,7 +63,7 @@ body {
     width: 80px;
     height: 65px;
     line-height: 1px;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;        
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .Date-box:hover {
@@ -49,7 +79,7 @@ body {
     padding: 5px;
     border-radius: 25px;
     max-width: 950px;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;        
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 }
 
@@ -62,6 +92,8 @@ body {
     flex: 2;
     display: flex;
     flex-direction: column;
+    font-family: 'Cairo';
+    font-weight:700;
 }
 
 .CampaignPhoto {
@@ -80,12 +112,12 @@ body {
 }
 
 .vertical-line {
-    position: fixed; 
-    top: 100px; 
+    position: fixed;
+    top: 100px;
     right: 340px;
     width: 3px;
     height: 80%;
-    background: linear-gradient(135deg, #2a9f5b, #1b4137); 
+    background: linear-gradient(135deg, #2a9f5b, #1b4137);
 }
 
 
@@ -93,7 +125,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    position:fixed;
+    position: fixed;
     right: 0px;
     padding: 5px;
     margin: 20px;
@@ -107,48 +139,49 @@ body {
     align-content: center;
     justify-content: center;
     border-radius: 20px;
-    font-size: 14px; 
+    font-size: 14px;
     color: white;
     background: linear-gradient(135deg, #2a9f5b, #1B4137);
-    max-width: 150px; 
-    font-family:'Segoe UI';
+    max-width: 150px;
+    font-family: 'Segoe UI';
     line-height: 0.1;
 }
 
 .profile-data table {
-    width:fit-content;
+    width: fit-content;
     border-spacing: 10px;
     background-color: #ccc;
     border-radius: 20px;
     margin-top: 10px;
     color: #0d181c;
-  }
-  
-  .profile-data td:first-child {
-    font-weight: bold;
-    text-align: left;
-  }
-  
-  .profile-data td:last-child {
-    text-align: right;
-    color: #2a9f5b;
-  }
-  
-  .profile-data tr:last-child td:last-child {
-    color: red; 
 }
 
-.info   {
-    
+.profile-data td:first-child {
+    font-weight: bold;
+    text-align: left;
+}
+
+.profile-data td:last-child {
+    text-align: right;
+    color: #2a9f5b;
+}
+
+.profile-data tr:last-child td:last-child {
+    color: red;
+}
+
+.info {
+
     padding-left: 0;
     list-style: none;
 }
 
-.icon{
+.icon {
     margin-right: 8px;
+    color: #2a9f5b;
 }
 
-.campaign-link{
+.campaign-link {
     text-decoration: none;
     display: flex;
     justify-content: space-between;
@@ -159,5 +192,5 @@ body {
     border-radius: 25px;
     max-width: 950px;
     gap: 20px;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;  
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

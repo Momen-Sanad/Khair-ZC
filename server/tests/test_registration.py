@@ -10,8 +10,9 @@ import datetime
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, parent_dir)
 
+from models.dbSchema import User, Campaign, RegisteredCampaign, Charity
 from app import create_app, db, bcrypt  # Import the Flask app and extensions
-from models.dbSchema import User, Campaign, RegisteredCampaign,Charity
+
 
 class RegistrationTestCase(unittest.TestCase):
     def setUp(self):
@@ -57,7 +58,7 @@ class RegistrationTestCase(unittest.TestCase):
             is_admin=True  # Set admin flag
         )
         db.session.add(self.admin)
-        
+
         # create a charity
         self.charity = Charity(
             id=1,
@@ -78,8 +79,7 @@ class RegistrationTestCase(unittest.TestCase):
             charity_id=1,  # Assuming charity with id=1 exists or adjust accordingly
             capacity=1
         )
-        
-        
+
         db.session.add(self.campaign)
 
         # Commit all changes to the database
@@ -126,7 +126,8 @@ class RegistrationTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         data = json.loads(response.data)
         # As per ErrorProcessor
-        self.assertEqual(data['message'], "You have successfully attended this campaign.")
+        self.assertEqual(
+            data['message'], "You have successfully attended this campaign.")
         self.assertEqual(data['status'], "success")
 
     def test_register_user_for_campaign_missing_fields(self):
@@ -423,7 +424,8 @@ class RegistrationTestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 201)
         data = json.loads(response.data)
-        self.assertEqual(data['message'], "You have successfully attended this campaign.")
+        self.assertEqual(
+            data['message'], "You have successfully attended this campaign.")
         self.assertEqual(data['status'], "success")
 
 
