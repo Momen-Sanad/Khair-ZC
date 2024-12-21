@@ -7,6 +7,7 @@ from models.Notifications import ErrorProcessor
 charity_bp = Blueprint('charity', __name__)
 Notifications = ErrorProcessor()
 
+
 @charity_bp.route('/create', methods=['POST'])
 @session_required
 @admin_required
@@ -35,6 +36,10 @@ def create():
         if existing_charity:
             return jsonify(Notifications.process_error("charity_exists", name=charity_name)), 400
 
+        existing_charId = Charity.query.filter_by(id=charity_id).first()
+        if existing_charId:
+            return jsonify(Notifications.process_error("charity_id_exists", id=charity_id)), 400
+
         # Create new charity
         new_charity = Charity(
             id=charity_id,
@@ -45,7 +50,8 @@ def create():
         )
 
         db.session.add(new_charity)
-        created_charities.append({"charityId": charity_id, "charityName": charity_name})
+        created_charities.append(
+            {"charityId": charity_id, "charityName": charity_name})
 
     db.session.commit()
     return jsonify({"message": "Charities created successfully", "charities": created_charities}), 201
