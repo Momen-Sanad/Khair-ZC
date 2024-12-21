@@ -66,6 +66,7 @@ class Merch(db.Model):
     # Use Text for longer descriptions
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Integer(), nullable=False)
+    image = db.Column(db.String(255), nullable=True)
     # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image
 
 

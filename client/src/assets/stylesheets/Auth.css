@@ -1,0 +1,189 @@
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensures it occupies at least the full viewport height */
+  overflow: hidden; /* Prevents any accidental overflow causing scroll bars */
+  box-sizing: border-box; /* Ensures padding is included in height calculation */
+}
+
+.auth-box-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  max-width: 1000px;
+  /* background-color: rgba(240, 240, 240, 0.031); */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 75px;
+  width: 100%;
+}
+
+.logo {
+  height: 125px;
+  width: auto;
+}
+
+.auth-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-wrapper {
+  flex: 1;
+  /* Take up space proportionally */
+}
+
+.auth-box-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.auth-form {
+  background-color: #1f2a2e;
+  border-radius: 32px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  width: 395px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.auth-form h2 {
+  color: #fff;
+  font-size: 30px;
+  text-align: center;
+  width: 100%;
+  margin: 40px 0px 40px 0px;
+}
+
+.input-data-container {
+  width: 375px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.input-data-container input {
+  padding: 12px 12px 12px 16px;
+  width: 350px;
+  border: none;
+  border-radius: 50px;
+  background-color: #00000046;
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.input-data-container .icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 18px;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #0e4aff;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 22px;
+  margin-bottom: 10px;
+}
+
+.auth-form button:hover {
+  background-color: #0031c2;
+}
+
+.auth-link {
+  text-align: center;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.auth-link p {
+  color: #888;
+  font-size: 18px;
+  margin: 15;
+}
+
+.auth-link button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;  /* Ensures the button font size matches the paragraph's */
+}
+
+.auth-link button:hover {
+  color: #0056b2;  /* Optional: Change color on hover */
+}
+
+.back-button {
+  display: flex;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 125px;
+  align-self: flex-start;
+  position: fixed;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  text-align: center;
+  margin-left: 50px;
+  z-index: 10;
+}
+
+.back-button:hover {
+  color: #0056b2;
+}
+
+.auth-separator {
+  width: 3px;
+  /* Thin vertical line */
+  height: 250px;
+  border-radius: 100px;
+  /* Full height of the parent container */
+  background: linear-gradient(to bottom, #00bf63, #007a74);
+  /* Gradient color */
+  margin: 0px 40px 0px 40px;
+  /* Spacing around the separator */
+}
+
+.auth-with-third-party {
+  flex: 0 0 50%;
+  /* Take up proportional space */
+  background-color: red;
+  /* Red background for visualization */
+  height: 200px;
+  /* Define height */
+  display: flex;
+  justify-content: center;
+  /* Center content horizontally */
+  align-items: center;
+  /* margin-left: 60px; */
+  /* Center content vertically */
+}

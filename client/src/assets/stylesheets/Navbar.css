@@ -7,15 +7,15 @@
 .navbar {
   background: linear-gradient(to bottom, rgb(0, 0, 0), rgba(255, 0, 0, 0));
   color: white;
-  position: sticky;    
+  position: sticky;
   top: 0;
-  z-index: 500;          
+  z-index: 500;
   width: 100%;
   transition: all 0.3s ease;
 }
 
 .navbar-container {
-  display: flex;          
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 18px 40px 18px 18px;
@@ -31,14 +31,14 @@
   width: 100px;
   /* padding-right: 100px; */
 }
-  
+
 .navbar-items {
   flex: 1;
   justify-content: center;
   text-align: center;
   align-items: center;
-  list-style-type: none;  
-  display: flex;     
+  list-style-type: none;
+  display: flex;
   gap: 150px;
 }
 
@@ -58,14 +58,13 @@
 }
 
 .navbar-item:hover {
-  padding: 10px 2px;
-  background-color: white;
-  border-radius: 20px;
-  color: green;         
+  color: greenyellow;
 }
+
 
 .auth-button {
   color: white;
+  text-decoration: none;
   border-color: #80cc28;
   border-width: 3px;
   border-style: solid;
