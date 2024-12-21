@@ -1,22 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FaUser, FaCog, FaShieldAlt, FaChartBar, FaSignOutAlt } from "react-icons/fa";
 import '../assets/stylesheets/Profile.css';
 import logo from '../assets/images/icon.png';
 
+interface user {
+  id: string
+  firstName: string,
+  lastName: string,
+  email: string,
+  isAdmin: boolean,
+  points: number
+}
+
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('appearance');
+  const [user, setUser] = useState<user>();
+  const fetchUser = 'http://localhost:5000/security/user'
 
-  // Mock user data - replace with your actual data
-  const userData = {
-    id: "202300491",
-    name: "Amr",
-    email: "amr@gmail.com",
-    description: "This is a description",
-    points: 1250,
-    followedCharities: 5,
-    attendedCampaigns: 12,
-    status: "Admin"
-  };
+  useEffect(() => {
+      const fetchUserData = async () => {
+        try {
+          const response = await fetch(fetchUser, {
+            method: 'GET',
+            credentials: 'include',
+          });
+          if (!response.ok) {
+            throw new Error('Failed to fetch user data');
+          }
+    
+          const userData = await response.json();
+          setUser(userData);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+    
+      fetchUserData();
+    }, []);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -26,10 +46,10 @@ const Profile = () => {
             <h2>Profile Details</h2>
             <div className="profile-details">
               <div className="detail-item">
-                <p>ID: {userData.id}</p>
-                <p>Name: {userData.name}</p>
-                <p>Email: {userData.email}</p>
-                <p>Description: {userData.description}</p>
+                <p>ID: {user?.id}</p>
+                <p>Name: {user?.firstName}{user?.lastName}</p>
+                <p>Email: {user?.email}</p>
+                <p>Description: {}</p>
               </div>
             </div>
           </div>
@@ -41,10 +61,10 @@ const Profile = () => {
             <h2>User Statistics</h2>
             <div className="statistics-grid">
               <div className="stat-item">
-                <p>Current Points: {userData.points}</p>
-                <p>Followed Charities: {userData.followedCharities}</p>
-                <p>Attended Campaigns: {userData.attendedCampaigns}</p>
-                <p>Status: {userData.status}</p>
+                <p>Current Points: {user?.points}</p>
+                <p>Followed Charities: {}</p>
+                <p>Attended Campaigns: {}</p>
+                <p>Status: {user?.isAdmin ? "Admin" : "User"}</p>
               </div>
             </div>
           </div>

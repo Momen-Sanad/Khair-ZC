@@ -68,7 +68,6 @@ def admin_required(f):
 
 from flask import session, jsonify
 
-
 @security_bp.route('/user', methods=['GET'])
 @session_required
 def get_user():

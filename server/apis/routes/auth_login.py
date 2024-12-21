@@ -75,7 +75,6 @@ def register():
     else:
         return jsonify({"message": "User Entered as a Guest", "status": "success"}), 201
 
-
 @auth_bp.route('/login', methods=['POST'])
 def login():
     """

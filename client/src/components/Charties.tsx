@@ -27,20 +27,8 @@ const Charities = () => {
   const [charities, setCharities] = useState<charity[]>([]);
   const [user, setUser] = useState<user>();
   const fetchCharities = 'http://localhost:5000/search/charities'
-  const fetchUser = 'http://localhost:5000/auth/user'
+  const fetchUser = 'http://localhost:5000/security/user'
   useEffect(() => {
-    // Mocking the user data for testing
-    const mockedUser = {
-      id: '123',
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'johndoe@example.com',
-      isAdmin: true,
-      points: 50
-    };
-    setUser(mockedUser); // Set the mocked user data
-
-    // Fetching charities from the API
     fetch(fetchCharities)
       .then(response => {
         if (!response.ok) {
@@ -56,14 +44,27 @@ const Charities = () => {
       });
   }, []);
 
-  useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
+useEffect(() => {
+      const fetchUserData = async () => {
+        try {
+          const response = await fetch(fetchUser, {
+            method: 'GET',
+            credentials: 'include',
+          });
+          if (!response.ok) {
+            throw new Error('Failed to fetch user data');
+          }
+    
+          const userData = await response.json();
+          setUser(userData);
+        } catch (error) {
+          console.error('Error:', error);
         }
-      }, []);
-  
-  
+      };
+    
+      fetchUserData();
+    }, []);
+
   const filteredCharities = charities.filter((charity) =>
     charity.name.toLowerCase().includes(searchInput.toLowerCase())
   );

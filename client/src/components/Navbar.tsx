@@ -21,12 +21,27 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   const [user, setUser] = useState<User | null>(null); // State for user data
   const [showNotifications, setShowNotifications] = useState<boolean>(false);
+  const fetchUser = 'http://localhost:5000/security/user'
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(fetchUser, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+  
+        const userData = await response.json();
+        setUser(userData);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+  
+    fetchUserData();
   }, []);
 
 
