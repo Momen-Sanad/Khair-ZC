@@ -100,12 +100,11 @@ def login():
         )
 
         # Set session values
-        session.permanent = True  # Enable permanent sessions
+        session.permanent = True  # Makes the session persist
         session['logged_in'] = True
         session['user_id'] = user.id
-        session['email'] = user.email  # Store the user's email in the session
-        session['last_activity'] = datetime.utcnow().isoformat()  # Track session activity
-
+        session['email'] = user.email
+        session['last_activity'] = datetime.utcnow().isoformat()
         # Prepare the success response
         response_data = Notifications.process_error("login_success")
         response_data['token'] = token

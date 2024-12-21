@@ -6,17 +6,14 @@ from models.Notifications import ErrorProcessor
 search_bp = Blueprint('search', __name__)
 Notifications = ErrorProcessor()
 
-@search_bp.route('/charity', methods=['GET'])  # route is /search/charity
-@session_required
+'''@search_bp.route('/charity', methods=['GET'])
 def search_charity():
-    # Search by name and optionally filter by category
     name = request.args.get('name', '').strip().lower()
     category = request.args.get('category', '').strip()
 
     if not name:
         return jsonify(Notifications.process_error("search_invalid_name")), 400
 
-    # Add regex for partial search
     regex_name = f"%{name}%"
 
     # Query charities with optional category filtering
@@ -28,19 +25,10 @@ def search_charity():
 
     if not charities:
         return jsonify(Notifications.process_error("search_no_results")), 404
+    
+    # Return search results
+    return jsonify([charity.to_dict() for charity in charities])'''
 
-    # Serialize charities into JSON
-    json_charities = [
-        {
-            "id": charity.id,
-            "name": charity.name,
-            "address": charity.address,
-            "description": charity.description,
-            "category": charity.category
-        } for charity in charities
-    ]
-
-    return jsonify(json_charities), 200
 
 @search_bp.route('/charities', methods=['GET'])
 def get_charties():
