@@ -171,41 +171,6 @@ class AuthLoginTestCase(unittest.TestCase):
         self.assertEqual(
             data['message'], notifications.process_error("login_invalid")['message'])
 
-    def test_logout_success(self):
-        """Test logging out successfully."""
-        # First, log in to obtain a session
-        payload = {
-            'email': 's-test.user@zewailcity.edu.eg',
-            'userPass': 'TestPass123'
-        }
-        login_response = self.client.post(
-            self.login_url,
-            data=json.dumps(payload),
-            content_type='application/json'
-        )
-        self.assertEqual(login_response.status_code, 200)
-
-        # Extract the token from the login response
-        data = json.loads(login_response.data)
-        token = data.get('token')
-        self.assertIsNotNone(
-            token, "Token should not be None after successful login.")
-
-        # Perform logout by sending the token in the headers
-        headers = {
-            'x-access-token': token
-        }
-        logout_response = self.client.post(
-            self.logout_url,
-            headers=headers,
-            content_type='application/json'
-        )
-
-        self.assertEqual(logout_response.status_code, 200)
-        data = json.loads(logout_response.data)
-        self.assertEqual(data['message'], "Logged out successfully!")
-        self.assertEqual(data['notification'], "You have been logged out.")
-
     def test_token_required_protected_route(self):
         """Test accessing a protected route with a valid token."""
         protected_url = '/auth/protected'

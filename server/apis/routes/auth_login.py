@@ -25,10 +25,11 @@ Notifications = ErrorProcessor()
 # session expiration
 @auth_bp.before_app_request
 def register_session_timeout():
-    response = check_session_timeout() 
+    response = check_session_timeout()
     if isinstance(response, dict):
         return jsonify(response)
     return response
+
 
 def token_required(f):
 
@@ -40,13 +41,15 @@ def token_required(f):
         if not token:
             return jsonify(Notifications.process_error("login_invalid")), 403
         try:
-            data = jwt.decode(token, 'your_secret_key', algorithms=["HS256"])
+            data = jwt.decode(
+                token, auth_bp.config['SECRET_KEY'], algorithms=["HS256"])
             current_user = User.query.filter_by(id=data['user_id']).first()
         except Exception as e:
             return jsonify(Notifications.process_error("login_invalid")), 403
         return f(current_user, *args, **kwargs)
 
     return decorated_function
+
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
@@ -68,10 +71,11 @@ def register():
     PasswordRegex = r'^(?=(.*[a-zA-Z]))(?=(.*\d))(?=.{7,})'
     if not regex.match(PasswordRegex, password):
         return jsonify(Notifications.process_error("signup_invalid_password")), 400
-    
+
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-    new_user = User(id=user_id, fname=first_name, lname=last_name, password=hashed_password, email=email)
+    new_user = User(id=user_id, fname=first_name, lname=last_name,
+                    password=hashed_password, email=email)
 
     # Add the user to the session
     db.session.add(new_user)
@@ -87,6 +91,7 @@ def register():
     else:
         return jsonify({"message": "User Entered as a Guest", "status": "success"}), 201
 
+
 @auth_bp.route('/login', methods=['POST'])
 def login():
 
@@ -100,19 +105,21 @@ def login():
     # Check if the provided password matches the stored hash
     if bcrypt.check_password_hash(user.password, password):
         token = jwt.encode(
-            {'user_id': user.id, 'exp': datetime.utcnow() + timedelta(hours=1)},
+            {'user_id': user.id, 'exp': datetime.now() +
+             timedelta(hours=24)},
             'your_secret_key',  # Your secret key for encoding
             algorithm="HS256"  # The algorithm to use
         )
 
         # Set session values
         session['logged_in'] = True
-        session['user_id'] = user.id  # Optionally store the user ID in the session
-        session['last_activity'] = datetime.utcnow().isoformat()  # Track activity for timeout
-        response_data = Notifications.process_error("login_success")  # This should be a dict
+        # Optionally store the user ID in the session
+        session['user_id'] = user.id
+        session['last_activity'] = datetime.now(
+        ).isoformat()  # Track activity for timeout
+        response_data = Notifications.process_error(
+            "login_success")  # This should be a dict
         response_data['token'] = token  # Add the token
-
-
 
         return jsonify(response_data), 200
     else:
