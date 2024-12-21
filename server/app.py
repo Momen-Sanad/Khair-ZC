@@ -8,8 +8,9 @@ from werkzeug.exceptions import NotFound
 from models.dbSchema import db
 
 # Import blueprints from respective modules
-from apis.routes.auth_login import auth_bp 
+from apis.routes.auth_login import auth_bp
 from apis.routes.create_charity import charity_bp
+from flask_bcrypt import Bcrypt  # Import Bcrypt
 
 from apis.routes.points_system import points_bp
 from apis.routes.Campaign_Registeration import registration_bp
@@ -20,8 +21,12 @@ from apis.routes.shop import shop_bp
 from apis.routes.media import media_bp
 
 
+bcrypt = Bcrypt()  # Initialize Bcrypt
+
+
+# Function to create and configure the Flask app (API gateway)
 def create_app():
-    
+
     app = Flask(__name__, static_folder='static', template_folder='templates')
     CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
     # Load configuration
@@ -57,8 +62,6 @@ def create_app():
     @app.errorhandler(NotFound)
     def handle_not_found(error):
         return jsonify({"error": "Endpoint not found"}), 404
-
-
 
     return app
 

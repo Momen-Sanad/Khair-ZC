@@ -6,6 +6,7 @@ from models.Notifications import ErrorProcessor
 join_bp = Blueprint('join', __name__)
 Notifications = ErrorProcessor()
 
+
 @join_bp.route('/charity', methods=['POST'])  # route is /join/charity
 @session_required
 def join_charity():
@@ -33,4 +34,4 @@ def join_charity():
     # Add the new FollowedCharity object to the database
     db.session.add(followed_charity)
     db.session.commit()
-    return jsonify({"message": "User successfully followed the charity"}), 200
+    return jsonify({"message": "User successfully followed the charity", "status": "success"}), 200

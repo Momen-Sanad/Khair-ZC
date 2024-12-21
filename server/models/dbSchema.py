@@ -17,13 +17,15 @@ class User(db.Model):
 
 class FollowedCampaign(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.String(500), db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.String(500), db.ForeignKey(
+        'user.id'), nullable=False)
     campaigns = db.Column(db.String(100), nullable=True, default=None)
 
 
 class FollowedCharity(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.String(500), db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.String(500), db.ForeignKey(
+        'user.id'), nullable=False)
     charity_id = db.Column(db.Integer(), db.ForeignKey(
         'charity.id'), nullable=False)
 
@@ -48,10 +50,13 @@ class Campaign(db.Model):
                      default=datetime.datetime.utcnow)
     reward = db.Column(db.Integer(), default=0, nullable=False)
     # Specify which charity is responsible for this campaign
-    charity_id = db.Column(db.Integer(), db.ForeignKey('charity.id', ondelete ="CASCADE"), nullable=False)
+    charity_id = db.Column(db.Integer(), db.ForeignKey(
+        'charity.id', ondelete="CASCADE",onupdate="CASCADE"),nullable=False)
     capacity = db.Column(db.Integer(), default=0)
     image = db.Column(db.String(255), nullable=True)
-    author = db.Column(db.String(100), nullable=False)
+    author = db.Column(db.String(100),nullable=False , default="Khair")
+
+    # image = db.Column(db.image.png, nullable=False)  # Uncomment when implementing image
 
 
 class Merch(db.Model):
@@ -66,14 +71,16 @@ class Merch(db.Model):
 
 class RedeemedMerch(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.String(500), db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.String(500), db.ForeignKey(
+        'user.id'), nullable=False)
     merch_id = db.Column(db.Integer(), db.ForeignKey(
         'merch.id'), nullable=False)
     date = db.Column(db.Date(), nullable=False)  # Date of redemption
 
 
 class RegisteredCampaign(db.Model):
-    user_id = db.Column(db.String(500), db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.String(500), db.ForeignKey(
+        'user.id'), nullable=False)
     campaign_id = db.Column(db.Integer(), db.ForeignKey(
         'campaign.id'), primary_key=True)
     
