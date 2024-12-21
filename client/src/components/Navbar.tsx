@@ -8,14 +8,27 @@ import logo from '../assets/images/KhairZcLogo.png';
 import Notification from './Notification';
 import { FiBell } from "react-icons/fi";
 
+interface User {
+  username: string;
+}
 
 interface NavbarProps {
   isScrolled: boolean;
 }
 
+
+
 const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
-  const loggedIn = true
+  const [user, setUser] = useState<User | null>(null); // State for user data
   const [showNotifications, setShowNotifications] = useState<boolean>(false);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
 
   const toggleNotifications = () => {
     setShowNotifications((prev) => !prev);
@@ -32,7 +45,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
           <li><Link to='/campaigns' className='navbar-item'>Campaigns</Link></li>
           <li><Link to='/charities' className='navbar-item'>Charities</Link></li>
           <li><Link to='/media' className='navbar-item'>Media</Link></li>
-          {loggedIn ? (
+          {user ? (
             <>
               <li><Link to='/mini-shop' className='navbar-item'>Mini Shop</Link></li>
               <div className='notification-bell' onClick={toggleNotifications}>
@@ -53,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
               <li><Link to='/auth' className='navbar-item'>Mini Shop</Link></li>
               <Link to='/auth' className='auth-button'>
                 <FaUserGraduate />
-                SIGN UP
+                SIGN IN
               </Link>
             </>
           )}

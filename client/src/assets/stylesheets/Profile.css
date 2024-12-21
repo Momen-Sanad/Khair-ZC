@@ -61,7 +61,8 @@
   
   /* General Button Styles */
   .nav-item,
-  .logout-button {
+  .logout-button,
+  .home-button {
     display: flex;
     align-items: center;
     padding: 12px 20px;
@@ -85,7 +86,8 @@
   }
   
   .nav-item .icon,
-  .logout-button .icon {
+  .logout-button .icon,
+  .home-button {
     margin-right: 12px;
     font-size: 18px;
   }
@@ -127,6 +129,26 @@
     /* Prevents overflow issues */
   }
   
+  .home-button {
+    margin-top: auto;
+    /* Pushes to the bottom */
+    width: 220px;
+    /* Ensures it fits within padding */
+    margin: 0 20px 20px;
+    background: linear-gradient(135deg, #d32f2f, #9a0007);
+    /* Red gradient */
+    text-align: center;
+    /* Centers the text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Center the text horizontally */
+    position: relative;
+    /* Enables positioning for the icon */
+    overflow: hidden;
+    /* Prevents overflow issues */
+  }
+  
   /* Icon Styling */
   .logout-button .icon {
     position: absolute;
@@ -137,8 +159,25 @@
     /* Prevents interaction issues */
   }
   
+  
+  /* Icon Styling */
+  .home-button .icon {
+    position: absolute;
+    left: 15px;
+    /* Adjusts the icon position to the left */
+    font-size: 18px;
+    pointer-events: none;
+    /* Prevents interaction issues */
+  }
+  
   /* Hover Effect */
   .logout-button:hover {
+    background: linear-gradient(135deg, #ff5252, #d32f2f);
+    box-shadow: 0 4px 10px rgba(211, 47, 47, 0.4);
+    transform: translateY(-2px);
+  }
+  
+  .home-button:hover {
     background: linear-gradient(135deg, #ff5252, #d32f2f);
     box-shadow: 0 4px 10px rgba(211, 47, 47, 0.4);
     transform: translateY(-2px);

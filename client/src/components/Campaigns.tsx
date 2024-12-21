@@ -27,24 +27,13 @@ interface user {
 }
 
 const Campaigns = () => {
-  const loggedIn = true;
   const [searchInput, setSearchInput] = useState('');
   const [campaigns, setCampaigns] = useState<campaign[]>([]);
   const [user, setUser] = useState<user>();
   const fetchCampaigns = 'http://localhost:5000/search/campaigns'
-  const fetchUser = 'http://localhost:5000/auth/user'
+  const fetchUser = 'http://localhost:5000/security/user'
 
   useEffect(() => {
-
-    const mockedUser = {
-      id: '123',
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'johndoe@example.com',
-      isAdmin: true,
-      points: 50
-    };
-    setUser(mockedUser); // Set the mocked user data
 
     fetch(fetchCampaigns)
       .then(response => {
@@ -61,25 +50,28 @@ const Campaigns = () => {
       });
   }, []);
 
-  const handleLogin = async (email: string, password: string) => {
-    try {
-      const response = await fetch('http://localhost:5000/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, userPass: password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        // Store token in localStorage
-        localStorage.setItem('token', data.token);
-        // Redirect to dashboard or another page after successful login
-      } else {
-        console.error('Login failed:', data.error);
+   useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(fetchUser, {
+          method: 'GET',
+          credentials: 'include',
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+  
+        const userData = await response.json();
+        setUser(userData);
+      } catch (error) {
+        console.error('Error:', error);
       }
-    } catch (error) {
-      console.error('Login error:', error);
-    }
-  };
+    };
+  
+    fetchUserData();
+  }, []);
+
 
   const filteredCampaigns = campaigns.filter((campaign) =>
     campaign.title.toLowerCase().includes(searchInput.toLowerCase())
@@ -156,7 +148,7 @@ const Campaigns = () => {
         );
       })}
       <div className='profile-container'>
-        {loggedIn && (
+        {user && (
           <>
             {user?.isAdmin ? (
               <>

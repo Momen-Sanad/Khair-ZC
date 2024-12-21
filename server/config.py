@@ -8,7 +8,7 @@ load_dotenv()
 
 # Switch to choose between database configurations
 # Possible values: 'local' or 'railway'
-DATABASE_MODE = 'local'
+DATABASE_MODE = 'railway'
 
 
 class Config:

@@ -23,7 +23,6 @@ interface user {
 }
 
 const Charities = () => {
-  const loggedIn= true
   const [searchInput, setSearchInput] = useState('');
   const [charities, setCharities] = useState<charity[]>([]);
   const [user, setUser] = useState<user>();
@@ -56,26 +55,15 @@ const Charities = () => {
         console.error('Error:', error);
       });
   }, []);
-  const handleLogin = async (email: string, password: string) => {
-    try {
-      const response = await fetch('http://localhost:5000/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, userPass: password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        // Store token in localStorage
-        localStorage.setItem('token', data.token);
-        // Redirect to dashboard or another page after successful login
-      } else {
-        console.error('Login failed:', data.error);
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-    }
-  };
 
+  useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      }, []);
+  
+  
   const filteredCharities = charities.filter((charity) =>
     charity.name.toLowerCase().includes(searchInput.toLowerCase())
   );
@@ -120,7 +108,7 @@ const Charities = () => {
         );
       })}
       <div className='profile-container'>
-        {loggedIn && (
+        {user && (
           <>
             {user?.isAdmin ? (
               <>

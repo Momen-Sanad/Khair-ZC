@@ -33,10 +33,6 @@ def get_products():
 @shop_bp.route('/products/add', methods=['POST'])
 def add_products():
     try:
-<<<<<<< HEAD
-=======
-        # Parse JSON request
->>>>>>> remotes/origin/backend
         product_data = request.json
 
         # Extract required fields

@@ -123,6 +123,10 @@ const Profile = () => {
           </nav>
           <button className="logout-button">
             <FaSignOutAlt className="icon" />
+            <span>Home Page</span>
+          </button>
+          <button className="logout-button">
+            <FaSignOutAlt className="icon" />
             <span>Logout</span>
           </button>
         </div>

@@ -43,6 +43,7 @@ const CampaignPage: React.FC = () => {
             });
         }
     }, [id]);
+    
 
     if (!campaign) {
         return <h1>Loading..</h1>;

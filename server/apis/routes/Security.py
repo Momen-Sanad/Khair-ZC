@@ -1,6 +1,9 @@
 from functools import wraps
-from flask import session, jsonify, current_app
+from flask import session, jsonify, current_app,Blueprint
 from datetime import datetime, timedelta
+
+security_bp = Blueprint('security', __name__)
+
 
 def check_session_timeout():
     """
@@ -24,6 +27,7 @@ def session_required(f):
     """
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        print("Session debug:", session)  # Add this line
         if not session.get('logged_in'):
             return jsonify({
                 "message": "Session is missing or invalid!",
@@ -60,3 +64,36 @@ def admin_required(f):
         # Allow access to the route
         return f(*args, **kwargs)
     return decorated_function
+
+from flask import session, jsonify
+
+
+@security_bp.route('/user', methods=['GET'])
+@session_required
+def get_user():
+    print("Session ID:", session.get('user_id'))  # Add this line
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({
+            "message": "User not found in session.",
+            "notification": "Please log in to access your profile."
+        }), 404
+    
+    from models.dbSchema import User
+    user = User.query.filter_by(id=user_id).first()
+    
+    if not user:
+        return jsonify({
+            "message": "User not found.",
+            "notification": "No user found with the provided ID."
+        }), 404
+    
+    return jsonify({
+        "id": user.id,
+        "firstName": user.fname,
+        "lastName": user.lname,
+        "email": user.email,
+        "isAdmin": user.is_admin,
+        "points": user.points
+    })
+

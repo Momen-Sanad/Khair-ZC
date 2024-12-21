@@ -18,18 +18,18 @@ const Auth = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+  
     if (isSignUp && userPass !== confirmPassword) {
       alert("Passwords don't match!");
       return;
     }
-
+  
     try {
       const authType = isSignUp ? '/auth/register' : '/auth/login';
       const authParameters = isSignUp
         ? { fname, lname, email, userPass }
         : { email, userPass };
-
+  
       const response = await fetch(`http://localhost:5000${authType}`, {
         method: 'POST',
         headers: {
@@ -37,17 +37,20 @@ const Auth = () => {
         },
         body: JSON.stringify(authParameters)
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-
         if (data.token) {
           localStorage.setItem('authToken', data.token);
+
+          localStorage.setItem('user', JSON.stringify({
+            username: data.username || `${data.fname} ${data.lname}` || email,
+          }));
         }
-
+  
         console.log('Authentication successful', data);
-
+  
         if (isSignUp) {
           window.location.href = '/auth';
         } else {
@@ -63,6 +66,7 @@ const Auth = () => {
       alert('An error occurred during authentication');
     }
   };
+  
 
   return (
     <>
