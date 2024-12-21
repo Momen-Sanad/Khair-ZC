@@ -10,12 +10,16 @@ from models.dbSchema import db
 # Import blueprints from respective modules
 from apis.routes.auth_login import auth_bp
 from apis.routes.create_charity import charity_bp
+from flask_bcrypt import Bcrypt  # Import Bcrypt
 
 from apis.routes.points_system import points_bp
 from apis.routes.Campaign_Registeration import registration_bp
 from apis.routes.search import search_bp
 from apis.routes.join import join_bp
 from apis.routes.CampaignManipulation import campaign_bp
+
+
+bcrypt = Bcrypt()  # Initialize Bcrypt
 
 
 # Function to create and configure the Flask app (API gateway)
