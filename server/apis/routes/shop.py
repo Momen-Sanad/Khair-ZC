@@ -31,11 +31,9 @@ def get_products():
 
 
 @shop_bp.route('/products/add', methods=['POST'])
-@session_required
-@admin_required
 def add_products():
     try:
-        # Parse JSON request
+
         product_data = request.json
 
         # Extract required fields

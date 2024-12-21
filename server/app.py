@@ -1,4 +1,4 @@
-
+from flask_cors import CORS
 from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
@@ -17,16 +17,14 @@ from apis.routes.Campaign_Registeration import registration_bp
 from apis.routes.search import search_bp
 from apis.routes.join import join_bp
 from apis.routes.CampaignManipulation import campaign_bp
+from apis.routes.shop import shop_bp
+from apis.routes.media import media_bp
 
 
-bcrypt = Bcrypt()  # Initialize Bcrypt
-
-
-# Function to create and configure the Flask app (API gateway)
 def create_app():
 
     app = Flask(__name__, static_folder='static', template_folder='templates')
-
+    CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
     # Load configuration
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = 'your_secret_key'
@@ -43,6 +41,9 @@ def create_app():
     app.register_blueprint(registration_bp, url_prefix='/registration')
     app.register_blueprint(search_bp,       url_prefix='/search')
     app.register_blueprint(join_bp,         url_prefix='/join')
+    app.register_blueprint(shop_bp,         url_prefix='/shop')
+    app.register_blueprint(media_bp,        url_prefix='/media' )
+
 
     # Health check endpoint
     @app.route('/health', methods=['GET'])
@@ -72,3 +73,4 @@ with app.app_context():
 # Run the app
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+    CORS(app)

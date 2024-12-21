@@ -1,3 +1,20 @@
+.text-content {
+    white-space: pre-wrap;
+    direction: auto;
+    text-align: start; 
+    font-family:'Cairo';
+}
+
+.text-segment {
+    display: block; 
+    margin-bottom: 0.5em;
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+
+
 .Campaign-page {
     display: flex;
     justify-content: space-around;
@@ -31,6 +48,8 @@
     background-color: white;
     color: black;
     padding-left: 40px;
+    font-family: 'Cairo';
+    font-weight: bold;
 }
 .Campaign-Info{
     border-radius: 15px;

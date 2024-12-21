@@ -36,7 +36,7 @@ def token_required(f):
         if not token:
             return jsonify(Notifications.process_error("login_invalid")), 403
         try:
-            data = jwt.decode(token, auth_bp.config['SECRET_KEY'], algorithms=["HS256"])
+            data = jwt.decode(token, 'your_secret_key', algorithms=["HS256"])
             current_user = User.query.filter_by(id=data['user_id']).first()
         except Exception as e:
             return jsonify(Notifications.process_error("login_invalid")), 403
