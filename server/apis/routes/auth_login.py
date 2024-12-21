@@ -1,7 +1,7 @@
 from models.Notifications import ErrorProcessor
 from models.dbSchema import db, User
 from apis.routes.Security import session_required, check_session_timeout
-from datetime import datetime, timedelta
+from datetime import datetime ,timedelta
 from flask import Blueprint, request, jsonify, session
 from requests_oauthlib import OAuth2Session
 from flask_bcrypt import Bcrypt
@@ -96,7 +96,7 @@ def login():
     # Check if the provided password matches the stored hash
     if bcrypt.check_password_hash(user.password, password):
         token = jwt.encode(
-            {'user_id': user.id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)},
+            {'user_id': user.id, 'exp': datetime.utcnow() + timedelta(hours=1)},
             'your_secret_key',  # Your secret key for encoding
             algorithm="HS256"  # The algorithm to use
         )
