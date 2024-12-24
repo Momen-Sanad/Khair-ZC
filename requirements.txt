@@ -1,0 +1,48 @@
+# Core Libraries
+alembic
+blinker
+click
+colorama
+Flask
+Flask-Migrate
+Flask-MySQLdb
+Flask-SQLAlchemy
+flask_cors
+greenlet
+itsdangerous
+Jinja2
+Mako
+MarkupSafe
+mysqlclient
+PyMySQL
+python-dotenv
+repoze.lru
+Routes
+setuptools
+six
+SQLAlchemy
+typing_extensions
+Werkzeug
+wheel
+
+# Database Libraries
+pymssql
+pyodbc
+
+# OAuth and Authentication
+requests-oauthlib
+python-oauth2  # or oauth
+oauthlib
+oauth
+flask-bcrypt
+authlib
+pyjwt
+# session
+# functools
+
+# Additional Utilities
+regex
+cryptography
+flask_login
+uuid
+# error_processor
